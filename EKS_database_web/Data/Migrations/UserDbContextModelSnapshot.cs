@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EKS_database_web.Data.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class UserDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

@@ -29,9 +29,14 @@ namespace EKS_database_web
         {
             services.AddDbContext<UserDbContext>(options =>
                 options.UseSqlite(
-                    Configuration.GetConnectionString("UserDbConnection")));
+                    Configuration.GetConnectionString("UsersDbConnection")));
+            services.AddDbContext<SongsDbContext>(options =>
+                options.UseSqlite(
+                    Configuration.GetConnectionString("SongsDbConnection")));
+            
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UserDbContext>();
+            
             services.AddRazorPages();
         }
 

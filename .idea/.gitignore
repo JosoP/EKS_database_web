@@ -1,3 +1,6 @@
 
 # Default ignored files
 /.idea.EKS_database_web/.idea/workspace.xml
+# Datasource local storage ignored files
+/.idea.EKS_database_web/.idea/dataSources/
+/.idea.EKS_database_web/.idea/dataSources.local.xml
