@@ -12,7 +12,7 @@ namespace EKS_database_web.Data
         {
             SongCategories = new HashSet<SongCategory>();
             SongPlaylists = new HashSet<SongPlaylist>();
-            Vers = new HashSet<Verse>();
+            Verse = new HashSet<Verse>();
         }
 
         [Key]
@@ -39,6 +39,6 @@ namespace EKS_database_web.Data
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
         
         [InverseProperty("Song")]
-        public virtual ICollection<Verse> Vers { get; set; }
+        public virtual ICollection<Verse> Verse { get; set; }
     }
 }

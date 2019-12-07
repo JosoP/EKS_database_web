@@ -51,7 +51,7 @@ namespace EKS_database_web.Data
 
             modelBuilder.Entity<SongCategory>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(sc => new {sc.SongId, sc.CategoryId});
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.SongCategories)
@@ -66,7 +66,7 @@ namespace EKS_database_web.Data
 
             modelBuilder.Entity<SongPlaylist>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(sc => new {sc.SongId, sc.PlaylistId});
 
                 entity.HasOne(d => d.Playlist)
                     .WithMany(p => p.SongPlaylists)
@@ -87,11 +87,7 @@ namespace EKS_database_web.Data
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Title).HasDefaultValueSql("'strofa'");
-
-                entity.HasOne(d => d.Song)
-                    .WithMany(p => p.Vers)
-                    .HasForeignKey(d => d.SongId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                
             });
 
             OnModelCreatingPartial(modelBuilder);
@@ -99,7 +95,7 @@ namespace EKS_database_web.Data
 
         void OnModelCreatingPartial(ModelBuilder modelBuilder)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
         }
     }
 }
