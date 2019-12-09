@@ -13,19 +13,10 @@ namespace EKS_database_web.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly SongsDbContext _songDbContext;
-        public List<Song> AllSongs { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, SongsDbContext songDbContext)
+        public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
-            _songDbContext = songDbContext;
-            AllSongs = _songDbContext.Songs
-                .Include(song => song.Verses)
-                .Include(song => song.SongCategories).ThenInclude(songCastegory => songCastegory.Category)
-                .Include(song => song.SongPlaylists).ThenInclude(songPlaylist => songPlaylist.Playlist)
-                .Include(song => song.SongCategories)
-                .ToList();
         }
 
         public void OnGet()

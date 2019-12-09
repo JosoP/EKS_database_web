@@ -29,6 +29,7 @@
 
     <ItemGroup>
       <Folder Include="Data\Songs\Migrations" />
+      <Folder Include="Services" />
     </ItemGroup>
 
 </Project>
