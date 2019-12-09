@@ -15,11 +15,9 @@ namespace EKS_database_web.Data
         public long PlaylistId { get; set; }
 
         [ForeignKey(nameof(PlaylistId))]
-        [InverseProperty("SongPlaylists")]
         public virtual Playlist Playlist { get; set; }
         
         [ForeignKey(nameof(SongId))]
-        [InverseProperty("SongPlaylists")]
         public virtual Song Song { get; set; }
     }
 }

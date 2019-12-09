@@ -25,30 +25,6 @@ namespace EKS_database_web.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>(entity =>
-            {
-                entity.HasIndex(e => e.Id)
-                    .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<Playlist>(entity =>
-            {
-                entity.HasIndex(e => e.Id)
-                    .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<Song>(entity =>
-            {
-                entity.HasIndex(e => e.Id)
-                    .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<SongCategory>(entity =>
             {
                 entity.HasKey(sc => new {sc.SongId, sc.CategoryId});
@@ -78,24 +54,6 @@ namespace EKS_database_web.Data
                     .HasForeignKey(d => d.SongId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
-
-            modelBuilder.Entity<Verse>(entity =>
-            {
-                entity.HasIndex(e => e.Id)
-                    .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Title).HasDefaultValueSql("'strofa'");
-                
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        void OnModelCreatingPartial(ModelBuilder modelBuilder)
-        {
-           // throw new NotImplementedException();
         }
     }
 }

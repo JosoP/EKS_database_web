@@ -15,11 +15,9 @@ namespace EKS_database_web.Data
         public long CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
-        [InverseProperty("SongCategories")]
         public virtual Category Category { get; set; }
         
         [ForeignKey(nameof(SongId))]
-        [InverseProperty("SongCategories")]
         public virtual Song Song { get; set; }
     }
 }

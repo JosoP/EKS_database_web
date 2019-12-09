@@ -24,7 +24,6 @@ namespace EKS_database_web.Data
         public string Text { get; set; }
 
         [ForeignKey(nameof(SongId))]
-        [InverseProperty("Verse")]
         public virtual Song Song { get; set; }
     }
 }

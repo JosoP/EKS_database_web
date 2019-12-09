@@ -21,9 +21,10 @@ namespace EKS_database_web.Pages
             _logger = logger;
             _songDbContext = songDbContext;
             AllSongs = _songDbContext.Songs
-                .Include(song => song.Verse)
+                .Include(song => song.Verses)
+                .Include(song => song.SongCategories).ThenInclude(songCastegory => songCastegory.Category)
+                .Include(song => song.SongPlaylists).ThenInclude(songPlaylist => songPlaylist.Playlist)
                 .Include(song => song.SongCategories)
-                .Include(song => song.SongPlaylists)
                 .ToList();
         }
 

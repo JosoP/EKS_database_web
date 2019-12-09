@@ -24,7 +24,6 @@ namespace EKS_database_web.Data
         [Column("lastModified")]
         public long LastModified { get; set; }
 
-        [InverseProperty(nameof(SongPlaylist.Playlist))]
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
     }
 }
