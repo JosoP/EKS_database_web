@@ -28,9 +28,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.AllSongs[0].SongCategories)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AllSongs[0].SongPlaylists)
-                </th>
+                @* <th> *@
+                @*     @Html.DisplayNameFor(model => model.AllSongs[0].SongPlaylists) *@
+                @* </th> *@
                 <th></th>
             </tr>
             </thead>
@@ -57,15 +57,15 @@
                         @* <button type="button" class="btn btn-secondary btn-sm rounded-pill">+</button> *@
                                                             @* Html.DisplayFor(modelItem => song.SongCategories) *@
                         </td>
-                        <td>
-                            @foreach (var songPlaylist in song.SongPlaylists)
-                            {
-                                <span class="badge badge-success">
-                                    @songPlaylist.Playlist.Name 
-                                </span>
-                            }
-                            @* @Html.DisplayFor(modelItem => song.SongPlaylists) *@
-                        </td>
+@*                         <td> *@
+@*                             @foreach (var songPlaylist in song.SongPlaylists) *@
+@*                             { *@
+@*                                 <span class="badge badge-success"> *@
+@*                                     @songPlaylist.Playlist.Name  *@
+@*                                 </span> *@
+@*                             } *@
+@*                             $1$ @Html.DisplayFor(modelItem => song.SongPlaylists) #1# *@
+@*                         </td> *@
                         <td>
                             <a asp-page="./Edit" asp-route-id="@song.Id">Edit</a> |
                             <a asp-page="./Details" asp-route-id="@song.Id">Details</a> |

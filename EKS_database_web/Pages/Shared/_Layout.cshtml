@@ -7,14 +7,15 @@
     <link rel="shortcut icon" href="~/img/main_icon_dark.svg" type="image/x-icon" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <nav class="my-header navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <img src="~/img/main_icon_light.svg" alt="Eks Logo" width="40"/>
                 <a class="navbar-brand" asp-area="" asp-page="/Index">EKS</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,7 +30,7 @@
                             <a class="nav-link text-light" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a  class="nav-link text-light" asp-area="" asp-page="/Songs">Songs</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Songs">Songs</a>
                         </li>
                     </ul>
                 </div>
@@ -37,14 +38,14 @@
         </nav>
     </header>
 
-<div class="container">
-    
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
+    <div class="container">
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-dark">
+    <footer class="footer border-top text-light">
         <div class="container">
             JosoP &copy; 2019 - EKS_database_web - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
