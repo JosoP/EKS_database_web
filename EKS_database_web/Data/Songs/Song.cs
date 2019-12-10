@@ -32,6 +32,17 @@ namespace EKS_database_web.Data
         [Column("lastModified")]
         public long LastModified { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy hh:mm:ss}")]
+        public DateTime LastModifiedDateTime
+        {
+            get => DateTimeOffset.FromUnixTimeSeconds(LastModified).DateTime;
+            set
+            {
+                DateTimeOffset offset = DateTime.SpecifyKind(value, DateTimeKind.Local);
+                LastModified = offset.ToUnixTimeSeconds();
+            }
+        }
+
         public virtual ICollection<SongCategory> SongCategories { get; set; }
         
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
