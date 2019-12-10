@@ -32,6 +32,7 @@ namespace EKS_database_web.Data
         [Column("lastModified")]
         public long LastModified { get; set; }
 
+        [NotMapped]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy hh:mm:ss}")]
         public DateTime LastModifiedDateTime
         {
