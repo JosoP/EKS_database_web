@@ -4,12 +4,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UserSecretsId>aspnet-EKS_database_web-0080954E-0032-43DE-90D5-441F0931618B</UserSecretsId>
         <LangVersion>8</LangVersion>
+        <RootNamespace>EKS_database_web</RootNamespace>
     </PropertyGroup>
-
-
-    <ItemGroup>
-        <None Update="user.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Bricelam.EntityFrameworkCore.Pluralizer" Version="1.0.0" />
@@ -25,8 +21,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\Songs\Migrations" />
       <Folder Include="Services" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Database\Database.csproj" />
     </ItemGroup>
 
 </Project>

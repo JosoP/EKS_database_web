@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EKS_database_web", "EKS_database_web\EKS_database_web.csproj", "{BA70F05F-7A47-4056-BC79-C79E28064C8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{BA70F05F-7A47-4056-BC79-C79E28064C8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataImporter", "DataImporter\DataImporter.csproj", "{E7460213-4864-4F5E-B87F-E91EF16FD164}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{DCF50F98-6A79-48A4-93B0-508AF45167F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{BA70F05F-7A47-4056-BC79-C79E28064C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA70F05F-7A47-4056-BC79-C79E28064C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA70F05F-7A47-4056-BC79-C79E28064C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7460213-4864-4F5E-B87F-E91EF16FD164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7460213-4864-4F5E-B87F-E91EF16FD164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7460213-4864-4F5E-B87F-E91EF16FD164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7460213-4864-4F5E-B87F-E91EF16FD164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCF50F98-6A79-48A4-93B0-508AF45167F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCF50F98-6A79-48A4-93B0-508AF45167F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCF50F98-6A79-48A4-93B0-508AF45167F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCF50F98-6A79-48A4-93B0-508AF45167F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

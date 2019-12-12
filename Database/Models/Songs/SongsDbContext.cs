@@ -1,8 +1,7 @@
-﻿using System;
+﻿using EKS_database_web.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace EKS_database_web.Data
+namespace Database.Models.Songs
 {
     public class SongsDbContext : DbContext
     {

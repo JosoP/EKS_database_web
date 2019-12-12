@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EKS_database_web.Data;
 
-namespace EKS_database_web.Data
+namespace Database.Models.Songs
 {
     [Table("songs")]
     public partial class Song

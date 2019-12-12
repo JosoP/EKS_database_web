@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EKS_database_web.Data;
 
-namespace EKS_database_web.Data
+namespace Database.Models.Songs
 {
-    [Table("playlists")]
-    public partial class Playlist
+    [Table("categories")]
+    public partial class Category
     {
-        public Playlist()
+        public Category()
         {
-            SongPlaylists = new HashSet<SongPlaylist>();
+            SongCategories = new HashSet<SongCategory>();
         }
 
         [Key]
@@ -24,6 +24,7 @@ namespace EKS_database_web.Data
         [Column("lastModified")]
         public long LastModified { get; set; }
 
-        public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
+        [InverseProperty(nameof(SongCategory.Category))]
+        public virtual ICollection<SongCategory> SongCategories { get; set; }
     }
 }
