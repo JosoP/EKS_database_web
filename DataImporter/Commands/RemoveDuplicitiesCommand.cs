@@ -1,3 +1,5 @@
+using Database.Models.Songs;
+
 namespace DataImporter.Commands
 {
     public class RemoveDuplicitiesCommand : IExecutable
@@ -5,6 +7,11 @@ namespace DataImporter.Commands
         public RemoveDuplicitiesCommand()
         {
             
+        }
+
+        public RemoveDuplicitiesCommand(DuplicityType duplicityType, SongsDbContext dbContext)
+        {
+            throw new System.NotImplementedException();
         }
 
         public bool Execute()

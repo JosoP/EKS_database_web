@@ -10,10 +10,6 @@ namespace DataImporter
 {
     public class ArgumentParser
     {
-        private const string CmdImportStr = "-import";
-        private const string CmdClearDatabaseStr = "-clearDatabase";
-        private const string CmdRemoveDuplicitiesStr = "-removeDuplicities";
-        
         private SongsDbContext _dbContext;
         public List<IExecutable> Commands { get; private set; }
         public bool AreAttributesCorrect { get; private set; }
@@ -27,11 +23,14 @@ namespace DataImporter
 
         public void Parse(string[] arguments)
         {
+            var tempCommands = new List<KeyValuePair<CommandPriority, IExecutable>>();
+            
             for (var i = 0; i < arguments.Length; i++)
             {
                 switch (arguments[i])
                 {
-                    case CmdImportStr:
+                    case "-import":
+                        
                         if (arguments.Length > (i + 2))
                         {
                             var importerString = arguments[++i];
@@ -41,7 +40,9 @@ namespace DataImporter
                             if (importer != null && path != null)
                             {
                                 importer.Path = path;
-                                Commands.Add(new ImportCommand(importer));
+                                tempCommands.Add(
+                                    new KeyValuePair<CommandPriority, IExecutable>(
+                                        CommandPriority.Import, new ImportCommand(importer)));
                             }
                             else
                             {
@@ -54,11 +55,13 @@ namespace DataImporter
                         }
                         break;
                     
-                    case CmdClearDatabaseStr:
-                        Commands.Add(new ClearDatabaseCommand());
+                    case "-clearDatabase":
+                        tempCommands.Add(
+                            new KeyValuePair<CommandPriority, IExecutable>(
+                                CommandPriority.BeforeImport, new ClearDatabaseCommand(_dbContext)));
                         break;
                     
-                    case CmdRemoveDuplicitiesStr:
+                    case "-removeDuplicities":
                         if (arguments.Length > (i + 1))
                         {
                             var duplicityName = arguments[++i];
@@ -66,7 +69,9 @@ namespace DataImporter
                             
                             if (duplicityType != DuplicityType.Unknown)
                             {
-                                Commands.Add(new RemoveDuplicitiesCommand());
+                                tempCommands.Add(
+                                    new KeyValuePair<CommandPriority, IExecutable>(
+                                        CommandPriority.AfterImport, new RemoveDuplicitiesCommand(duplicityType, _dbContext)));
                             }
                             else
                             {
@@ -83,6 +88,14 @@ namespace DataImporter
                         break;
                 };
             }
+
+            if (AreAttributesCorrect)
+            {
+                Commands = tempCommands
+                    .OrderByDescending(pair => pair.Key)
+                    .Select(pair => pair.Value)
+                    .ToList();
+            }
         }
 
         private IImporter GetImporter(string importerName)
@@ -90,9 +103,9 @@ namespace DataImporter
             switch (importerName)
             {
                 case "SalesianImporter":
-                    return new SalesianImporter();
+                    return new SalesianImporter(_dbContext);
                 case "OmsaImporter":
-                    return new OmsaImporter();
+                    return new OmsaImporter(_dbContext);
             }
 
             return null;
@@ -102,9 +115,9 @@ namespace DataImporter
         {
             switch (duplicityName)
             {
-                case "sameName": return DuplicityType.SameName;
-                case "sameNumber": return DuplicityType.SameSongNumber;
-                case "sameData": return DuplicityType.SameData;
+                case "SameName": return DuplicityType.SameName;
+                case "SameNumber": return DuplicityType.SameSongNumber;
+                case "SameData": return DuplicityType.SameData;
                 default : return DuplicityType.Unknown;
             }
         }
