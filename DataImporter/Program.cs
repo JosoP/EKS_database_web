@@ -11,13 +11,15 @@ namespace DataImporter
     {
         static void Main(string[] args)
         {
+            var isOk = true;
             var configuration = GetAppConfiguration();
             var optionsBuilder = new DbContextOptionsBuilder<SongsDbContext>();
             optionsBuilder.UseSqlite(configuration.GetConnectionString("SongsDbConnection"));
 
             using (var dbContext = new SongsDbContext(optionsBuilder.Options))
             {
-                var argumentParser = new ArgumentParser(args);
+                var argumentParser = new ArgumentParser(dbContext);
+                argumentParser.Parse(args);
 
                 if (argumentParser.AreAttributesCorrect)
                 {
@@ -26,7 +28,8 @@ namespace DataImporter
                         var isSuccess = command.Execute();
                         if (isSuccess == false)
                         {
-                        
+                            isOk = false;
+                            break;
                         }
                     }
 
@@ -34,6 +37,11 @@ namespace DataImporter
                     {
                         Console.WriteLine($"{song.Title}");
                     }
+                }
+
+                if (isOk)
+                {
+                    dbContext.SaveChanges();
                 }
             }
         }

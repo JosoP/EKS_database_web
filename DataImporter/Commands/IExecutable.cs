@@ -1,4 +1,4 @@
-namespace DataImporter
+namespace DataImporter.Commands
 {
     public interface IExecutable
     {
