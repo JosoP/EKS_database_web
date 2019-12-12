@@ -23,14 +23,11 @@ namespace DataImporter
 
         public void Parse(string[] arguments)
         {
-            var tempCommands = new List<KeyValuePair<CommandPriority, IExecutable>>();
-            
             for (var i = 0; i < arguments.Length; i++)
             {
                 switch (arguments[i])
                 {
                     case "-import":
-                        
                         if (arguments.Length > (i + 2))
                         {
                             var importerString = arguments[++i];
@@ -40,9 +37,7 @@ namespace DataImporter
                             if (importer != null && path != null)
                             {
                                 importer.Path = path;
-                                tempCommands.Add(
-                                    new KeyValuePair<CommandPriority, IExecutable>(
-                                        CommandPriority.Import, new ImportCommand(importer)));
+                                Commands.Add(new ImportCommand(importer));
                             }
                             else
                             {
@@ -56,9 +51,7 @@ namespace DataImporter
                         break;
                     
                     case "-clearDatabase":
-                        tempCommands.Add(
-                            new KeyValuePair<CommandPriority, IExecutable>(
-                                CommandPriority.BeforeImport, new ClearDatabaseCommand(_dbContext)));
+                        Commands.Add(new ClearDatabaseCommand(_dbContext));
                         break;
                     
                     case "-removeDuplicities":
@@ -69,9 +62,7 @@ namespace DataImporter
                             
                             if (duplicityType != DuplicityType.Unknown)
                             {
-                                tempCommands.Add(
-                                    new KeyValuePair<CommandPriority, IExecutable>(
-                                        CommandPriority.AfterImport, new RemoveDuplicitiesCommand(duplicityType, _dbContext)));
+                                Commands.Add(new RemoveDuplicitiesCommand(duplicityType, _dbContext));
                             }
                             else
                             {
@@ -87,14 +78,6 @@ namespace DataImporter
                         AreAttributesCorrect = false;
                         break;
                 };
-            }
-
-            if (AreAttributesCorrect)
-            {
-                Commands = tempCommands
-                    .OrderByDescending(pair => pair.Key)
-                    .Select(pair => pair.Value)
-                    .ToList();
             }
         }
 
