@@ -3,10 +3,9 @@ using System.Runtime.Serialization;
 
 namespace DataImporter.Models
 {
-    [DataContract(Name="kategorie")]
-    public class SalesianCategories
+    [CollectionDataContract(Name = "kategorie", ItemName = "kategoria", Namespace = "")]
+    public class SalesianCategories : List<string>
     {
-        [DataMember(Name="kategoria")]
-        public List<string> Categories { get; set; }
+        //public List<string> Categories { get; set; }
     }
 }

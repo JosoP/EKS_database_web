@@ -21,7 +21,6 @@ namespace Database.Models.Songs
         public virtual DbSet<SongPlaylist> SongPlaylists { get; set; }
         public virtual DbSet<Verse> Verses { get; set; }
         
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SongCategory>(entity =>
@@ -53,6 +52,11 @@ namespace Database.Models.Songs
                     .HasForeignKey(d => d.SongId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+        }
+
+        public void ClearAll()
+        {
+            Songs.RemoveRange(Songs);
         }
     }
 }

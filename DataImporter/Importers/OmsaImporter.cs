@@ -5,7 +5,7 @@ namespace DataImporter.Importers
 {
     public class OmsaImporter : IImporter
     {
-        public OmsaImporter(SongsDbContext dbContext)
+        public OmsaImporter()
         {
             throw new System.NotImplementedException();
         }

@@ -38,11 +38,17 @@ namespace DataImporter
                         Console.WriteLine($"{song.Title}");
                     }
                 }
-
-                if (isOk)
+                else
                 {
-                    dbContext.SaveChanges();
+                    Console.Error.WriteLine("Bad arguments.");
+                    isOk = false;
                 }
+
+//                if (isOk)
+//                {
+//                    Console.WriteLine("Saving of database ...");
+//                    //dbContext.SaveChanges();
+//                }
             }
         }
 

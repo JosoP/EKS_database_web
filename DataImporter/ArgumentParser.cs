@@ -10,7 +10,7 @@ namespace DataImporter
 {
     public class ArgumentParser
     {
-        private SongsDbContext _dbContext;
+        private readonly SongsDbContext _dbContext;
         public List<IExecutable> Commands { get; private set; }
         public bool AreAttributesCorrect { get; private set; }
         
@@ -25,9 +25,10 @@ namespace DataImporter
         {
             for (var i = 0; i < arguments.Length; i++)
             {
-                switch (arguments[i])
+                var currentArgument = arguments[i];
+                switch (currentArgument)
                 {
-                    case "-import":
+                    case "-Import":
                         if (arguments.Length > (i + 2))
                         {
                             var importerString = arguments[++i];
@@ -37,24 +38,26 @@ namespace DataImporter
                             if (importer != null && path != null)
                             {
                                 importer.Path = path;
-                                Commands.Add(new ImportCommand(importer));
+                                Commands.Add(new ImportCommand(importer, _dbContext));
                             }
                             else
                             {
                                 AreAttributesCorrect = false;
+                                Console.WriteLine("-Import - One of arguments is bad");
                             }
                         }
                         else
                         {
                             AreAttributesCorrect = false;
+                            Console.WriteLine("-Import command needs next 2 arguments <Importer type> <Path to locality for importing>");
                         }
                         break;
                     
-                    case "-clearDatabase":
+                    case "-ClearDatabase":
                         Commands.Add(new ClearDatabaseCommand(_dbContext));
                         break;
                     
-                    case "-removeDuplicities":
+                    case "-RemoveDuplicities":
                         if (arguments.Length > (i + 1))
                         {
                             var duplicityName = arguments[++i];
@@ -75,34 +78,32 @@ namespace DataImporter
                         }
                         break;
                     default:
+                        Console.WriteLine($"Argument {currentArgument} is not known.");
                         AreAttributesCorrect = false;
                         break;
                 };
             }
         }
 
-        private IImporter GetImporter(string importerName)
+        private static IImporter GetImporter(string importerName)
         {
-            switch (importerName)
+            return importerName switch
             {
-                case "SalesianImporter":
-                    return new SalesianImporter(_dbContext);
-                case "OmsaImporter":
-                    return new OmsaImporter(_dbContext);
-            }
-
-            return null;
+                "SalesianImporter" => (IImporter) new SalesianImporter(),
+                "OmsaImporter" => new OmsaImporter(),
+                _ => null
+            };
         }
 
-        private DuplicityType GetDuplicityType(string duplicityName)
+        private static DuplicityType GetDuplicityType(string duplicityName)
         {
-            switch (duplicityName)
+            return duplicityName switch
             {
-                case "SameName": return DuplicityType.SameName;
-                case "SameNumber": return DuplicityType.SameSongNumber;
-                case "SameData": return DuplicityType.SameData;
-                default : return DuplicityType.Unknown;
-            }
+                "SameName" => DuplicityType.SameName,
+                "SameNumber" => DuplicityType.SameSongNumber,
+                "SameData" => DuplicityType.SameData,
+                _ => DuplicityType.Unknown
+            };
         }
     }
 }
