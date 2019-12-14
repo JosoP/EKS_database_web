@@ -26,5 +26,10 @@ namespace Database.Models.Songs
 
         [InverseProperty(nameof(SongCategory.Category))]
         public virtual ICollection<SongCategory> SongCategories { get; set; }
+
+        public override string ToString()
+        {
+            return $"Category - Id={Id}, Name={Name}, Description={Description}, songs={SongCategories.Count}";
+        }
     }
 }

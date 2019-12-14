@@ -32,11 +32,6 @@ namespace DataImporter
                             break;
                         }
                     }
-
-                    foreach (var song in dbContext.Songs.ToList())
-                    {
-                        Console.WriteLine($"{song.Title}");
-                    }
                 }
                 else
                 {

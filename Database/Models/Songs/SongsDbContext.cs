@@ -56,7 +56,12 @@ namespace Database.Models.Songs
 
         public void ClearAll()
         {
+            Categories.RemoveRange(Categories);
+            Playlists.RemoveRange(Playlists);
             Songs.RemoveRange(Songs);
+            SongCategories.RemoveRange(SongCategories);
+            SongPlaylists.RemoveRange(SongPlaylists);
+            Verses.RemoveRange(Verses);
         }
     }
 }

@@ -21,10 +21,7 @@ namespace DataImporter.Commands
             
             if (importedSongs != null)
             {
-                var songs = importedSongs.ToDatabaseSongs();
-                _dbContext.Songs.AddRange(songs);
-                Console.WriteLine($"There was imported {songs.Count} songs.");
-                return true;
+                return importedSongs.SaveToDatabase(_dbContext);
             }
             else
             {

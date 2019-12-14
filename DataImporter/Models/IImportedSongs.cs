@@ -5,6 +5,6 @@ namespace DataImporter.Models
 {
     public interface IImportedSongs
     {
-        List<Song> ToDatabaseSongs();
+        bool SaveToDatabase(SongsDbContext dbContext);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 
 namespace DataImporter.Models
@@ -8,8 +9,20 @@ namespace DataImporter.Models
     {
         [DataMember(Name = "cislo", Order = 0)] 
         public string Number { get; set; }
-        
-        [DataMember(Name = "nazov", Order = 1)] 
+
+        public int? NumberInt
+        {
+            get
+            {
+                if(Int32.TryParse(Number, out int numberInt))
+                {
+                    return numberInt;
+                }
+                return null;
+            }
+        }
+
+        [DataMember(Name = "nazov", Order = 1)]
         public string Title { get; set; }
         
         [DataMember(Name = "autori", Order = 2)] 

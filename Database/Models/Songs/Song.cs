@@ -40,7 +40,7 @@ namespace Database.Models.Songs
             get => DateTimeOffset.FromUnixTimeSeconds(LastModified).DateTime;
             set
             {
-                DateTimeOffset offset = DateTime.SpecifyKind(value, DateTimeKind.Local);
+                DateTimeOffset offset = DateTime.SpecifyKind(value, DateTimeKind.Utc);
                 LastModified = offset.ToUnixTimeSeconds();
             }
         }
@@ -50,5 +50,13 @@ namespace Database.Models.Songs
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
         
         public virtual ICollection<Verse> Verses { get; set; }
+
+        public override string ToString()
+        {
+            return
+                $"Song - Id=\"{Id}\", Title=\"{Title}\", Number=\"{Number}\", Author=\"{Author}\"," +
+                $"categories={SongCategories.Count}, playlists={SongPlaylists.Count}, " +
+                $"verses={Verses.Count}, LastModified=\"{LastModifiedDateTime}\"";
+        }
     }
 }
