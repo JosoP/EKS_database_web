@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Database.Models.Songs;
 using DataImporter.Models;
 
@@ -12,7 +13,7 @@ namespace DataImporter.Importers
 
         public string Path { get; set; }
 
-        public IImportedSongs Import()
+        public List<UniversalSong> Import()
         {
             throw new System.NotImplementedException();
         }

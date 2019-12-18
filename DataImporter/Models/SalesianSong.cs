@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Database.Models.Songs;
 
 namespace DataImporter.Models
 {
@@ -36,5 +38,92 @@ namespace DataImporter.Models
         
         [DataMember(Name="url", Order = 5)]
         public string Url { get; set; }
+
+        public UniversalSong ToUniversal()
+        {
+            var universalCategories = new List<UniversalCategory>();
+
+            foreach (var category in Categories)
+            {
+                universalCategories.Add( new UniversalCategory { Name = category } );
+            }
+            
+            return new UniversalSong
+            {
+                Title = this.Title,
+                Number = NumberInt,
+                Authors = Authors,
+                Categories = universalCategories,
+                Url = Url,
+                Verses = ParseTextToVerses()
+            };
+        }
+        
+        
+        private List<UniversalVerse> ParseTextToVerses()
+        {
+            const string proxyEnter = "[]"; 
+            const string proxyVerseEnd = "[end]"; 
+            
+            var verses = new List<UniversalVerse>();
+            if (Text != null)
+            {
+                if (Text.Length > 0)
+                {
+                    
+//                    var textWithoutChords = string.Join("", text.Split(']')
+//                        .Select(p => p.Split('[')[0].Trim()));
+
+
+                    var tempText = Text;
+                    tempText = tempText.RemoveBetweenIncluding('[', ']') // remove chords
+                        .RemoveBetweenIncluding('(', ')')
+                        .Trim()
+                        .Replace("\n\n\n", "\n")
+                        .Replace("\n\n", "\n")
+                        .Replace("\n&nbsp;&nbsp;&nbsp;&nbsp;", proxyEnter) // enter proxy
+                        .Replace("&nbsp;", "")
+                        .Trim()
+                        .Replace("\n", proxyVerseEnd)
+                        .Replace(proxyEnter, "\n");
+
+                    tempText = tempText.Trim();
+                    var verseTexts = tempText.Split(proxyVerseEnd);
+                    
+                    foreach (var verseText in verseTexts)
+                    {
+                        if (verseText.Length > 0)
+                        {
+                            if (verseText.Contains(' '))
+                            {
+                                verses.Add(new UniversalVerse
+                                {
+                            
+                                    Title = verseText.Substring(0, verseText.IndexOf(' ')),
+                                    Text = verseText.Substring(verseText.IndexOf(' ') + 1)
+                                });
+                            }
+                            else
+                            {
+                                verses.Add(new UniversalVerse
+                                {
+                            
+                                    Title = "",
+                                    Text = verseText
+                                });
+                            }
+                                
+                        }
+                        else
+                        {
+                            Console.WriteLine("BAD VERSE... ");
+                        }
+                    }
+                }
+            }
+
+            return verses;
+        }
+        
     }
 }

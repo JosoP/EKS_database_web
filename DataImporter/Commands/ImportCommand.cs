@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Database.Models.Songs;
 using DataImporter.Importers;
+using DataImporter.Models;
 
 namespace DataImporter.Commands
 {
@@ -15,13 +17,15 @@ namespace DataImporter.Commands
             _dbContext = dbContext;
         }
 
-        public bool Execute()
+        public bool Execute(List<UniversalSong> songs)
         {
             var importedSongs = _importer.Import();
             
             if (importedSongs != null)
             {
-                return importedSongs.SaveToDatabase(_dbContext);
+                //return importedSongs.SaveToDatabase(_dbContext);
+                songs.AddRange(importedSongs);
+                return true;
             }
             else
             {

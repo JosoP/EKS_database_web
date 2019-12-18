@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Database.Models.Songs;
+using DataImporter.Models;
 
 namespace DataImporter.Commands
 {
@@ -12,7 +14,7 @@ namespace DataImporter.Commands
             _dbContext = dbContext;
         }
 
-        public bool Execute()
+        public bool Execute(List<UniversalSong> songs)
         {
             Console.WriteLine("Clearing of database started...");
             _dbContext.ClearAll();

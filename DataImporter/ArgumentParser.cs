@@ -85,12 +85,12 @@ namespace DataImporter
             }
         }
 
-        private static IImporter GetImporter(string importerName)
+        private static IImporter GetImporter(string dataType)
         {
-            return importerName switch
+            return dataType switch
             {
-                "SalesianImporter" => (IImporter) new SalesianImporter(),
-                "OmsaImporter" => new OmsaImporter(),
+                "SalesianData" => (IImporter) new SalesianImporter(),
+                "OmsaData" => new OmsaImporter(),
                 _ => null
             };
         }

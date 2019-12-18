@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
 using Database.Models.Songs;
@@ -12,7 +14,7 @@ namespace DataImporter.Importers
 
         public string Path { get; set; }
 
-        public IImportedSongs Import()
+        public List<UniversalSong> Import()
         {
             try
             {
@@ -26,7 +28,7 @@ namespace DataImporter.Importers
                 }
                 
                 Console.WriteLine($"Salesians songs has been successfuly imported. Count {importedSongs.Count}");
-                return importedSongs;
+                return importedSongs.Select(song => song.ToUniversal()).ToList();
             }
             catch (Exception e)
             {

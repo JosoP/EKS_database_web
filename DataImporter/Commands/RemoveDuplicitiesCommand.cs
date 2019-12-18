@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Database.Models.Songs;
+using DataImporter.Models;
 
 namespace DataImporter.Commands
 {
@@ -14,7 +16,7 @@ namespace DataImporter.Commands
             throw new System.NotImplementedException();
         }
 
-        public bool Execute()
+        public bool Execute(List<UniversalSong> songs)
         {
             throw new System.NotImplementedException();
         }
