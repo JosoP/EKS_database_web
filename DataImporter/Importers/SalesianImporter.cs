@@ -9,12 +9,12 @@ using DataImporter.Models;
 
 namespace DataImporter.Importers
 {
-    public class SalesianImporter : IImporter
+    public class SalesianImporter : Importer
     {
 
         public string Path { get; set; }
 
-        public List<UniversalSong> Import()
+        public override List<UniversalSong> Import()
         {
             try
             {
@@ -36,7 +36,18 @@ namespace DataImporter.Importers
                 Console.WriteLine(e);
                 return null;
             }
+        }
+
+        public override bool ParseArguments(List<string> arguments)
+        {
+            if (arguments.Count != 1) return false;
             
+            var fileName = arguments[0];
+            
+            if (!File.Exists(fileName)) return false;
+            
+            Path = fileName;
+            return true;
         }
     }
 }

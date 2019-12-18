@@ -14,26 +14,27 @@ namespace DataImporter
         static void Main(string[] args)
         {
             var isOk = true;
-            var configuration = GetAppConfiguration();
-            var optionsBuilder = new DbContextOptionsBuilder<SongsDbContext>();
-            optionsBuilder.UseSqlite(configuration.GetConnectionString("SongsDbConnection"));
-
-            using var dbContext = new SongsDbContext(optionsBuilder.Options);
-            var argumentParser = new ArgumentParser(dbContext);
+            
+            var argumentParser = new ArgumentParser();
             argumentParser.Parse(args);
 
             if (argumentParser.AreAttributesCorrect)
             {
                 var editedSongs = new List<UniversalSong>();
-                    
+                var commandIndex = 0;
+                
                 foreach (var command in argumentParser.Commands)
                 {
+                    Console.WriteLine($"{++commandIndex}. command");
+                    
                     var isSuccess = command.Execute(editedSongs);
                     if (isSuccess == false)
                     {
                         isOk = false;
                         break;
                     }
+
+                    Console.WriteLine("--------------------------\n");
                 }
             }
             else
@@ -42,21 +43,14 @@ namespace DataImporter
                 isOk = false;
             }
 
-//                if (isOk)
-//                {
-//                    Console.WriteLine("Saving of database ...");
-//                    //dbContext.SaveChanges();
-//                }
-        }
-
-
-        static IConfigurationRoot GetAppConfiguration()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            
-            return builder.Build();
+            if (isOk)
+            {
+                Console.WriteLine("All commands are done successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Some error occured during commands execution.");
+            }
         }
     }
 }

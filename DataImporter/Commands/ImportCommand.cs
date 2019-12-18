@@ -6,18 +6,19 @@ using DataImporter.Models;
 
 namespace DataImporter.Commands
 {
-    public class ImportCommand : IExecutable
+    public class ImportCommand : Command
     {
-        private readonly IImporter _importer;
-        private readonly SongsDbContext _dbContext;
-
-        public ImportCommand(IImporter importer, SongsDbContext dbContext)
+        private  Importer _importer;
+        
+//        static ImportCommand()
+//        {
+//            Command.RegisterCommand("-Import", typeof(ImportCommand));
+//        }
+        public ImportCommand()
         {
-            _importer = importer;
-            _dbContext = dbContext;
         }
 
-        public bool Execute(List<UniversalSong> songs)
+        public override bool Execute(List<UniversalSong> songs)
         {
             var importedSongs = _importer.Import();
             
@@ -31,6 +32,21 @@ namespace DataImporter.Commands
             {
                 Console.WriteLine($"Importing of songs failed.");
                 return false;
+            }
+        }
+
+        public override bool ParseArguments(List<string> arguments)
+        {
+            if (arguments.Count < 1) return false;
+            
+            _importer = Importer.FindImporter(arguments[0]);
+            if (_importer == null)
+            {
+                return false;
+            }
+            else
+            {
+                return _importer.ParseArguments(arguments.GetRange(1, arguments.Count - 1));
             }
         }
     }

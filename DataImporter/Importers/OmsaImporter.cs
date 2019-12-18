@@ -4,16 +4,20 @@ using DataImporter.Models;
 
 namespace DataImporter.Importers
 {
-    public class OmsaImporter : IImporter
+    public class OmsaImporter : Importer
     {
+        public string Path { get; set; }
         public OmsaImporter()
+        {
+            
+        }
+
+        public override List<UniversalSong> Import()
         {
             throw new System.NotImplementedException();
         }
 
-        public string Path { get; set; }
-
-        public List<UniversalSong> Import()
+        public override bool ParseArguments(List<string> arguments)
         {
             throw new System.NotImplementedException();
         }

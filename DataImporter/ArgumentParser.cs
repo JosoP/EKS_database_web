@@ -10,100 +10,51 @@ namespace DataImporter
 {
     public class ArgumentParser
     {
-        private readonly SongsDbContext _dbContext;
-        public List<IExecutable> Commands { get; private set; }
+        public List<Command> Commands { get; private set; }
         public bool AreAttributesCorrect { get; private set; }
         
-        public ArgumentParser(SongsDbContext dbContext)
+        public ArgumentParser()
         {
-            _dbContext = dbContext;
             AreAttributesCorrect = true;
-            Commands = new List<IExecutable>();
+            Commands = new List<Command>();
         }
 
         public void Parse(string[] arguments)
         {
-            for (var i = 0; i < arguments.Length; i++)
+            List<string> previousCommandArguments = null;
+
+            foreach (var currentArgument in arguments)
             {
-                var currentArgument = arguments[i];
-                switch (currentArgument)
+                var command = Command.FindCommand(currentArgument);
+                if (command == null)
                 {
-                    case "-Import":
-                        if (arguments.Length > (i + 2))
-                        {
-                            var importerString = arguments[++i];
-                            var path = arguments[++i];
-                            var importer = GetImporter(importerString);
-                            
-                            if (importer != null && path != null)
-                            {
-                                importer.Path = path;
-                                Commands.Add(new ImportCommand(importer, _dbContext));
-                            }
-                            else
-                            {
-                                AreAttributesCorrect = false;
-                                Console.WriteLine("-Import - One of arguments is bad");
-                            }
-                        }
-                        else
-                        {
-                            AreAttributesCorrect = false;
-                            Console.WriteLine("-Import command needs next 2 arguments <Importer type> <Path to locality for importing>");
-                        }
-                        break;
-                    
-                    case "-ClearDatabase":
-                        Commands.Add(new ClearDatabaseCommand(_dbContext));
-                        break;
-                    
-                    case "-RemoveDuplicities":
-                        if (arguments.Length > (i + 1))
-                        {
-                            var duplicityName = arguments[++i];
-                            var duplicityType = GetDuplicityType(duplicityName);
-                            
-                            if (duplicityType != DuplicityType.Unknown)
-                            {
-                                Commands.Add(new RemoveDuplicitiesCommand(duplicityType, _dbContext));
-                            }
-                            else
-                            {
-                                AreAttributesCorrect = false;
-                            }
-                        }
-                        else
-                        {
-                            AreAttributesCorrect = false;
-                        }
-                        break;
-                    default:
-                        Console.WriteLine($"Argument {currentArgument} is not known.");
+                    if (previousCommandArguments != null)
+                    {
+                        previousCommandArguments.Add(currentArgument);
+                    }
+                    else
+                    {
                         AreAttributesCorrect = false;
-                        break;
-                };
+                    }
+                }
+                else
+                {
+                    if (previousCommandArguments != null)
+                    {
+                        Commands.Last().ParseArguments(previousCommandArguments);
+                    }
+
+                    previousCommandArguments = new List<string>();
+                    Commands.Add(command);
+                }
+            }
+
+            if (previousCommandArguments != null)
+            {
+                Commands.Last().ParseArguments(previousCommandArguments);
             }
         }
 
-        private static IImporter GetImporter(string dataType)
-        {
-            return dataType switch
-            {
-                "SalesianData" => (IImporter) new SalesianImporter(),
-                "OmsaData" => new OmsaImporter(),
-                _ => null
-            };
-        }
 
-        private static DuplicityType GetDuplicityType(string duplicityName)
-        {
-            return duplicityName switch
-            {
-                "SameName" => DuplicityType.SameName,
-                "SameNumber" => DuplicityType.SameSongNumber,
-                "SameData" => DuplicityType.SameData,
-                _ => DuplicityType.Unknown
-            };
-        }
     }
 }
