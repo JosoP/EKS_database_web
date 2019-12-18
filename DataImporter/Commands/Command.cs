@@ -34,12 +34,5 @@ namespace DataImporter.Commands
             
             return null;
         }
-
-//        public static void RegisterCommand(string commandString, Type command)
-//        {
-//            allCommands.Add(commandString, command);
-//        }
     }
-    
-    
 }

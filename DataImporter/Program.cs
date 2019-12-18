@@ -16,9 +16,8 @@ namespace DataImporter
             var isOk = true;
             
             var argumentParser = new ArgumentParser();
-            argumentParser.Parse(args);
 
-            if (argumentParser.AreAttributesCorrect)
+            if (argumentParser.Parse(args))
             {
                 var editedSongs = new List<UniversalSong>();
                 var commandIndex = 0;

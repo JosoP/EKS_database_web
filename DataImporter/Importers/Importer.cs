@@ -16,11 +16,11 @@ namespace DataImporter.Importers
             _allImporters.Add("OmsaData", typeof(OmsaImporter));
         }
         
-        public static Importer FindImporter(string commandString)
+        public static Importer FindImporter(string importerString)
         {
             foreach (var importer in _allImporters)
             {
-                if (importer.Key == commandString)
+                if (importer.Key == importerString)
                 {
                     return (Importer) Activator.CreateInstance(importer.Value);
                 }

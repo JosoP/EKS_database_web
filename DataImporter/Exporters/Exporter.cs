@@ -16,11 +16,11 @@ namespace DataImporter.Exporters
             AllExporters.Add("InternalDatabase", typeof(InternalDatabaseExporter));
         }
         
-        public static Exporter FindExporter(string commandString)
+        public static Exporter FindExporter(string exporterString)
         {
             foreach (var exporter in AllExporters)
             {
-                if (exporter.Key == commandString)
+                if (exporter.Key == exporterString)
                 {
                     return (Exporter) Activator.CreateInstance(exporter.Value);
                 }
