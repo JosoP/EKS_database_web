@@ -11,15 +11,13 @@ namespace DataImporter
     public class ArgumentParser
     {
         public List<Command> Commands { get; private set; }
-        public bool AreAttributesCorrect { get; private set; }
         
         public ArgumentParser()
         {
-            AreAttributesCorrect = true;
             Commands = new List<Command>();
         }
 
-        public void Parse(string[] arguments)
+        public bool Parse(string[] arguments)
         {
             List<string> previousCommandArguments = null;
 
@@ -34,7 +32,7 @@ namespace DataImporter
                     }
                     else
                     {
-                        AreAttributesCorrect = false;
+                        return false;
                     }
                 }
                 else
@@ -53,6 +51,8 @@ namespace DataImporter
             {
                 Commands.Last().ParseArguments(previousCommandArguments);
             }
+
+            return true;
         }
 
 

@@ -55,7 +55,8 @@ namespace DataImporter.Models
                 Authors = Authors,
                 Categories = universalCategories,
                 Url = Url,
-                Verses = ParseTextToVerses()
+                Verses = ParseTextToVerses(),
+                CreationDate = DateTime.Now
             };
         }
         
