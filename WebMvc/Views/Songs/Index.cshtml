@@ -1,7 +1,64 @@
-@model object
+@model IEnumerable<Database.Models.Songs.Song>
 
 @{
-    ViewData["Title"] = "Zoznam piesní";
+    ViewData["Title"] = "Index";
 }
 
-<h2>title</h2>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SongCategories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastModified)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var song in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => song.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => song.Number)
+            </td>
+            <td>
+                @foreach (var songCategory in song.SongCategories)
+                {
+                    <span class="badge badge-primary">
+                        @songCategory.Category.Name 
+                    </span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => song.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => song.LastModified)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@song.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@song.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@song.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
