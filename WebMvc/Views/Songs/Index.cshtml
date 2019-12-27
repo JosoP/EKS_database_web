@@ -1,32 +1,37 @@
 @model IEnumerable<Database.Models.Songs.Song>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Piesne";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary btn-sm" asp-action="Create">Vytvoriť novú pieseň</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
+                @* Názov *@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Number)
+                @* Číslo *@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SongCategories)
+                @* Kategórie *@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Author)
+                @* Autor *@
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastModified)
-            </th>
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.LastModified) *@
+            @*     $1$ Upravené #1# *@
+            @* </th> *@
             <th></th>
         </tr>
     </thead>
@@ -39,24 +44,29 @@
             <td>
                 @Html.DisplayFor(modelItem => song.Number)
             </td>
-            <td>
-                @foreach (var songCategory in song.SongCategories)
-                {
-                    <span class="badge badge-primary">
-                        @songCategory.Category.Name 
-                    </span>
-                }
+            <td style="width: min-content">
+                <div>
+                    @foreach (var songCategory in song.SongCategories)
+                    {
+                        <span class="badge badge-primary">
+                            @songCategory.Category.Name
+                        </span>
+                    }    
+                </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => song.Author)
             </td>
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => song.LastModifiedDateTimeLocal) *@
+            @* </td> *@
             <td>
-                @Html.DisplayFor(modelItem => song.LastModified)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@song.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@song.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@song.Id">Delete</a>
+                <div class="btn-group btn-group-sm">
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">Upraviť</a><br/>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">Detaily</a><br/>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">Odstrániť</a>
+                </div>
+                
             </td>
         </tr>
 }
