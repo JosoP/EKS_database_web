@@ -13,6 +13,9 @@ namespace Database.Models.Songs
         [Column("songId")]
         public long SongId { get; set; }
         
+        [Column("seqenceNumber")]
+        public int SequenceNumber { get; set; }
+        
         [Required]
         [Column("title")]
         public string Title { get; set; }

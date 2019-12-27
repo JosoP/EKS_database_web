@@ -41,6 +41,7 @@ namespace DataImporter.Exporters
 
                 foreach (var universalSong in songs)
                 {
+                    int seqNum = 0;
                     var newSong = new Song
                     {
                         Number = universalSong.Number,
@@ -49,7 +50,8 @@ namespace DataImporter.Exporters
                         Verses = universalSong.Verses.Select(verse => new Verse
                         {
                             Title = verse.Title,
-                            Text = verse.Text
+                            Text = verse.Text,
+                            SequenceNumber = seqNum++   // sequence number for exact order of verses
                         }).ToList(),
                         LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime()
                     };

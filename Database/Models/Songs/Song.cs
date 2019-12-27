@@ -14,7 +14,7 @@ namespace Database.Models.Songs
         {
             SongCategories = new HashSet<SongCategory>();
             SongPlaylists = new HashSet<SongPlaylist>();
-            Verses = new HashSet<Verse>();
+            Verses = new List<Verse>();
         }
 
         [Key]
@@ -54,8 +54,10 @@ namespace Database.Models.Songs
         [DisplayName("Kategórie")]
         public virtual ICollection<SongCategory> SongCategories { get; set; }
         
+        [DisplayName("Playlisty")]
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
         
+        [DisplayName("Strofy")]
         public virtual ICollection<Verse> Verses { get; set; }
 
         public override string ToString()

@@ -22,7 +22,7 @@ namespace WebMvc.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Songs
-                .Include(song => song.SongCategories).ThenInclude(songCastegory => songCastegory.Category)
+                .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
                 .ToListAsync());
         }
 
@@ -35,6 +35,8 @@ namespace WebMvc.Controllers
             }
 
             var song = await _context.Songs
+                .Include(s => s.Verses)
+                .Include(s => s.SongCategories).ThenInclude(songCategory => songCategory.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (song == null)
             {
@@ -140,7 +142,12 @@ namespace WebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var song = await _context.Songs.FindAsync(id);
+            var song = await _context.Songs
+                .Include(s => s.Verses)
+                .Include(s => s.SongCategories)
+                .Include(s => s.SongPlaylists)
+                .FirstOrDefaultAsync(m => m.Id == id);
+                //.FindAsync(id);
             _context.Songs.Remove(song);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -28,4 +28,9 @@
       <ProjectReference Include="..\Database\Database.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\img\main_icon_dark.svg" />
+      <_ContentIncludedByDefault Remove="wwwroot\img\main_icon_light.svg" />
+    </ItemGroup>
+
 </Project>

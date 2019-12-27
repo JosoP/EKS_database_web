@@ -3,14 +3,16 @@ using System;
 using Database.Models.Songs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EKS_database_web.Data.Songs.Migrations
 {
     [DbContext(typeof(SongsDbContext))]
-    partial class SongsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191227220542_verse_sequence_number")]
+    partial class verse_sequence_number
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
