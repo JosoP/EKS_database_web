@@ -51,7 +51,7 @@ namespace DataImporter.Exporters
                             Title = verse.Title,
                             Text = verse.Text
                         }).ToList(),
-                        LastModifiedDateTime = DateTime.Now
+                        LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime()
                     };
 
                     var categories = FindOrCreateCetegories(universalSong.Categories, dbContext);

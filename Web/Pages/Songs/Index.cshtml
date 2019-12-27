@@ -62,7 +62,7 @@
                                                             @* Html.DisplayFor(modelItem => song.SongCategories) *@
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => song.LastModifiedDateTime)
+                            @Html.DisplayFor(modelItem => song.LastModifiedDateTimeLocal)
                         </td>
                         <td>
                             <a asp-page="./Edit" asp-route-id="@song.Id">Edit</a> |
