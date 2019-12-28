@@ -76,3 +76,12 @@ body {
 .my-header {
   background: #002752;
 }
+
+.edit-btn:before {
+  content: url("/WebMvc/wwwroot/img/pencil.svg");
+}
+
+.img-in-button {
+  padding-top: 10%;
+  padding-bottom: 10%;
+}

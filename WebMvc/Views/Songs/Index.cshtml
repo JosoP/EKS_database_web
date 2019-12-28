@@ -6,9 +6,6 @@
 
 <h1>Piesne</h1>
 
-<p>
-    
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -33,7 +30,9 @@
             @*     $1$ Upravené #1# *@
             @* </th> *@
             <th>
-                <a class="btn btn-success btn-sm" asp-action="Create">Vytvoriť novú pieseň</a>
+                <a class="btn btn-success btn-sm btn-block" asp-action="Create">
+                    <img src="~/img/plus-16.png" alt="Vytvoriť novú pieseň" class="img-in-button" style="margin-right: 5px;"> Nová
+                </a>
             </th>
         </tr>
     </thead>
@@ -64,9 +63,18 @@
             @* </td> *@
             <td>
                 <div class="btn-group btn-group-sm">
-                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">Upraviť</a><br/>
-                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">Detaily</a><br/>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">Odstrániť</a>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
+                        @* <i class="glyphicon glyphicon-pencil"></i> *@
+                        <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
+                    </a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">
+                        @* <i class="glyphicon glyphicon-search"></i> *@
+                        <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
+                    </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">
+                        @* <i class="glyphicon glyphicon-trash"></i> *@
+                        <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
+                    </a>
                 </div>
                 
             </td>
