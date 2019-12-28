@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
 
 namespace WebMvc.Controllers
 {
@@ -19,11 +20,18 @@ namespace WebMvc.Controllers
         }
 
         // GET: Songs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Songs
+            var songs = _context.Songs
                 .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
-                .ToListAsync());
+                .Select(song => song);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                songs = songs.Where(s => s.Title.ToLower().Contains(searchString.ToLower()));
+            }
+            
+            return View(await songs.ToListAsync());
         }
 
         // GET: Songs/Details/5

@@ -6,6 +6,19 @@
 
 <h1>Piesne</h1>
 
+
+<form asp-controller="Songs" asp-action="Index" class="form-inline">
+    <div class="form-group mb-2 ">
+        <input type="text" 
+               name="SearchString" 
+               placeholder="@Html.DisplayNameFor(model => model.Title)">
+    </div>
+    <div class="form-group mx-sm-2 mb-2">
+        <input class="btn btn-primary btn-sm" type="submit" value="Filtrovať" />
+    </div>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -29,9 +42,9 @@
             @*     @Html.DisplayNameFor(model => model.LastModified) *@
             @*     $1$ Upravené #1# *@
             @* </th> *@
-            <th>
-                <a class="btn btn-success btn-sm btn-block" asp-action="Create">
-                    <img src="~/img/plus-16.png" alt="Vytvoriť novú pieseň" class="img-in-button" style="margin-right: 5px;"> Nová
+            <th class="text-right">
+                <a class="btn btn-success btn-sm " asp-action="Create">
+                    <img src="~/img/plus-16.png" alt="Vytvoriť novú pieseň">
                 </a>
             </th>
         </tr>
@@ -61,7 +74,7 @@
             @* <td> *@
             @*     @Html.DisplayFor(modelItem => song.LastModifiedDateTimeLocal) *@
             @* </td> *@
-            <td>
+            <td class="text-right">
                 <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
                         @* <i class="glyphicon glyphicon-pencil"></i> *@
