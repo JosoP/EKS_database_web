@@ -7,7 +7,7 @@
 <h1>Piesne</h1>
 
 <p>
-    <a class="btn btn-primary btn-sm" asp-action="Create">Vytvoriť novú pieseň</a>
+    
 </p>
 <table class="table">
     <thead>
@@ -32,7 +32,9 @@
             @*     @Html.DisplayNameFor(model => model.LastModified) *@
             @*     $1$ Upravené #1# *@
             @* </th> *@
-            <th></th>
+            <th>
+                <a class="btn btn-success btn-sm" asp-action="Create">Vytvoriť novú pieseň</a>
+            </th>
         </tr>
     </thead>
     <tbody>

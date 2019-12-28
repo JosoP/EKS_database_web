@@ -147,7 +147,7 @@ namespace WebMvc.Controllers
                 .Include(s => s.SongCategories)
                 .Include(s => s.SongPlaylists)
                 .FirstOrDefaultAsync(m => m.Id == id);
-                //.FindAsync(id);
+
             _context.Songs.Remove(song);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

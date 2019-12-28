@@ -34,7 +34,8 @@ namespace WebMvc
                     Configuration.GetConnectionString("UsersDbConnection")));
             services.AddDbContext<SongsDbContext>(options =>
                 options.UseSqlite(
-                    Configuration.GetConnectionString("SongsDbConnection")));
+                    Configuration.GetConnectionString("SongsDbConnection"))
+                    .EnableSensitiveDataLogging());
             
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UserDbContext>();

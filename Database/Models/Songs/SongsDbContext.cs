@@ -30,12 +30,12 @@ namespace Database.Models.Songs
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.SongCategories)
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.Song)
                     .WithMany(p => p.SongCategories)
                     .HasForeignKey(d => d.SongId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<SongPlaylist>(entity =>
@@ -45,12 +45,12 @@ namespace Database.Models.Songs
                 entity.HasOne(d => d.Playlist)
                     .WithMany(p => p.SongPlaylists)
                     .HasForeignKey(d => d.PlaylistId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(d => d.Song)
                     .WithMany(p => p.SongPlaylists)
                     .HasForeignKey(d => d.SongId)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
 
