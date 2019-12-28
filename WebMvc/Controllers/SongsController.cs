@@ -18,8 +18,13 @@ namespace WebMvc.Controllers
         {
             _context = context;
         }
-
-        // GET: Songs
+        
+        /// <summary>
+        /// GET: Songs
+        /// 
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Index(string searchString)
         {
             var songs = _context.Songs
@@ -35,6 +40,11 @@ namespace WebMvc.Controllers
         }
 
         // GET: Songs/Details/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -55,6 +65,10 @@ namespace WebMvc.Controllers
         }
 
         // GET: Songs/Create
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
@@ -63,6 +77,11 @@ namespace WebMvc.Controllers
         // POST: Songs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="song"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Number,Author,LastModified")] Song song)
@@ -77,6 +96,11 @@ namespace WebMvc.Controllers
         }
 
         // GET: Songs/Edit/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -95,6 +119,12 @@ namespace WebMvc.Controllers
         // POST: Songs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="song"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Number,Author,LastModified")] Song song)
@@ -128,6 +158,11 @@ namespace WebMvc.Controllers
         }
 
         // GET: Songs/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -146,6 +181,11 @@ namespace WebMvc.Controllers
         }
 
         // POST: Songs/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
@@ -161,6 +201,7 @@ namespace WebMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
         private bool SongExists(long id)
         {
             return _context.Songs.Any(e => e.Id == id);
