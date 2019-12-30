@@ -61,6 +61,8 @@ namespace WebMvc.Controllers
                 return NotFound();
             }
 
+            song.Verses = song.Verses.OrderBy(v => v.SequenceNumber).ToList();
+
             return View(song);
         }
 
@@ -108,11 +110,17 @@ namespace WebMvc.Controllers
                 return NotFound();
             }
 
-            var song = await _context.Songs.FindAsync(id);
+            var song = await _context.Songs
+                .Include(s => s.Verses)
+                .Include(s => s.SongCategories).ThenInclude(songCategory => songCategory.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (song == null)
             {
                 return NotFound();
             }
+            
+            song.Verses = song.Verses.OrderBy(v => v.SequenceNumber).ToList();
+            
             return View(song);
         }
 
@@ -127,7 +135,7 @@ namespace WebMvc.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Number,Author,LastModified")] Song song)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Number,Author,LastModified,Verses")] Song song)
         {
             if (id != song.Id)
             {
@@ -136,6 +144,8 @@ namespace WebMvc.Controllers
 
             if (ModelState.IsValid)
             {
+                song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
+                
                 try
                 {
                     _context.Update(song);
@@ -154,6 +164,7 @@ namespace WebMvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(song);
         }
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Database.Models.Songs
@@ -17,10 +18,12 @@ namespace Database.Models.Songs
         public int SequenceNumber { get; set; }
         
         [Required]
+        [DisplayName("Názov")]
         [Column("title")]
         public string Title { get; set; }
         
         [Required]
+        [DisplayName("Text")]
         [Column("text")]
         public string Text { get; set; }
 

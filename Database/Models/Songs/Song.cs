@@ -58,7 +58,7 @@ namespace Database.Models.Songs
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
         
         [DisplayName("Strofy")]
-        public virtual ICollection<Verse> Verses { get; set; }
+        public virtual List<Verse> Verses { get; set; }
 
         public override string ToString()
         {
