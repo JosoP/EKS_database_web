@@ -145,10 +145,14 @@ namespace WebMvc.Controllers
             if (ModelState.IsValid)
             {
                 song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
+                for (int i = 0; i < song.Verses.Count; i++)
+                {
+                    song.Verses[i].SequenceNumber = i;
+                }
                 
                 try
                 {
-                    _context.Update(song);
+                    _context.UpdateSong(song);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

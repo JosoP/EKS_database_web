@@ -5,26 +5,26 @@
     ViewData["Title"] = "Upraviť";
 }
 
-<h4>Upraviť pieseň @Model.Title</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Upraviť pieseň @Model.Title</h4>
+            <hr />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control"/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control" />
+                <input asp-for="Number" class="form-control"/>
                 <span asp-validation-for="Number" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
+                <input asp-for="Author" class="form-control"/>
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             @* <div class="form-group row"> *@
@@ -32,37 +32,75 @@
             @*     <input asp-for="LastModifiedDateTimeLocal" class="col-sm-10" readonly="readonly"/> *@
             @*     <span asp-validation-for="LastModifiedDateTimeLocal" class="text-danger"></span> *@
             @* </div> *@
-            <div class="form-group" >
-                <h5><label asp-for="Verses" class="control-label"></label></h5>
+        </div>
+        <div class="col-md-6">
+            <h4>Strofy</h4>
+            <input type="hidden" id="versesCount" value="@Model.Verses.Count" />
+            <hr/>
+            <div id="versesContainer">
                 @{
                     for (int i = 0; i < Model.Verses.Count; i++)
                     {
-                        <hr />
-                        <input asp-for="Verses[i].Id" type="hidden"/>
-                        <input asp-for="Verses[i].SongId" type="hidden" />
-                        <input asp-for="Verses[i].SequenceNumber" type="hidden" />
-                        <div class="form-group row">
-                            <label asp-for="Verses[i].Title" class="col-sm-2 col-form-label"></label>
-                            <input asp-for="Verses[i].Title" class="col-sm-5"/>
-                        </div>
-                        <div class="form-group row">
-                            <label asp-for="Verses[i].Text" class="col-sm-2 col-form-label"></label>
-                            <textarea asp-for="Verses[i].Text" class="col-sm-10" rows="5"></textarea>
+                        <div class="verse">
+                            <input asp-for="Verses[i].Id" type="hidden"/>
+                            <input asp-for="Verses[i].SongId" type="hidden"/>
+                            <input asp-for="Verses[i].SequenceNumber" type="hidden"/>
+                            <div class="form-group row">
+                                <label asp-for="Verses[i].Title" class="col-sm-2 col-form-label"></label>
+                                <input asp-for="Verses[i].Title" class="col-sm-5"/>
+                                <button class="col-sm-5 remove-button"  value="Odstrániť"></button>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Verses[i].Text" class="col-sm-2 col-form-label"></label>
+                                <textarea asp-for="Verses[i].Text" class="col-sm-10" rows="5"></textarea>
+                            </div>
+                            <hr/>
                         </div>
                     }
 
                 }
             </div>
-            <div class="form-group">
-                <input type="submit" value="Uložiť" class="btn btn-primary" />
-            </div>
-        </form>
+            <input id="AddButton" type="button" value="Pridať slohu" >
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <input type="submit" value="Uložiť" class="btn btn-primary" />
+    </div>
+</form>
 
 <div>
     <a asp-action="Index">Späť do zoznamu</a>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#AddButton").click(function () {
+            tc = parseInt($("#versesCount").val());
+            tc = tc + 1;
+            $("#versesCount").val(tc);
+
+            // $("tbody").append('<input type="text" name="[' + (tc - 1) + '].StreetNo" /><input type="text" name="[' + (tc - 1) + '].Address" /><input type="text" name="[' + (tc - 1) + '].Telephone" />Remove')
+            $("#versesContainer").append('  <div class="form-group row">'
+                                        + '     <label for="Verses_' + (tc - 1) + '__Title" class="col-sm-2 col-form-label"></label>'
+                                        + '     <input id="Verses_' + (tc - 1) + '__Title" name="Verses[' + (tc - 1) + '].Title" class="col-sm-5" type="text"/>'      
+                                        + ' </div>'
+                                        + ' <div class="form-group row">'
+                                        + '     <label for="Verses_' + (tc - 1) + '__Text" class="col-sm-2 col-form-label"></label>'
+                                        + '     <textarea id="Verses_' + (tc - 1) + '__Text" name="Verses[' + (tc - 1) + '].Text" class="col-sm-10" rows="5"></textarea>'
+                                        + ' </div>' 
+                                        + '  <hr/>')
+        });
+
+        $(".remove-button").click(function () {
+            // tc = parseInt($("#versesCount").val());
+            // tc = tc - 1;
+            // $("#versesCount").val(tc)
+
+            $(this).parents("div.verse").remove();
+        });
+    });
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
