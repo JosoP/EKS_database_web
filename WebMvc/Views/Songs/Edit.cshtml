@@ -41,18 +41,18 @@
                 @{
                     for (int i = 0; i < Model.Verses.Count; i++)
                     {
-                        <div class="verse">
-                            <input asp-for="Verses[i].Id" type="hidden"/>
-                            <input asp-for="Verses[i].SongId" type="hidden"/>
-                            <input asp-for="Verses[i].SequenceNumber" type="hidden"/>
+                        <div class="js-verse">
+                            <input type="hidden" asp-for="Verses[i].Id" class="js-verse-id"/>
+                            <input type="hidden" asp-for="Verses[i].SongId" class="js-verse-song-id"/>
+                            <input type="hidden" asp-for="Verses[i].SequenceNumber" class="js-verse-sequence-num"/>
                             <div class="form-group row">
-                                <label asp-for="Verses[i].Title" class="col-sm-2 col-form-label"></label>
-                                <input asp-for="Verses[i].Title" class="col-sm-5"/>
+                                <label asp-for="Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
+                                <input asp-for="Verses[i].Title" class="col-sm-5 js-verse-title"/>
                                 <button class="col-sm-5 remove-button"  value="Odstrániť"></button>
                             </div>
                             <div class="form-group row">
-                                <label asp-for="Verses[i].Text" class="col-sm-2 col-form-label"></label>
-                                <textarea asp-for="Verses[i].Text" class="col-sm-10" rows="5"></textarea>
+                                <label asp-for="Verses[i].Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>
+                                <textarea asp-for="Verses[i].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>
                             </div>
                             <hr/>
                         </div>
@@ -82,12 +82,12 @@
 
             // $("tbody").append('<input type="text" name="[' + (tc - 1) + '].StreetNo" /><input type="text" name="[' + (tc - 1) + '].Address" /><input type="text" name="[' + (tc - 1) + '].Telephone" />Remove')
             $("#versesContainer").append('  <div class="form-group row">'
-                                        + '     <label for="Verses_' + (tc - 1) + '__Title" class="col-sm-2 col-form-label"></label>'
-                                        + '     <input id="Verses_' + (tc - 1) + '__Title" name="Verses[' + (tc - 1) + '].Title" class="col-sm-5" type="text"/>'      
+                                        + '     <label for="Verses_' + (tc - 1) + '__Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>'
+                                        + '     <input id="Verses_' + (tc - 1) + '__Title" name="Verses[' + (tc - 1) + '].Title" class="col-sm-5 js-verse-title" type="text"/>'      
                                         + ' </div>'
                                         + ' <div class="form-group row">'
-                                        + '     <label for="Verses_' + (tc - 1) + '__Text" class="col-sm-2 col-form-label"></label>'
-                                        + '     <textarea id="Verses_' + (tc - 1) + '__Text" name="Verses[' + (tc - 1) + '].Text" class="col-sm-10" rows="5"></textarea>'
+                                        + '     <label for="Verses_' + (tc - 1) + '__Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>'
+                                        + '     <textarea id="Verses_' + (tc - 1) + '__Text" name="Verses[' + (tc - 1) + '].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>'
                                         + ' </div>' 
                                         + '  <hr/>')
         });
@@ -97,7 +97,40 @@
             // tc = tc - 1;
             // $("#versesCount").val(tc)
 
-            $(this).parents("div.verse").remove();
+            $(this).parents("div.js-verse").remove();           // remove verse which remove button has been pressed
+            
+            $(".js-verse-id").each(function(i){
+                $(this).attr('id', 'Verses_' + i + '__Id');
+                $(this).attr('name', 'Verses[' + i + '].Id');
+            });
+            
+            $(".js-verse-song-id").each(function(i){
+                $(this).attr('id', 'Verses_' + i + '__SongId');
+                $(this).attr('name', 'Verses[' + i + '].SongId');
+            });
+            
+            $(".js-verse-sequence-num").each(function(i){
+                $(this).attr('id', 'Verses_' + i + '__SequenceNumber');
+                $(this).attr('name', 'Verses[' + i + '].SequenceNumber');
+            });
+            
+            $(".js-verse-title-lbl").each(function(i){
+                $(this).attr('for', 'Verses_' + i + '__Title');
+            });
+            
+            $(".js-verse-title").each(function(i){
+                $(this).attr('id', 'Verses_' + i + '__Title');
+                $(this).attr('name', 'Verses[' + i + '].Title');
+            });
+            
+            $(".js-verse-text-lbl").each(function(i){
+                $(this).attr('for', 'Verses_' + i + '__Text');
+            });
+            
+            $(".js-verse-text").each(function(i){
+                $(this).attr('name', 'Verses[' + i + '].Text');
+                $(this).attr('id', 'Verses_' + i + '__Text');
+            });
         });
     });
 </script>
