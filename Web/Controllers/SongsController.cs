@@ -148,6 +148,7 @@ namespace WebMvc.Controllers
                 for (int i = 0; i < song.Verses.Count; i++)
                 {
                     song.Verses[i].SequenceNumber = i;
+                    song.Verses[i].SongId = song.Id;
                 }
                 
                 try
