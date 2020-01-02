@@ -166,13 +166,11 @@ namespace EKS_database_web.Data.Songs.Migrations
                     b.HasOne("Database.Models.Songs.Category", "Category")
                         .WithMany("SongCategories")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Database.Models.Songs.Song", "Song")
                         .WithMany("SongCategories")
                         .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -181,13 +179,11 @@ namespace EKS_database_web.Data.Songs.Migrations
                     b.HasOne("Database.Models.Songs.Playlist", "Playlist")
                         .WithMany("SongPlaylists")
                         .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Database.Models.Songs.Song", "Song")
                         .WithMany("SongPlaylists")
                         .HasForeignKey("SongId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
