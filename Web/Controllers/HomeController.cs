@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebMvc.Models;
+using Web.Models;
 
-namespace WebMvc.Controllers
+namespace Web.Controllers
 {
     public class HomeController : Controller
     {

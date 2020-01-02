@@ -1,29 +1,29 @@
-@model Database.Models.Songs.Song
+@model Web.Models.SongCategoryViewModel
 
 <h4>Strofy</h4>
-<input type="hidden" id="versesCount" value="@Model.Verses.Count" />
+<input type="hidden" id="versesCount" value="@Model.Song.Verses.Count" />
 <hr/>
 <div id="versesContainer">
     @{
-        for (int i = 0; i < Model.Verses.Count; i++)
+        for (int i = 0; i < Model.Song.Verses.Count; i++)
         {    
             <div class="js-verse">
-                <input type="hidden" asp-for="Verses[i].Id" class="js-verse-id"/>
-                <input type="hidden" asp-for="Verses[i].SongId" class="js-verse-song-id"/>
-                <input type="hidden" asp-for="Verses[i].SequenceNumber" class="js-verse-sequence-num"/>
+                <input type="hidden" asp-for="Song.Verses[i].Id" class="js-verse-id"/>
+                <input type="hidden" asp-for="Song.Verses[i].SongId" class="js-verse-song-id"/>
+                <input type="hidden" asp-for="Song.Verses[i].SequenceNumber" class="js-verse-sequence-num"/>
 
                 <button class="btn btn-danger btn-sm js-btn-remove-verse">
                     <img src="~/img/trash-2-16.png" alt="Odstrániť strofu" class="img-in-button" type="button">
                 </button>
                 <div class="form-group row">
-                    <label asp-for="Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
-                    <input asp-for="Verses[i].Title" class="col-sm-5 js-verse-title"/>
-                    <span asp-validation-for="Verses[i].Title" class="text-danger"></span>
+                    <label asp-for="Song.Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
+                    <input asp-for="Song.Verses[i].Title" class="col-sm-5 js-verse-title"/>
+                    <span asp-validation-for="Song.Verses[i].Title" class="text-danger"></span>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Verses[i].Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>
-                    <textarea asp-for="Verses[i].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>
-                    <span asp-validation-for="Verses[i].Text" class="text-danger"></span>  
+                    <label asp-for="Song.Verses[i].Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>
+                    <textarea asp-for="Song.Verses[i].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>
+                    <span asp-validation-for="Song.Verses[i].Text" class="text-danger"></span>  
                 </div>
                 <div class="row">
                     <div class="col-sm-11">
@@ -65,7 +65,7 @@
             recalculateVerses();
         });
         
-        $(".js-btn-add-verse").click(function() {
+        $(document).on('click', '.js-btn-add-verse', function() {
             let clone = $(".js-verse:first").clone();
             clone.find("input").val("");
             clone.find("textarea").val("");
@@ -77,11 +77,7 @@
             recalculateVerses();
         });
 
-        $(".js-btn-remove-verse").click(function () {
-            // tc = parseInt($("#versesCount").val());
-            // tc = tc - 1;
-            // $("#versesCount").val(tc)
-
+        $(document).on('click', '.js-btn-remove-verse', function () {
             $(this).parents("div.js-verse").remove();           // remove verse which remove button has been pressed
             
             recalculateVerses();
@@ -90,31 +86,31 @@
         function recalculateVerses() {
             $(".js-verse").each(function(i) {
                 $(this).find(".js-verse-id")
-                    .attr('id', 'Verses_' + i + '__Id')
-                    .attr('name', 'Verses[' + i + '].Id');
+                    .attr('id', 'Song_Verses_' + i + '__Id')
+                    .attr('name', 'Song.Verses[' + i + '].Id');
                   
                 $(this).find(".js-verse-song-id")
-                    .attr('id', 'Verses_' + i + '__SongId')
-                    .attr('name', 'Verses[' + i + '].SongId');
+                    .attr('id', 'Song_Verses_' + i + '__SongId')
+                    .attr('name', 'Song.Verses[' + i + '].SongId');
                 
                 $(this).find(".js-verse-sequence-num")
-                    .attr('id', 'Verses_' + i + '__SequenceNumber')
-                    .attr('name', 'Verses[' + i + '].SequenceNumber')
+                    .attr('id', 'Song_Verses_' + i + '__SequenceNumber')
+                    .attr('name', 'Song.Verses[' + i + '].SequenceNumber')
                     .attr('value', i);
                 
                 $(this).find(".js-verse-sequence-num")
-                    .attr('for', 'Verses_' + i + '__Title');
+                    .attr('for', 'Song_Verses_' + i + '__Title');
                 
                 $(this).find(".js-verse-title")
-                    .attr('id', 'Verses_' + i + '__Title')
-                    .attr('name', 'Verses[' + i + '].Title');
+                    .attr('id', 'Song_Verses_' + i + '__Title')
+                    .attr('name', 'Song.Verses[' + i + '].Title');
                 
                 $(this).find(".js-verse-text-lbl")
-                    .attr('for', 'Verses_' + i + '__Text');
+                    .attr('for', 'Song_Verses_' + i + '__Text');
                 
                 $(this).find(".js-verse-text")
-                    .attr('name', 'Verses[' + i + '].Text')
-                    .attr('id', 'Verses_' + i + '__Text');
+                    .attr('name', 'Song.Verses[' + i + '].Text')
+                    .attr('id', 'Song_Verses_' + i + '__Text');
             });
             
           // $(".js-verse-id").each(function(i){

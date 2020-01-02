@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
+using Web.Models;
 
-namespace WebMvc.Controllers
+namespace Web.Controllers
 {
     public class SongsController : Controller
     {
@@ -110,18 +111,24 @@ namespace WebMvc.Controllers
                 return NotFound();
             }
 
-            var song = await _context.Songs
-                .Include(s => s.Verses)
-                .Include(s => s.SongCategories).ThenInclude(songCategory => songCategory.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (song == null)
+            var viewModel = new SongCategoryViewModel
+            {
+                Song = await _context.Songs
+                    .Include(s => s.Verses)
+                    .Include(s => s.SongCategories).ThenInclude(songCategory => songCategory.Category)
+                    .FirstOrDefaultAsync(m => m.Id == id),
+                Categories = await _context.Categories.ToListAsync()
+            };
+            if (viewModel.Song == null)
             {
                 return NotFound();
             }
             
-            song.Verses = song.Verses.OrderBy(v => v.SequenceNumber).ToList();
+            viewModel.Song.Verses = viewModel.Song.Verses.OrderBy(v => v.SequenceNumber).ToList();
             
-            return View(song);
+            
+            
+            return View(viewModel);
         }
 
         // POST: Songs/Edit/5
@@ -131,34 +138,36 @@ namespace WebMvc.Controllers
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="song"></param>
+        /// <param name="viewModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Number,Author,LastModified,Verses")] Song song)
+        public async Task<IActionResult> Edit(
+            long id, 
+            [Bind("Song,Categories")] SongCategoryViewModel viewModel)
         {
-            if (id != song.Id)
+            if (id != viewModel.Song.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
-                for (int i = 0; i < song.Verses.Count; i++)
+                viewModel.Song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
+                for (int i = 0; i < viewModel.Song.Verses.Count; i++)
                 {
-                    song.Verses[i].SequenceNumber = i;
-                    song.Verses[i].SongId = song.Id;
+                    viewModel.Song.Verses[i].SequenceNumber = i;
+                    viewModel.Song.Verses[i].SongId = viewModel.Song.Id;
                 }
                 
                 try
                 {
-                    _context.UpdateSong(song);
+                    _context.UpdateSong(viewModel.Song);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SongExists(song.Id))
+                    if (!SongExists(viewModel.Song.Id))
                     {
                         return NotFound();
                     }
@@ -170,7 +179,7 @@ namespace WebMvc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             
-            return View(song);
+            return View(viewModel);
         }
 
         // GET: Songs/Delete/5

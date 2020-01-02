@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
 
-namespace WebMvc.Controllers
+namespace Web.Controllers
 {
     public class PlaylistsController : Controller
     {

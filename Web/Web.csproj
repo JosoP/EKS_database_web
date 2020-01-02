@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <UserSecretsId>aspnet-WebMvc-3B956FB4-2D9E-44B0-9B36-3D2D44ECCA9C</UserSecretsId>
-        <RootNamespace>WebMvc</RootNamespace>
+        <UserSecretsId>aspnet-Web-3B956FB4-2D9E-44B0-9B36-3D2D44ECCA9C</UserSecretsId>
+        <RootNamespace>Web</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
