@@ -1,8 +1,17 @@
 @model Web.Models.SongCategoryViewModel
 
-<h4>Strofy</h4>
+<h5>Strofy</h5>
 <input type="hidden" id="versesCount" value="@Model.Song.Verses.Count" />
-<hr/>
+<div class="row">
+    <div class="col-sm-11">
+        <hr/>
+    </div>
+    <div class="col-sm-1">
+        <button class="btn btn-success btn-sm float-right" type="button" id="add-verse-start">
+            <img src="~/img/plus-16.png" alt="Pridať strofu" class="img-in-button">
+        </button>
+    </div>
+</div>
 <div id="versesContainer">
     @{
         for (int i = 0; i < Model.Song.Verses.Count; i++)
@@ -12,18 +21,22 @@
                 <input type="hidden" asp-for="Song.Verses[i].SongId" class="js-verse-song-id"/>
                 <input type="hidden" asp-for="Song.Verses[i].SequenceNumber" class="js-verse-sequence-num"/>
 
-                <button class="btn btn-danger btn-sm js-btn-remove-verse">
-                    <img src="~/img/trash-2-16.png" alt="Odstrániť strofu" class="img-in-button" type="button">
+                <button class="btn btn-danger btn-sm js-btn-remove-verse" type="button">
+                    <img src="~/img/trash-2-16.png" alt="Odstrániť strofu" class="img-in-button">
                 </button>
                 <div class="form-group row">
                     <label asp-for="Song.Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
-                    <input asp-for="Song.Verses[i].Title" class="col-sm-5 js-verse-title"/>
-                    <span asp-validation-for="Song.Verses[i].Title" class="text-danger"></span>
+                    <div class="col-sm-10" >
+                        <input asp-for="Song.Verses[i].Title" class="col-sm-6 form-control js-verse-title"/>
+                        <span asp-validation-for="Song.Verses[i].Title" class="text-danger js-verse-title-validation"></span>
+                    </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="Song.Verses[i].Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>
-                    <textarea asp-for="Song.Verses[i].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>
-                    <span asp-validation-for="Song.Verses[i].Text" class="text-danger"></span>  
+                    <div class="col-sm-10" >
+                        <textarea asp-for="Song.Verses[i].Text" class="col-sm-12 js-verse-text" rows="5"></textarea>
+                        <span asp-validation-for="Song.Verses[i].Text" class="text-danger col-sm-12 js-verse-text-validation"></span> 
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-11">
@@ -43,45 +56,44 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#AddButton").click(function () {
-            // let clone = $(".js-verse:first").clone();
-            // clone.find("input").val("");
-            
-            // $("#versesContainer").append(clone);
-            $("#versesContainer").append(
-                  ' <div class="js-verse">'
-                + '     <div class="form-group row">'
-                + '         <label for="Verses_0__Title" class="col-sm-2 col-form-label js-verse-title-lbl">Názov</label>'
-                + '         <input id="Verses_0__Title" name="Verses[0].Title" class="col-sm-5 js-verse-title" type="text"/>'      
-                + '     </div>'
-                + '     <div class="form-group row">'
-                + '         <label for="Verses_0__Text" class="col-sm-2 col-form-label js-verse-text-lbl">Text</label>'
-                + '         <textarea id="Verses_0__Text" name="Verses[0].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>'
-                + '     </div>' 
-                + '     <hr/>'
-                + ' </div>');
-                
-            recalculateVerses();
-        });
-        
+    
+
+    $(document).ready(function () {        
         $(document).on('click', '.js-btn-add-verse', function() {
-            let clone = $(".js-verse:first").clone();
-            clone.find("input").val("");
-            clone.find("textarea").val("");
-            clone.find(".js-verse-song-id").val($("#song-id").val());
-            clone.find(".js-verse-id").remove();
+            let clone = getVerseClone();
           
             clone.insertAfter($(this).parents("div.js-verse"));
             
             recalculateVerses();
         });
-
-        $(document).on('click', '.js-btn-remove-verse', function () {
-            $(this).parents("div.js-verse").remove();           // remove verse which remove button has been pressed
+        
+        $("#add-verse-start").click(function(){
+            let clone = getVerseClone();
+            
+            $("#versesContainer").prepend(clone);
             
             recalculateVerses();
         });
+
+        $(document).on('click', '.js-btn-remove-verse', function () {
+            let verseCount = $(".js-verse").length;
+            
+            if (verseCount > 1){
+                $(this).parents("div.js-verse").remove();           // remove verse which remove button has been pressed
+                            
+                recalculateVerses();
+            }
+        });
+        
+        function getVerseClone(){
+            let clone = $(".js-verse:first").clone();
+            clone.find("input").val("");
+            clone.find("textarea").val("");
+            clone.find(".js-verse-song-id").val($("#song-id").val());
+            clone.find(".js-verse-id").remove();
+            
+            return clone;            
+        }
         
         function recalculateVerses() {
             $(".js-verse").each(function(i) {
@@ -98,56 +110,32 @@
                     .attr('name', 'Song.Verses[' + i + '].SequenceNumber')
                     .attr('value', i);
                 
-                $(this).find(".js-verse-sequence-num")
+                $(this).find(".js-verse-title-lbl")
                     .attr('for', 'Song_Verses_' + i + '__Title');
                 
                 $(this).find(".js-verse-title")
                     .attr('id', 'Song_Verses_' + i + '__Title')
                     .attr('name', 'Song.Verses[' + i + '].Title');
                 
+                $(this).find(".js-verse-title-validation")
+                    .attr('valmsg-for', 'Song.Verses[' + i + '].Title')
+                    .attr('data-valmsg-for', 'Song.Verses[' + i + '].Title');
+                    // .firstChild()
+                    //     .attr('id', 'Song_Verses_' + i + '__Title-error');
+                
                 $(this).find(".js-verse-text-lbl")
                     .attr('for', 'Song_Verses_' + i + '__Text');
                 
                 $(this).find(".js-verse-text")
-                    .attr('name', 'Song.Verses[' + i + '].Text')
-                    .attr('id', 'Song_Verses_' + i + '__Text');
+                    .attr('id', 'Song_Verses_' + i + '__Text')
+                    .attr('name', 'Song.Verses[' + i + '].Text');
+                
+                $(this).find(".js-verse-text-validation")
+                    .attr('valmsg-for', 'Song.Verses[' + i + '].Text')
+                    .attr('data-valmsg-for', 'Song.Verses[' + i + '].Text');
+                //     .firstChild()
+                //         .attr('id', 'Song_Verses_' + i + '__Text-error');
             });
-            
-          // $(".js-verse-id").each(function(i){
-          //     $(this).attr('id', 'Verses_' + i + '__Id');
-          //     $(this).attr('name', 'Verses[' + i + '].Id');
-          // });
-          
-          // $(".js-verse-song-id").each(function(i){
-          //     $(this).attr('id', 'Verses_' + i + '__SongId');
-          //     $(this).attr('name', 'Verses[' + i + '].SongId');
-          // });
-          
-          // $(".js-verse-sequence-num").each(function(i){
-          //     $(this).attr('id', 'Verses_' + i + '__SequenceNumber');
-          //     $(this).attr('name', 'Verses[' + i + '].SequenceNumber');
-          //     $(this).attr('value', i);
-          // });
-          
-          // $(".js-verse-title-lbl").each(function(i){
-          //     $(this).attr('for', 'Verses_' + i + '__Title');
-          // });
-          
-          // $(".js-verse-title").each(function(i){
-          //     $(this).attr('id', 'Verses_' + i + '__Title');
-          //     $(this).attr('name', 'Verses[' + i + '].Title');
-          // });
-          
-          // $(".js-verse-text-lbl").each(function(i){
-          //     $(this).attr('for', 'Verses_' + i + '__Text');
-          // });
-          //
-          // $(".js-verse-text").each(function(i){
-          //     $(this).attr('name', 'Verses[' + i + '].Text');
-          //     $(this).attr('id', 'Verses_' + i + '__Text');
-          // });
-          
-          
         }
     });
 </script>
