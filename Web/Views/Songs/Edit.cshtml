@@ -48,7 +48,9 @@
                             <div class="form-group row">
                                 <label asp-for="Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
                                 <input asp-for="Verses[i].Title" class="col-sm-5 js-verse-title"/>
-                                <button class="col-sm-5 remove-button"  value="Odstrániť"></button>
+                                <button class="btn btn-danger btn-remove">
+                                    @* <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button"> *@
+                                </button>
                             </div>
                             <div class="form-group row">
                                 <label asp-for="Verses[i].Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>
@@ -76,62 +78,70 @@
 <script>
     $(document).ready(function () {
         $("#AddButton").click(function () {
-            tc = parseInt($("#versesCount").val());
-            tc = tc + 1;
-            $("#versesCount").val(tc);
-
-            // $("tbody").append('<input type="text" name="[' + (tc - 1) + '].StreetNo" /><input type="text" name="[' + (tc - 1) + '].Address" /><input type="text" name="[' + (tc - 1) + '].Telephone" />Remove')
-            $("#versesContainer").append('  <div class="form-group row">'
-                                        + '     <label for="Verses_' + (tc - 1) + '__Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>'
-                                        + '     <input id="Verses_' + (tc - 1) + '__Title" name="Verses[' + (tc - 1) + '].Title" class="col-sm-5 js-verse-title" type="text"/>'      
-                                        + ' </div>'
-                                        + ' <div class="form-group row">'
-                                        + '     <label for="Verses_' + (tc - 1) + '__Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>'
-                                        + '     <textarea id="Verses_' + (tc - 1) + '__Text" name="Verses[' + (tc - 1) + '].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>'
-                                        + ' </div>' 
-                                        + '  <hr/>')
+            // let clone = $(".js-verse:first").clone();
+            // clone.find("input").val("");
+            
+            // $("#versesContainer").append(clone);
+            $("#versesContainer").append(
+                  ' <div class="js-verse">'
+                + '     <div class="form-group row">'
+                + '         <label for="Verses_0__Title" class="col-sm-2 col-form-label js-verse-title-lbl">Názov</label>'
+                + '         <input id="Verses_0__Title" name="Verses[0].Title" class="col-sm-5 js-verse-title" type="text"/>'      
+                + '     </div>'
+                + '     <div class="form-group row">'
+                + '         <label for="Verses_0__Text" class="col-sm-2 col-form-label js-verse-text-lbl">Text</label>'
+                + '         <textarea id="Verses_0__Text" name="Verses[0].Text" class="col-sm-10 js-verse-text" rows="5"></textarea>'
+                + '     </div>' 
+                + '     <hr/>'
+                + ' </div>');
+                
+            recalculateVerses();
         });
 
-        $(".remove-button").click(function () {
+        $(".btn-remove").click(function () {
             // tc = parseInt($("#versesCount").val());
             // tc = tc - 1;
             // $("#versesCount").val(tc)
 
             $(this).parents("div.js-verse").remove();           // remove verse which remove button has been pressed
             
-            $(".js-verse-id").each(function(i){
-                $(this).attr('id', 'Verses_' + i + '__Id');
-                $(this).attr('name', 'Verses[' + i + '].Id');
-            });
-            
-            $(".js-verse-song-id").each(function(i){
-                $(this).attr('id', 'Verses_' + i + '__SongId');
-                $(this).attr('name', 'Verses[' + i + '].SongId');
-            });
-            
-            $(".js-verse-sequence-num").each(function(i){
-                $(this).attr('id', 'Verses_' + i + '__SequenceNumber');
-                $(this).attr('name', 'Verses[' + i + '].SequenceNumber');
-            });
-            
-            $(".js-verse-title-lbl").each(function(i){
-                $(this).attr('for', 'Verses_' + i + '__Title');
-            });
-            
-            $(".js-verse-title").each(function(i){
-                $(this).attr('id', 'Verses_' + i + '__Title');
-                $(this).attr('name', 'Verses[' + i + '].Title');
-            });
-            
-            $(".js-verse-text-lbl").each(function(i){
-                $(this).attr('for', 'Verses_' + i + '__Text');
-            });
-            
-            $(".js-verse-text").each(function(i){
-                $(this).attr('name', 'Verses[' + i + '].Text');
-                $(this).attr('id', 'Verses_' + i + '__Text');
-            });
+            recalculateVerses();
         });
+        
+        function recalculateVerses() {
+          $(".js-verse-id").each(function(i){
+              $(this).attr('id', 'Verses_' + i + '__Id');
+              $(this).attr('name', 'Verses[' + i + '].Id');
+          });
+          
+          $(".js-verse-song-id").each(function(i){
+              $(this).attr('id', 'Verses_' + i + '__SongId');
+              $(this).attr('name', 'Verses[' + i + '].SongId');
+          });
+          
+          $(".js-verse-sequence-num").each(function(i){
+              $(this).attr('id', 'Verses_' + i + '__SequenceNumber');
+              $(this).attr('name', 'Verses[' + i + '].SequenceNumber');
+          });
+          
+          $(".js-verse-title-lbl").each(function(i){
+              $(this).attr('for', 'Verses_' + i + '__Title');
+          });
+          
+          $(".js-verse-title").each(function(i){
+              $(this).attr('id', 'Verses_' + i + '__Title');
+              $(this).attr('name', 'Verses[' + i + '].Title');
+          });
+          
+          $(".js-verse-text-lbl").each(function(i){
+              $(this).attr('for', 'Verses_' + i + '__Text');
+          });
+          
+          $(".js-verse-text").each(function(i){
+              $(this).attr('name', 'Verses[' + i + '].Text');
+              $(this).attr('id', 'Verses_' + i + '__Text');
+          });
+        }
     });
 </script>
 

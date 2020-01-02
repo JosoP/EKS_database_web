@@ -2,26 +2,25 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <UserSecretsId>aspnet-EKS_database_web-0080954E-0032-43DE-90D5-441F0931618B</UserSecretsId>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>EKS_database_web</RootNamespace>
+        <UserSecretsId>aspnet-WebMvc-3B956FB4-2D9E-44B0-9B36-3D2D44ECCA9C</UserSecretsId>
+        <RootNamespace>WebMvc</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bricelam.EntityFrameworkCore.Pluralizer" Version="1.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.1.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="2.0.0-preview1-final" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services" />
+      <Folder Include="Pages" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,8 +28,21 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\img\main_icon_dark.svg" />
-      <_ContentIncludedByDefault Remove="wwwroot\img\main_icon_light.svg" />
+      <Content Update="wwwroot\img\main_icon_dark.svg">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="wwwroot\img\main_icon_light.svg">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="wwwroot\img\trash-2-24.png">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataImporter", "DataImporte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{DCF50F98-6A79-48A4-93B0-508AF45167F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMvc", "WebMvc\WebMvc.csproj", "{2E5AD7B4-073C-43AF-9B05-0F88D9CE5730}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{2E5AD7B4-073C-43AF-9B05-0F88D9CE5730}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
