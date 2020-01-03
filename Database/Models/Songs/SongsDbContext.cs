@@ -66,36 +66,63 @@ namespace Database.Models.Songs
             Verses.RemoveRange(Verses);
         }
 
-        public void UpdateSong(Song song)
+        public void UpdateSong(Song newSong)
         {
-            if(song == null) return;
+            if(newSong == null) return;
             
             var originalSong = Songs
                 .Include(s => s.Verses)
-                .FirstOrDefault(s => s.Id == song.Id);
+                .Include(s => s.SongCategories)
+                .FirstOrDefault(s => s.Id == newSong.Id);
 
             if (originalSong == null)
             {
-                Songs.Add(song);
+                Songs.Add(newSong);
             }
             else
             {
-                originalSong.Number = song.Number;
-                originalSong.Title = song.Title;
-                originalSong.Author = song.Author;
+                originalSong.Number = newSong.Number;
+                originalSong.Title = newSong.Title;
+                originalSong.Author = newSong.Author;
                 originalSong.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
-                foreach (var verse in song.Verses)
+                foreach (var verse in newSong.Verses)
                 {
                     UpdateVerse(verse);
                 }
-                
-                foreach (var verse in originalSong.Verses)    // if some song has been removed
+                foreach (var songCategory in newSong.SongCategories)
                 {
-                    if (song.Verses.Any(v => v.Id == verse.Id) == false)
+                    AddSongCategoryIfNot(songCategory);
+                }
+                
+                foreach (var verse in originalSong.Verses)                    // remove, if some verse has been removed
+                {
+                    if (newSong.Verses.Any(v => v.Id == verse.Id) == false)
                     {
                         Verses.Remove(verse);
                     }
                 }
+                
+                
+                foreach (var songCategory in originalSong.SongCategories)    // remove, if some songcategory has been removed
+                {
+                    if (newSong.SongCategories.Any(sc => sc.CategoryId == songCategory.CategoryId) == false)
+                    {
+                        SongCategories.Remove(songCategory);
+                    }
+                }
+            }
+        }
+
+        private void AddSongCategoryIfNot(SongCategory songCategory)
+        {
+            if(songCategory == null)    return;
+            
+            var existing = SongCategories
+                .FirstOrDefault(sc => sc.CategoryId == songCategory.CategoryId && sc.SongId == songCategory.SongId);
+
+            if (existing == null)
+            {
+                SongCategories.Add(songCategory);
             }
         }
 

@@ -8,7 +8,7 @@
     </div>
     <div class="col-sm-1">
         <button class="btn btn-success btn-sm float-right" type="button" id="add-verse-start">
-            <img src="~/img/plus-16.png" alt="Pridať strofu" class="img-in-button">
+            <img src="~/img/plus-2-16.png" alt="Pridať strofu" class="img-in-button">
         </button>
     </div>
 </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-sm-1">
                         <button class="btn btn-success btn-sm float-right js-btn-add-verse" type="button">
-                            <img src="~/img/plus-16.png" alt="Pridať strofu" class="img-in-button">
+                            <img src="~/img/plus-2-16.png" alt="Pridať strofu" class="img-in-button">
                         </button>
                     </div>
                 </div>
@@ -120,8 +120,6 @@
                 $(this).find(".js-verse-title-validation")
                     .attr('valmsg-for', 'Song.Verses[' + i + '].Title')
                     .attr('data-valmsg-for', 'Song.Verses[' + i + '].Title');
-                    // .firstChild()
-                    //     .attr('id', 'Song_Verses_' + i + '__Title-error');
                 
                 $(this).find(".js-verse-text-lbl")
                     .attr('for', 'Song_Verses_' + i + '__Text');
@@ -133,8 +131,6 @@
                 $(this).find(".js-verse-text-validation")
                     .attr('valmsg-for', 'Song.Verses[' + i + '].Text')
                     .attr('data-valmsg-for', 'Song.Verses[' + i + '].Text');
-                //     .firstChild()
-                //         .attr('id', 'Song_Verses_' + i + '__Text-error');
             });
         }
     });

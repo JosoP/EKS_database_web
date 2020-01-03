@@ -1,27 +1,28 @@
 @model Web.Models.SongCategoryViewModel
 
 <hr/>
-<div class="form-group">
+<div class="form-group ">
     <div class="form-inline">
-        <label asp-for="Song.SongCategories" class="control-label"></label>
-        <button class="btn btn-success btn-sm float-right js-btn-add-category" type="button" data-toggle="modal" data-target="#addCategoryModal">
-            <img src="~/img/plus-16.png" alt="Pridať kategóriu" class="img-in-button">
+        <label asp-for="Song.SongCategories" class="control-label h5"></label>
+        <button class="btn btn-success btn-sm float-right js-btn-add-category" type="button" style="margin-left: 10px"
+                data-toggle="modal" data-target="#addCategoryModal">
+            <img src="~/img/plus-2-16.png" alt="Pridať kategóriu" class="img-in-button">
         </button>
     </div>
     
-    <div class="col-sm-11">
-        <h6>
-            @foreach (var songCategory in Model.Song.SongCategories)
+    <div class="control-label" style="margin-top: 10px">
+        <h4 id="selectedCategories">
+            @for (int i = 0; i < Model.Song.SongCategories.Count; i++)
             {
-                <span class="badge badge-primary js-category-badge">
-                    @songCategory.Category.Name
-                    <img src="~/img/x-mark-8.png" class="js-category-remove" alt="Vymazať strofu"> 
-                    @* <button class="badge-button" type="button"> *@
-                    @*     <img src="~/img/x-mark-8.png" alt="Vymazať strofu"> *@
-                    @* </button> *@
+                <span class="badge badge-primary js-category">
+                    @Model.SelectedCategories[i].Name
+                    <input type="hidden" asp-for="SelectedCategories[i].Id" class="js-cat-id"/>
+                    <input type="hidden" asp-for="SelectedCategories[i].Name" class="js-cat-name"/>
+                    
+                    <img src="~/img/x-mark-16.png" class="js-category-remove" alt="Vymazať kategóriu">
                 </span>
             }
-        </h6>
+        </h4>
     </div>
     
 </div>
@@ -33,18 +34,35 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Pridať kategóriu</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+        <div  class="modal-body">
+@*             <select id="otherCategoriesSelect" class="form-control"> *@
+@*                 <option selected="selected" disabled value="">Zvoľte kategóriu</option> *@
+@*                 @foreach (var category in Model.OtherCategories) *@
+@*                 { *@
+@*                     <option selected="selected" value="@category.Id">@category.Name</option> *@
+@*                 } *@
+@*             </select> *@
+        <h4 id="otherCategories">
+            @for (int i = 0; i < Model.OtherCategories.Count; i++)
+            {
+                <span class="badge badge-primary js-category">
+                    @Model.OtherCategories[i].Name
+                    <input type="hidden" asp-for="OtherCategories[i].Id" class="js-cat-id"/>
+                    <input type="hidden" asp-for="OtherCategories[i].Name" class="js-cat-name"/>
+                    
+                    <img src="~/img/plus-2-16.png" class="js-category-add" alt="Pridať kategóriu">
+                </span>
+            }
+        </h4>
+        </div>
+        @* <div class="modal-footer"> *@
+        @*     <button id="addCategory" type="button" class="btn btn-primary">Pridať</button> *@
+        @* </div> *@
     </div>
   </div>
 </div>
@@ -54,7 +72,55 @@
 
     $(document).ready(function () {  
         $(document).on('click', '.js-category-remove', function () {
-            $(this).parent('.js-category-badge').remove();            
+            let clone = $(this).parent('.js-category').clone();   
+            $(this).parent('.js-category').remove();
+            
+            $("#otherCategories")
+                .append(' ')
+                .append(clone); // add to other (not selected) categories
+            renameCategoriesTags();
         });
+        
+        $(document).on('click', '.js-category-add', function () {
+            let clone = $(this).parent('.js-category').clone();   
+            $(this).parent('.js-category').remove();
+            
+            $("#selectedCategories")
+                .append(' ')    
+                .append(clone);    // add to selected categories
+            renameCategoriesTags()
+        });
+        
+        function renameCategoriesTags() {
+            $("#selectedCategories").find(".js-category").each(function(i) {
+                $(this).find(".js-cat-id")
+                    .attr('id', 'SelectedCategories_' + i + '__Id')
+                    .attr('name', 'SelectedCategories[' + i + '].Id');
+                
+                $(this).find(".js-cat-name")
+                    .attr('id', 'SelectedCategories_' + i + '__Name')
+                    .attr('name', 'SelectedCategories[' + i + '].Name');
+                
+                $(this).find(".js-category-add")                    // if bad button -> change it
+                                .attr('class', 'js-category-remove')
+                                .attr('src', '/img/x-mark-16.png')
+                                .attr('alt', 'Vymazať kategóriu');
+            });
+            
+            $("#otherCategories").find(".js-category").each(function(i) {
+                $(this).find(".js-cat-id")
+                    .attr('id', 'OtherCategories_' + i + '__Id')
+                    .attr('name', 'OtherCategories[' + i + '].Id');
+                
+                $(this).find(".js-cat-name")
+                    .attr('id', 'OtherCategories_' + i + '__Name')
+                    .attr('name', 'OtherCategories[' + i + '].Name');
+                
+                $(this).find(".js-category-remove")                 // if bad button -> change it
+                                .attr('class', 'js-category-add')
+                                .attr('src', '/img/plus-2-16.png')
+                                .attr('alt', 'Pridať kategóriu');
+            });
+        }
     });
 </script>
