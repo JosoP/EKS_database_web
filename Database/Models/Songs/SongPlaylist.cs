@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Database.Models.Songs
 {
@@ -12,9 +13,11 @@ namespace Database.Models.Songs
         public long PlaylistId { get; set; }
 
         [ForeignKey(nameof(PlaylistId))]
+        [DisplayName("Playlist")]
         public virtual Playlist Playlist { get; set; }
         
         [ForeignKey(nameof(SongId))]
+        [DisplayName("Pieseň")]
         public virtual Song Song { get; set; }
     }
 }

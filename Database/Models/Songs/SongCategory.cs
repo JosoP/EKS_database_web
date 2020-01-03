@@ -12,6 +12,7 @@ namespace Database.Models.Songs
         public long SongId { get; set; }
         
         [ForeignKey(nameof(SongId))]
+        [DisplayName("Pieseň")]
         public Song Song { get; set; }
         
         [Key]
@@ -19,6 +20,7 @@ namespace Database.Models.Songs
         public long CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
+        [DisplayName("Kategória")]
         public Category Category { get; set; }
         
         
