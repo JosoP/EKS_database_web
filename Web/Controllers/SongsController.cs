@@ -30,6 +30,7 @@ namespace Web.Controllers
         {
             var songs = _context.Songs
                 .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
+                .OrderBy(s => s.Title)
                 .Select(song => song);
 
             if (!String.IsNullOrEmpty(searchString))
@@ -74,7 +75,16 @@ namespace Web.Controllers
         /// <returns></returns>
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new SongCategoryViewModel
+            {
+                Song = new Song(),
+                OtherCategories = _context.Categories.ToList(),
+                SelectedCategories = new List<Category>()
+            };
+            
+            viewModel.Song.Verses.Add(new Verse());
+            
+            return View(viewModel);
         }
 
         // POST: Songs/Create
@@ -83,19 +93,31 @@ namespace Web.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="song"></param>
+        /// <param name="viewModel"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Number,Author,LastModified")] Song song)
+        public async Task<IActionResult> Create([Bind("Song,SelectedCategories,OtherCategories")] SongCategoryViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(song);
+                if (viewModel.SelectedCategories != null)
+                {
+                    foreach (var category in viewModel.SelectedCategories)
+                    {
+                        viewModel.Song.SongCategories.Add(new SongCategory
+                        {
+                            Song = viewModel.Song, 
+                            CategoryId = category.Id
+                        });
+                    }
+                }
+                
+                _context.Add(viewModel.Song);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(song);
+            return View(viewModel);
         }
 
         // GET: Songs/Edit/5
@@ -158,7 +180,7 @@ namespace Web.Controllers
 
             if (ModelState.IsValid)
             {
-                viewModel.Song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
+                //viewModel.Song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
                 // for (int i = 0; i < viewModel.Song.Verses.Count; i++)
                 // {
                 //     viewModel.Song.Verses[i].SequenceNumber = i;

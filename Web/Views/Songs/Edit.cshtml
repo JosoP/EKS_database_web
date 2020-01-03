@@ -5,13 +5,13 @@
     ViewData["Title"] = "Upraviť";
 }
 
+<h1>Upraviť pieseň</h1>
+<hr />
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Song.Id" id="song-id"/>
     <div class="row">
         <div class="col-md-6">
-            <h4>Upraviť pieseň @Model.Song.Title</h4>
-            <hr />
             <div class="form-group">
                 <label asp-for="Song.Title" class="control-label"></label>
                 <input asp-for="Song.Title" class="form-control"/>

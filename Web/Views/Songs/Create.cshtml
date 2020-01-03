@@ -1,49 +1,51 @@
 @using Database.Models.Songs
-@model Database.Models.Songs.Song
+@model Web.Models.SongCategoryViewModel
 
 @{
     ViewData["Title"] = "Vytvoriť";
 }
+<div>
+    <h1>Vytvoriť novú pieseň</h1>
 
-<h1>Vytvoriť novú pieseň</h1>
+    <hr/>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Song.Id" id="song-id"/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Song.Title" class="control-label"></label>
+                    <input asp-for="Song.Title" class="form-control"/>
+                    <span asp-validation-for="Song.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Song.Number" class="control-label"></label>
+                    <input asp-for="Song.Number" class="form-control"/>
+                    <span asp-validation-for="Song.Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Song.Author" class="control-label"></label>
+                    <input asp-for="Song.Author" class="form-control"/>
+                    <span asp-validation-for="Song.Author" class="text-danger"></span>
+                </div>
+                @await Html.PartialAsync("_CategoriesAddingPartial")
             </div>
-            <div class="form-group">
-                <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control" />
-                <span asp-validation-for="Number" class="text-danger"></span>
+            <div class="col-md-6">
+                @await Html.PartialAsync("_VersesEditPartial")
             </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Verses" class="control-label">Strofy <button class="btn btn-light" >Pridať</button></label>
-                <input asp-for="Verses" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Uložiť" class="btn btn-primary"/>
+        </div>
+    </form>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
