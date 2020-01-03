@@ -44,7 +44,7 @@
             @* </th> *@
             <th class="text-right">
                 <a class="btn btn-success btn-sm " asp-action="Create">
-                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň">
+                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
                 </a>
             </th>
         </tr>
@@ -77,15 +77,12 @@
             <td class="text-right">
                 <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
-                        @* <i class="glyphicon glyphicon-pencil"></i> *@
                         <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
                     </a>
                     <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">
-                        @* <i class="glyphicon glyphicon-search"></i> *@
                         <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
                     </a>
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">
-                        @* <i class="glyphicon glyphicon-trash"></i> *@
                         <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
                     </a>
                 </div>

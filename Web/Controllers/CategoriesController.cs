@@ -53,10 +53,11 @@ namespace Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,LastModified")] Category category)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Category category)
         {
             if (ModelState.IsValid)
             {
+                category.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +97,7 @@ namespace Web.Controllers
             {
                 try
                 {
+                    category.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }

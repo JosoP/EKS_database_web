@@ -1,13 +1,13 @@
 @model Database.Models.Songs.Song
 
 @{
-    ViewData["Title"] = "Detaily";
+    ViewData["Title"] = "Detaily Piesne";
 }
 
-<h1>Detaily</h1>
+<h1>Detaily Piesne</h1>
 
 <div>
-    <h4>Pieseň</h4>
+    <h4></h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -75,6 +75,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Upraviť</a> |
+    @* <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@Model.Id"> *@
+    @*         <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button"> *@
+    @*     </a> *@
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info btn-sm">Upraviť</a> |
     <a asp-action="Index">Späť do zoznamu</a>
 </div>

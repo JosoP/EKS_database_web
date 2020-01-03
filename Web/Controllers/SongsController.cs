@@ -30,7 +30,7 @@ namespace Web.Controllers
         {
             var songs = _context.Songs
                 .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
-                .OrderBy(s => s.Title)
+                
                 .Select(song => song);
 
             if (!String.IsNullOrEmpty(searchString))
@@ -38,7 +38,7 @@ namespace Web.Controllers
                 songs = songs.Where(s => s.Title.ToLower().Contains(searchString.ToLower()));
             }
             
-            return View(await songs.ToListAsync());
+            return View(await songs.OrderBy(s => s.Title.ToLower()).ToListAsync());
         }
 
         // GET: Songs/Details/5
@@ -112,8 +112,9 @@ namespace Web.Controllers
                         });
                     }
                 }
+                viewModel.Song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
                 
-                _context.Add(viewModel.Song);
+                _context.Songs.Add(viewModel.Song);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

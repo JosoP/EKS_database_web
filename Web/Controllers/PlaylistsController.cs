@@ -57,6 +57,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                playlist.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
                 _context.Add(playlist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +97,7 @@ namespace Web.Controllers
             {
                 try
                 {
+                    playlist.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
                     _context.Update(playlist);
                     await _context.SaveChangesAsync();
                 }
