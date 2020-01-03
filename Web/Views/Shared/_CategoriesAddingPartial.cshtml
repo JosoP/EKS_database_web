@@ -11,7 +11,7 @@
     </div>
     
     <div class="control-label" style="margin-top: 10px">
-        <h4 id="selectedCategories">
+        <h5 id="selectedCategories">
             @for (int i = 0; i < Model.Song.SongCategories.Count; i++)
             {
                 <span class="badge badge-primary js-category">
@@ -19,10 +19,10 @@
                     <input type="hidden" asp-for="SelectedCategories[i].Id" class="js-cat-id"/>
                     <input type="hidden" asp-for="SelectedCategories[i].Name" class="js-cat-name"/>
                     
-                    <img src="~/img/x-mark-16.png" class="js-category-remove" alt="Vymazať kategóriu">
+                    <img src="~/img/x-mark-12.png" class="js-category-remove" alt="Vymazať kategóriu">
                 </span>
             }
-        </h4>
+        </h5>
     </div>
     
 </div>
@@ -40,14 +40,7 @@
         </button>
       </div>
         <div  class="modal-body">
-@*             <select id="otherCategoriesSelect" class="form-control"> *@
-@*                 <option selected="selected" disabled value="">Zvoľte kategóriu</option> *@
-@*                 @foreach (var category in Model.OtherCategories) *@
-@*                 { *@
-@*                     <option selected="selected" value="@category.Id">@category.Name</option> *@
-@*                 } *@
-@*             </select> *@
-        <h4 id="otherCategories">
+            <h5 id="otherCategories">
             @for (int i = 0; i < Model.OtherCategories.Count; i++)
             {
                 <span class="badge badge-primary js-category">
@@ -55,14 +48,11 @@
                     <input type="hidden" asp-for="OtherCategories[i].Id" class="js-cat-id"/>
                     <input type="hidden" asp-for="OtherCategories[i].Name" class="js-cat-name"/>
                     
-                    <img src="~/img/plus-2-16.png" class="js-category-add" alt="Pridať kategóriu">
+                    <img src="~/img/plus-2-12.png" class="js-category-add" alt="Pridať kategóriu">
                 </span>
             }
-        </h4>
+        </h5>
         </div>
-        @* <div class="modal-footer"> *@
-        @*     <button id="addCategory" type="button" class="btn btn-primary">Pridať</button> *@
-        @* </div> *@
     </div>
   </div>
 </div>
@@ -103,7 +93,7 @@
                 
                 $(this).find(".js-category-add")                    // if bad button -> change it
                                 .attr('class', 'js-category-remove')
-                                .attr('src', '/img/x-mark-16.png')
+                                .attr('src', '/img/x-mark-12.png')
                                 .attr('alt', 'Vymazať kategóriu');
             });
             
@@ -118,7 +108,7 @@
                 
                 $(this).find(".js-category-remove")                 // if bad button -> change it
                                 .attr('class', 'js-category-add')
-                                .attr('src', '/img/plus-2-16.png')
+                                .attr('src', '/img/plus-2-12.png')
                                 .attr('alt', 'Pridať kategóriu');
             });
         }
