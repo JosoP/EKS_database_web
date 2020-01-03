@@ -21,7 +21,7 @@ namespace Database.Models.Songs
         
         [Required]
         [Column("name")]
-        [DisplayName("Naposledy upravené")]
+        [DisplayName("Názov")]
         public string Name { get; set; }
         
         [Column("description")]

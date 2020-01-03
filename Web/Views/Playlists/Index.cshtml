@@ -1,14 +1,11 @@
 @model IEnumerable<Database.Models.Songs.Playlist>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Playlisty";
 }
 
-<h1>Index</h1>
+<h1>Playlisty</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -18,10 +15,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastModified)
+            <th class="text-right">
+                <a class="btn btn-success btn-sm " asp-action="Create">
+                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú kategóriu" class="img-in-button">
+                </a>
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -33,13 +31,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModified)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td class="text-right">
+                <div class="btn-group btn-group-sm">
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">
+                        <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
+                    </a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">
+                        <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
+                    </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                        <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
+                    </a>
+                </div>
             </td>
         </tr>
 }
