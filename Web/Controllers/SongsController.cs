@@ -117,7 +117,7 @@ namespace Web.Controllers
                     .Include(s => s.Verses)
                     .Include(s => s.SongCategories).ThenInclude(songCategory => songCategory.Category)
                     .FirstOrDefaultAsync(m => m.Id == id),
-                Categories = await _context.Categories.ToListAsync()
+                OtherCategories = await _context.Categories.ToListAsync()
             };
             if (viewModel.Song == null)
             {
@@ -125,8 +125,13 @@ namespace Web.Controllers
             }
             
             viewModel.Song.Verses = viewModel.Song.Verses.OrderBy(v => v.SequenceNumber).ToList();
-            
-            
+
+            viewModel.SelectedCategories = new List<Category>();
+            foreach (var songCategory in viewModel.Song.SongCategories)
+            {
+                viewModel.OtherCategories.Remove(songCategory.Category);
+                viewModel.SelectedCategories.Add(songCategory.Category);
+            }
             
             return View(viewModel);
         }
@@ -144,7 +149,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             long id, 
-            [Bind("Song,Categories")] SongCategoryViewModel viewModel)
+            [Bind("Song,SelectedCategories")] SongCategoryViewModel viewModel)
         {
             if (id != viewModel.Song.Id)
             {
@@ -154,10 +159,17 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 viewModel.Song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
-                for (int i = 0; i < viewModel.Song.Verses.Count; i++)
+                // for (int i = 0; i < viewModel.Song.Verses.Count; i++)
+                // {
+                //     viewModel.Song.Verses[i].SequenceNumber = i;
+                //     viewModel.Song.Verses[i].SongId = viewModel.Song.Id;
+                // }
+                if (viewModel.SelectedCategories != null)
                 {
-                    viewModel.Song.Verses[i].SequenceNumber = i;
-                    viewModel.Song.Verses[i].SongId = viewModel.Song.Id;
+                    foreach (var category in viewModel.SelectedCategories)
+                    {
+                        viewModel.Song.SongCategories.Add(new SongCategory{SongId = viewModel.Song.Id, CategoryId = category.Id});
+                    }
                 }
                 
                 try
