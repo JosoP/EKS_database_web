@@ -24,21 +24,23 @@ namespace Web.Controllers
         /// GET: Songs
         /// 
         /// </summary>
-        /// <param name="searchString"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
-            var songs = _context.Songs
-                .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
-                
-                .Select(song => song);
-
-            if (!String.IsNullOrEmpty(searchString))
+            var viewModel = new AllSongsAllCategoriesViewModel
             {
-                songs = songs.Where(s => s.Title.ToLower().Contains(searchString.ToLower()));
-            }
-            
-            return View(await songs.OrderBy(s => s.Title.ToLower()).ToListAsync());
+                Songs = await _context.Songs
+                    .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
+                    .OrderBy(s => s.Title.ToLower()).ToListAsync(),
+                Categories = await _context.Categories.ToListAsync()
+            };
+
+            // if (!String.IsNullOrEmpty(searchString))
+            // {
+            //     songs = songs.Where(s => s.Title.ToLower().Contains(searchString.ToLower()));
+            // }
+
+            return View( viewModel );
         }
 
         // GET: Songs/Details/5

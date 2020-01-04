@@ -1,4 +1,4 @@
-@model IEnumerable<Database.Models.Songs.Song>
+@model AllSongsAllCategoriesViewModel
 
 @{
     ViewData["Title"] = "Piesne";
@@ -7,68 +7,87 @@
 <h1>Piesne</h1>
 
 
-<form asp-controller="Songs" asp-action="Index" method="get" class="form-inline">
-    <div class="form-group mb-2 ">
-        <input type="text" 
-               name="SearchString" 
-               placeholder="@Html.DisplayNameFor(model => model.Title)">
-    </div>
-    <div class="form-group mx-sm-2 mb-2">
-        <input class="btn btn-primary btn-sm" type="submit" value="Filtrovať" />
-    </div>
-</form>
+
+<div class="row ">
+    
+    
+    
+</div>
+
 
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-                @* Názov *@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Number)
-                @* Číslo *@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SongCategories)
-                @* Kategórie *@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-                @* Autor *@
-            </th>
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.LastModified) *@
-            @*     $1$ Upravené #1# *@
-            @* </th> *@
-            <th class="text-right">
-                <a class="btn btn-success btn-sm " asp-action="Create">
-                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
-                </a>
-            </th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].SongCategories)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].Author)
+        </th>
+        <th class="text-right">
+            <a class="btn btn-success btn-sm " asp-action="Create">
+                <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+            </a>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <input id="titleFilterInput" type="text" class=" input-sm js-filter" 
+                   placeholder="Zadajte filter">
+        </th>
+        <th>
+            <input id="numberFilterInput" type="number" class="form-control js-filter"
+                   placeholder="Zadajte filter">
+        </th>
+        <th>
+            <select class="form-control js-filter" id="categoryFilterSelect" >
+                <option>Zvoľte filter</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value=@category.Id>@category.Name</option>
+                }
+            </select>
+        </th>
+        <th>
+            <input id="authorFilterInput" type="text" class="form-control js-filter"
+                   placeholder="Zadajte filter">
+        </th>
+        <th class="text-right">
+            <button id="clearFilterButton" class="btn btn-dark btn-sm " type="button"> 
+                <img src="~/img/x-mark-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+            </button>
+        </th>
+    </tr>
     </thead>
-    <tbody>
-@foreach (var song in Model) {
+    <tbody id="songTableBody">
+@foreach (var song in Model.Songs) {
         <tr>
-            <td>
+            <td class="js-title">
                 @Html.DisplayFor(modelItem => song.Title)
             </td>
-            <td>
+            <td class="js-song-number">
                 @Html.DisplayFor(modelItem => song.Number)
             </td>
-            <td style="width: min-content">
+            <td style="width: min-content" class="js-categories">
                 <div>
                     @foreach (var songCategory in song.SongCategories)
                     {
-                        <span class="badge badge-primary">
+                        
+                        <span class="badge badge-primary js-category">
+                            <p hidden class="js-category-id">@songCategory.CategoryId</p>
                             @songCategory.Category.Name
                         </span>
                     }    
                 </div>
             </td>
-            <td>
+            <td class="js-author">
                 @Html.DisplayFor(modelItem => song.Author)
             </td>
             @* <td> *@
@@ -92,3 +111,49 @@
 }
     </tbody>
 </table>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+$(document).ready(function(){
+    $.expr[':'].textEquals = $.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return $(elem).text().match("^" + arg + "$");
+        };
+    });
+    
+    
+    $(".js-filter").on("change keyup", function() {
+        filter();
+    });
+    
+    $("#clearFilterButton").on("click", function() {
+        $('#titleFilterInput').val('');
+        $('#numberFilterInput').val('');
+        $('#authorFilterInput').val('');
+        $('#categoryFilterSelect').val($("#categoryFilterSelect option:first").val());
+        
+        
+        $("#songTableBody tr").each(function() {
+            $(this).toggle(true)
+        });
+    }); 
+    
+    function filter() {
+        let titleFilterValue = $('#titleFilterInput').val().toLowerCase();
+        let numberFilterValue = $('#numberFilterInput').val().toLowerCase();
+        let authorFilterValue = $('#authorFilterInput').val().toLowerCase();
+        let categoryFilterId = $('#categoryFilterSelect').find(':selected').val();
+      
+        $("#songTableBody tr").each(function() {
+            $(this).toggle(
+                $(this).find('.js-title').text().toLowerCase().indexOf(titleFilterValue) > -1 &&
+                $(this).find('.js-author').text().toLowerCase().indexOf(authorFilterValue) > -1 &&
+                $(this).find('.js-song-number').text().toLowerCase().indexOf(numberFilterValue) > -1 &&
+                $(this).find(".js-category-id:contains('" + categoryFilterId + "')").length > 0
+                // $(this).find(".js-category:contains('" + categoryFilterValue + "')").length > 0
+                ) 
+        });
+    }
+ 
+});
+</script>
