@@ -4,46 +4,52 @@
 @{
     ViewData["Title"] = "Vytvoriť pieseň";
 }
-<div>
-    <h1>Vytvoriť novú pieseň</h1>
 
-    <hr/>
-
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Song.Id" id="song-id"/>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="Song.Title" class="control-label"></label>
-                    <input asp-for="Song.Title" class="form-control"/>
-                    <span asp-validation-for="Song.Title" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Song.Number" class="control-label"></label>
-                    <input asp-for="Song.Number" class="form-control"/>
-                    <span asp-validation-for="Song.Number" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Song.Author" class="control-label"></label>
-                    <input asp-for="Song.Author" class="form-control"/>
-                    <span asp-validation-for="Song.Author" class="text-danger"></span>
-                </div>
-                @await Html.PartialAsync("_CategoriesAddingPartial")
-            </div>
-            <div class="col-md-6">
-                @await Html.PartialAsync("_VersesEditPartial")
-            </div>
+<form asp-action="Create">
+    <div class="row">
+        <div class="col-6">
+            <h1>Vytvoriť novú pieseň</h1>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Uložiť" class="btn btn-primary"/>
+        <div class="col-6">
+            <button class="btn btn-primary btn-lg float-right" type="submit">
+                <img src="~/img/save-32.png" alt="Uložiť" class="img-in-button">
+            </button>
         </div>
-    </form>
-
-    <div>
-        <a asp-action="Index">Späť do zoznamu</a>
     </div>
+            
+    <hr />
+    
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Song.Id" id="song-id"/>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Song.Title" class="control-label"></label>
+                <input asp-for="Song.Title" class="form-control"/>
+                <span asp-validation-for="Song.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Song.Number" class="control-label"></label>
+                <input asp-for="Song.Number" class="form-control"/>
+                <span asp-validation-for="Song.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Song.Author" class="control-label"></label>
+                <input asp-for="Song.Author" class="form-control"/>
+                <span asp-validation-for="Song.Author" class="text-danger"></span>
+            </div>
+            @await Html.PartialAsync("_CategoriesAddingPartial")
+        </div>
+        <div class="col-md-6">
+            @await Html.PartialAsync("_VersesEditPartial")
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Späť do zoznamu</a>
 </div>
+
 
 
 @section Scripts {

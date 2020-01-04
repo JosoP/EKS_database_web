@@ -1,0 +1,142 @@
+@model AllSongsAllCategoriesViewModel
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].SongCategories)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Songs[0].Author)
+        </th>
+        <th class="text-right">
+            <a class="btn btn-success btn-sm " asp-action="Create">
+                <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+            </a>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <input id="titleFilterInput" type="text" class=" input-filter js-filter" 
+                   placeholder="Zadajte filter">
+        </th>
+        <th>
+            <input id="numberFilterInput" type="number" class="input-filter js-filter"
+                   placeholder="Zadajte filter">
+        </th>
+        <th>
+            <select class="input-filter js-filter" id="categoryFilterSelect" >
+                <option value="">Zvoľte filter</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value=@category.Id>@category.Name</option>
+                }
+            </select>
+        </th>
+        <th>
+            <input id="authorFilterInput" type="text" class="input-filter js-filter"
+                   placeholder="Zadajte filter">
+        </th>
+        <th class="text-right">
+            <button id="clearFilterButton" class="btn btn-light btn-sm " type="button"> 
+                <img src="~/img/x-mark-dark-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+            </button>
+        </th>
+    </tr>
+    </thead>
+    <tbody id="songTableBody">
+@foreach (var song in Model.Songs) {
+        <tr>
+            <td class="js-title">
+                @Html.DisplayFor(modelItem => song.Title)
+            </td>
+            <td class="js-song-number">
+                @Html.DisplayFor(modelItem => song.Number)
+            </td>
+            <td style="width: min-content" class="js-categories">
+                <div>
+                    @foreach (var songCategory in song.SongCategories)
+                    {
+                        
+                        <span class="badge badge-primary js-category">
+                            <p hidden class="js-category-id">@songCategory.CategoryId</p>
+                            @songCategory.Category.Name
+                        </span>
+                    }    
+                </div>
+            </td>
+            <td class="js-author">
+                @Html.DisplayFor(modelItem => song.Author)
+            </td>
+            <td class="text-right">
+                <div class="btn-group btn-group-sm">
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
+                        <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
+                    </a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">
+                        <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
+                    </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">
+                        <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
+                    </a>
+                </div>
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+$(document).ready(function(){
+    $.expr[':'].textEquals = $.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return $(elem).text().match("^" + arg + "$");
+        };
+    });
+    
+    
+    $(".js-filter").on("change keyup", function() {
+        filter();
+    });
+    
+    $("#clearFilterButton").on("click", function() {
+        $('#titleFilterInput').val('');
+        $('#numberFilterInput').val('');
+        $('#authorFilterInput').val('');
+        $('#categoryFilterSelect').val($("#categoryFilterSelect option:first").val());
+        
+        
+        $("#songTableBody tr").each(function() {
+            $(this).toggle(true)
+        });
+    }); 
+    
+    function filter() {
+        let titleFilterValue = $('#titleFilterInput').val().toLowerCase();
+        let numberFilterValue = $('#numberFilterInput').val().toLowerCase();
+        let authorFilterValue = $('#authorFilterInput').val().toLowerCase();
+        let categoryFilterId = $('#categoryFilterSelect').find(':selected').val();
+      
+        $("#songTableBody tr").each(function() {
+            $(this).toggle(
+                $(this).find('.js-title').text().toLowerCase().indexOf(titleFilterValue) > -1 &&
+                $(this).find('.js-author').text().toLowerCase().indexOf(authorFilterValue) > -1 &&
+                $(this).find('.js-song-number').text().toLowerCase().indexOf(numberFilterValue) > -1 &&
+                (categoryFilterId === "" || $(this).find(".js-category-id:contains('" + categoryFilterId + "')").length > 0)
+                ) 
+        });
+    }
+ 
+});
+</script>
