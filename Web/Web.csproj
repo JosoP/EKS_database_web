@@ -45,4 +45,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\HelloWorld\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\HelloWorld\Welcome.cshtml" />
+    </ItemGroup>
+
 </Project>
