@@ -39,16 +39,16 @@
     </tr>
     <tr>
         <th>
-            <input id="titleFilterInput" type="text" class=" input-sm js-filter" 
+            <input id="titleFilterInput" type="text" class=" input-filter js-filter" 
                    placeholder="Zadajte filter">
         </th>
         <th>
-            <input id="numberFilterInput" type="number" class="form-control js-filter"
+            <input id="numberFilterInput" type="number" class="input-filter js-filter"
                    placeholder="Zadajte filter">
         </th>
         <th>
-            <select class="form-control js-filter" id="categoryFilterSelect" >
-                <option>Zvoľte filter</option>
+            <select class="input-filter js-filter" id="categoryFilterSelect" >
+                <option value="">Zvoľte filter</option>
                 @foreach (var category in Model.Categories)
                 {
                     <option value=@category.Id>@category.Name</option>
@@ -56,12 +56,12 @@
             </select>
         </th>
         <th>
-            <input id="authorFilterInput" type="text" class="form-control js-filter"
+            <input id="authorFilterInput" type="text" class="input-filter js-filter"
                    placeholder="Zadajte filter">
         </th>
         <th class="text-right">
-            <button id="clearFilterButton" class="btn btn-dark btn-sm " type="button"> 
-                <img src="~/img/x-mark-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+            <button id="clearFilterButton" class="btn btn-light btn-sm " type="button"> 
+                <img src="~/img/x-mark-dark-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
             </button>
         </th>
     </tr>
@@ -149,8 +149,7 @@ $(document).ready(function(){
                 $(this).find('.js-title').text().toLowerCase().indexOf(titleFilterValue) > -1 &&
                 $(this).find('.js-author').text().toLowerCase().indexOf(authorFilterValue) > -1 &&
                 $(this).find('.js-song-number').text().toLowerCase().indexOf(numberFilterValue) > -1 &&
-                $(this).find(".js-category-id:contains('" + categoryFilterId + "')").length > 0
-                // $(this).find(".js-category:contains('" + categoryFilterValue + "')").length > 0
+                (categoryFilterId == "" || $(this).find(".js-category-id:contains('" + categoryFilterId + "')").length > 0)
                 ) 
         });
     }

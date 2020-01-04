@@ -87,3 +87,7 @@ body {
   padding-top: 10%;
   padding-bottom: 10%;
 }
+
+.input-filter{
+  height: 30px;
+}
