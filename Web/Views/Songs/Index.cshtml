@@ -90,9 +90,6 @@
             <td class="js-author">
                 @Html.DisplayFor(modelItem => song.Author)
             </td>
-            @* <td> *@
-            @*     @Html.DisplayFor(modelItem => song.LastModifiedDateTimeLocal) *@
-            @* </td> *@
             <td class="text-right">
                 <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
@@ -149,7 +146,7 @@ $(document).ready(function(){
                 $(this).find('.js-title').text().toLowerCase().indexOf(titleFilterValue) > -1 &&
                 $(this).find('.js-author').text().toLowerCase().indexOf(authorFilterValue) > -1 &&
                 $(this).find('.js-song-number').text().toLowerCase().indexOf(numberFilterValue) > -1 &&
-                (categoryFilterId == "" || $(this).find(".js-category-id:contains('" + categoryFilterId + "')").length > 0)
+                (categoryFilterId === "" || $(this).find(".js-category-id:contains('" + categoryFilterId + "')").length > 0)
                 ) 
         });
     }
