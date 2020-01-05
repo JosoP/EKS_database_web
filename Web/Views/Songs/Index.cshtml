@@ -1,4 +1,4 @@
-@model AllSongsAllCategoriesViewModel
+@model SongsTableViewModel
 
 @{
     ViewData["Title"] = "Piesne";
@@ -6,4 +6,4 @@
 
 <h1>Piesne</h1>
 
-@await Html.PartialAsync("_AllSongsTablePartial")
+@{ await Html.RenderPartialAsync("_SongsTablePartial"); }

@@ -1,0 +1,136 @@
+@model PlaylistEditViewModel
+
+<h5>@Html.DisplayNameFor(model => model.Playlist.SongPlaylists)</h5>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSongs[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedSongs[0].Number)
+        </th>
+        <th class="text-right">
+            <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#addSongModal">
+                <img src="~/img/plus-2-16.png" alt="Pridať pieseň" class="img-in-button">
+            </button>
+        </th>
+    </tr>
+    </thead>
+    <tbody id="selectedSongsTableBody">
+    @for (int i = 0; i < Model.SelectedSongs.Count; i++)
+    {
+        <tr class="js-song-row">
+            <input type="hidden" asp-for="SelectedSongs[i].Id" class="js-song-id"/>
+            <input type="hidden" asp-for="SelectedSongs[i].Title" class="js-song-title"/>
+            <td class="js-title">
+                @Html.DisplayFor(modelItem => modelItem.SelectedSongs[i].Title)
+            </td>
+            <td class="js-song-number">
+                @Html.DisplayFor(modelItem => modelItem.SelectedSongs[i].Number)
+            </td>
+            <td style="width: min-content" class="js-categories" hidden>
+                <div>
+                    @foreach (var songCategory in Model.SelectedSongs[i].SongCategories)
+                    {
+                        <span class="badge badge-primary js-category">
+                            <p hidden class="js-category-id">@songCategory.CategoryId</p>
+                            @songCategory.Category.Name
+                        </span>
+                    }
+                </div>
+            </td>
+            <td class="js-author" hidden>
+                @Html.DisplayFor(modelItem => modelItem.SelectedSongs[i].Author)
+            </td>
+            <td class="text-right js-row-buttons">
+                <button type="button" class="btn btn-danger btn-sm js-remove-selected-song">
+                    <img src="~/img/x-mark-16.png" alt="Odobrať pieseň" class="img-in-button">
+                </button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+
+<div id="addSongModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSongModalTitle">Vyberte piesne do playlistu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @{await Html.RenderPartialAsync("_SongsTablePartial", Model.SongsTableViewModel);}
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(document).on("click",'.js-select-song', function() {
+        let clone = $($(this).closest("tr")).clone();
+        
+         clone.children('.js-categories').hide();
+         clone.children('.js-author').hide();
+         clone.children('.js-row-buttons').remove();
+         clone.append('<td class="text-right js-row-buttons">\n'+
+                       '                <button type="button" class="btn btn-danger btn-sm js-remove-selected-song">\n'+
+                       '                    <img src="/img/x-mark-16.png" alt="Odobrať pieseň" class="img-in-button">\n'+
+                       '                </button>\n'+
+                       '            </td>');
+         
+        $('#selectedSongsTableBody').append(clone);
+        
+
+        $($(this).closest("tr")).fadeTo(400, 0, function () { 
+            $(this).remove();
+        });  
+        
+        renameSelectedSongId();
+    }); 
+    
+    
+    $(document).on("click", '.js-remove-selected-song', function() {
+        let clone = $($(this).closest("tr")).clone();
+                
+        clone.children('.js-song-id')
+              .attr('id', '')
+              .attr('name', '');
+        clone.children('.js-song-title')
+            .attr('id', '')
+            .attr('name', '');
+        
+         clone.children('.js-categories').show();
+         clone.children('.js-author').show();
+         clone.children('.js-row-buttons').remove();
+         clone.append('<td class="text-right js-row-buttons">\n'+
+                       '        <button class="btn btn-primary btn-sm js-select-song" type="button">\n'+
+                       '            <img src="/img/arrow-55-16.png" alt="Zvoliť pieseň" class="img-in-button">\n'+
+                       '        </button>\n'+
+                       '    </td>');
+
+        $('#songTableBody').append(clone);
+         
+        $($(this).closest("tr")).remove();
+        
+        renameSelectedSongId();
+    });
+    
+    function renameSelectedSongId() {
+        $('#selectedSongsTableBody').find('.js-song-row').each(function(i) {
+            $(this).children('.js-song-id')
+                .attr('id', 'SelectedSongs_' + i + '__Id')
+                .attr('name', 'SelectedSongs[' + i + '].Id');
+            $(this).children('.js-song-title')
+                .attr('id', 'SelectedSongs_' + i + '__Title')
+                .attr('name', 'SelectedSongs[' + i + '].Title');
+        })
+    }
+});
+</script>

@@ -27,8 +27,9 @@ namespace Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var viewModel = new AllSongsAllCategoriesViewModel
+            var viewModel = new SongsTableViewModel
             {
+                ViewMode = SongsTableViewModel.Mode.Maintaining,
                 Songs = await _context.Songs
                     .Include(song => song.SongCategories).ThenInclude(songCategory => songCategory.Category)
                     .OrderBy(s => s.Title.ToLower()).ToListAsync(),
@@ -194,7 +195,7 @@ namespace Web.Controllers
                 
                 try
                 {
-                    _context.UpdateSong(viewModel.Song);
+                    _context.UpdateSongWithVersesAndCategories(viewModel.Song);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

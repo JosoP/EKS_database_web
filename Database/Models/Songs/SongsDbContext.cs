@@ -66,30 +66,30 @@ namespace Database.Models.Songs
             Verses.RemoveRange(Verses);
         }
 
-        public void UpdateSong(Song newSong)
+        public void UpdateSongWithVersesAndCategories(Song newSong)
         {
             if(newSong == null) return;
             
             var originalSong = Songs
                 .Include(s => s.Verses)
                 .Include(s => s.SongCategories)
-                .FirstOrDefault(s => s.Id == newSong.Id);
+                .FirstOrDefault(s => s.Id == newSong.Id);        // read updated song from database
 
-            if (originalSong == null)
+            if (originalSong == null)                                    // song is not in database now
             {
                 Songs.Add(newSong);
             }
-            else
+            else                                                         // song is in database
             {
                 originalSong.Number = newSong.Number;
                 originalSong.Title = newSong.Title;
                 originalSong.Author = newSong.Author;
-                originalSong.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
-                foreach (var verse in newSong.Verses)
+                originalSong.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();    // time of last edit update
+                foreach (var verse in newSong.Verses)                        // update existing verses
                 {
                     UpdateVerse(verse);
                 }
-                foreach (var songCategory in newSong.SongCategories)
+                foreach (var songCategory in newSong.SongCategories)        // add new relations to categories 
                 {
                     AddSongCategoryIfNot(songCategory);
                 }
@@ -102,7 +102,6 @@ namespace Database.Models.Songs
                     }
                 }
                 
-                
                 foreach (var songCategory in originalSong.SongCategories)    // remove, if some songcategory has been removed
                 {
                     if (newSong.SongCategories.Any(sc => sc.CategoryId == songCategory.CategoryId) == false)
@@ -110,6 +109,50 @@ namespace Database.Models.Songs
                         SongCategories.Remove(songCategory);
                     }
                 }
+            }
+        }
+
+        public void UpdatePlaylistWithSongs(Playlist newPlaylist)
+        {
+            if (newPlaylist == null) return;
+
+            var originalPlaylist = Playlists
+                .Include(p => p.SongPlaylists)
+                .FirstOrDefault(p => p.Id == newPlaylist.Id);
+
+            
+            if (originalPlaylist == null)            // playlist now not exist
+            {
+                Playlists.Add(newPlaylist);    
+            }
+            else
+            {
+                originalPlaylist.Name = newPlaylist.Name;
+                originalPlaylist.Description = newPlaylist.Description;
+                originalPlaylist.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();     // time of last edit update
+                
+                foreach (var songPlaylist in newPlaylist.SongPlaylists)                        // update existing verses
+                {
+                    AddSongPlaylistIfNot(songPlaylist);
+                }
+                
+                foreach (var songPlaylist in originalPlaylist.SongPlaylists)    // remove, if some songplaylist has been removed
+                {
+                    if (newPlaylist.SongPlaylists.Any(sp => sp.SongId == songPlaylist.SongId) == false) // in new playlist isn't this songplaylist
+                    {
+                        SongPlaylists.Remove(songPlaylist);        // remove it
+                    }
+                }
+            }
+        }
+
+        private void AddSongPlaylistIfNot(SongPlaylist songPlaylist)
+        {
+            if(songPlaylist == null)    return;
+
+            if (SongPlaylists.Any(sp => sp.PlaylistId == songPlaylist.PlaylistId && sp.SongId == songPlaylist.SongId) == false)
+            {
+                SongPlaylists.Add(songPlaylist);
             }
         }
 

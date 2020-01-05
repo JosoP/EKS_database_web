@@ -1,4 +1,4 @@
-@model AllSongsAllCategoriesViewModel
+@model SongsTableViewModel
 
 
 <table class="table">
@@ -16,11 +16,16 @@
         <th>
             @Html.DisplayNameFor(model => model.Songs[0].Author)
         </th>
+        
         <th class="text-right">
-            <a class="btn btn-success btn-sm " asp-action="Create">
-                <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
-            </a>
+            @if (Model.ViewMode == SongsTableViewModel.Mode.Maintaining)
+            {
+                <a class="btn btn-success btn-sm " asp-action="Create">
+                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+                </a>
+            }
         </th>
+        
     </tr>
     <tr>
         <th>
@@ -53,29 +58,33 @@
     </thead>
     <tbody id="songTableBody">
 @foreach (var song in Model.Songs) {
-        <tr>
-            <td class="js-title">
-                @Html.DisplayFor(modelItem => song.Title)
-            </td>
-            <td class="js-song-number">
-                @Html.DisplayFor(modelItem => song.Number)
-            </td>
-            <td style="width: min-content" class="js-categories">
-                <div>
-                    @foreach (var songCategory in song.SongCategories)
-                    {
-                        
-                        <span class="badge badge-primary js-category">
-                            <p hidden class="js-category-id">@songCategory.CategoryId</p>
-                            @songCategory.Category.Name
-                        </span>
-                    }    
-                </div>
-            </td>
-            <td class="js-author">
-                @Html.DisplayFor(modelItem => song.Author)
-            </td>
-            <td class="text-right">
+    <tr class="js-song-row">
+        <input type="hidden" value=@song.Id class="js-song-id"/>
+        <input type="hidden" value=@song.Id class="js-song-title"/>
+        <td class="js-title">
+            @Html.DisplayFor(modelItem => song.Title)
+        </td>
+        <td class="js-song-number">
+            @Html.DisplayFor(modelItem => song.Number)
+        </td>
+        <td style="width: min-content" class="js-categories">
+            <div>
+                @foreach (var songCategory in song.SongCategories)
+                {
+
+                    <span class="badge badge-primary js-category">
+                        <p hidden class="js-category-id">@songCategory.CategoryId</p>
+                        @songCategory.Category.Name
+                    </span>
+                }
+            </div>
+        </td>
+        <td class="js-author">
+            @Html.DisplayFor(modelItem => song.Author)
+        </td>
+        <td class="text-right js-row-buttons">
+            @if (Model.ViewMode == SongsTableViewModel.Mode.Maintaining)
+            {
                 <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
                         <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
@@ -87,9 +96,15 @@
                         <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
                     </a>
                 </div>
-                
-            </td>
-        </tr>
+            }
+            else
+            {
+                <button class="btn btn-primary btn-sm js-select-song" type="button">
+                    <img src="~/img/arrow-55-16.png" alt="Zvoliť pieseň" class="img-in-button">
+                </button>
+            }
+        </td>
+    </tr>
 }
     </tbody>
 </table>
@@ -99,13 +114,6 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script>
 $(document).ready(function(){
-    $.expr[':'].textEquals = $.expr.createPseudo(function(arg) {
-        return function( elem ) {
-            return $(elem).text().match("^" + arg + "$");
-        };
-    });
-    
-    
     $(".js-filter").on("change keyup", function() {
         filter();
     });
@@ -137,6 +145,8 @@ $(document).ready(function(){
                 ) 
         });
     }
+    
+    
  
 });
 </script>

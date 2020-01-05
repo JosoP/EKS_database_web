@@ -45,6 +45,7 @@ namespace Database.Models.Songs
             }
         }
 
+        [DisplayName("Piesne")]
         public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
     }
 }
