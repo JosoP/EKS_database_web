@@ -34,6 +34,7 @@ namespace Web.Controllers
             }
 
             var playlist = await _context.Playlists
+                .Include(p => p.SongPlaylists).ThenInclude(sp => sp.Song)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (playlist == null)
             {
@@ -134,6 +135,7 @@ namespace Web.Controllers
             }
 
             var playlist = await _context.Playlists
+                .Include(p => p.SongPlaylists).ThenInclude(sp => sp.Song)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (playlist == null)
             {
