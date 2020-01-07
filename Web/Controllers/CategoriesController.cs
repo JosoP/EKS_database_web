@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
@@ -19,12 +20,21 @@ namespace Web.Controllers
         }
 
         // GET: Categories
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
         }
 
         // GET: Categories/Details/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -43,6 +53,11 @@ namespace Web.Controllers
         }
 
         // GET: Categories/Create
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -51,8 +66,14 @@ namespace Web.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Name,Description")] Category category)
         {
             if (ModelState.IsValid)
@@ -66,6 +87,12 @@ namespace Web.Controllers
         }
 
         // GET: Categories/Edit/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -84,8 +111,15 @@ namespace Web.Controllers
         // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,LastModified")] Category category)
         {
             if (id != category.Id)
@@ -118,6 +152,12 @@ namespace Web.Controllers
         }
 
         // GET: Categories/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -136,8 +176,14 @@ namespace Web.Controllers
         }
 
         // POST: Categories/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var category = await _context.Categories.FindAsync(id);

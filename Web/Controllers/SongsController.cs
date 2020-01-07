@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
 using Web.Models;
 
@@ -73,6 +74,7 @@ namespace Web.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public IActionResult Create()
         {
             var viewModel = new SongCategoryViewModel
@@ -99,6 +101,7 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Song,SelectedCategories,OtherCategories")] SongCategoryViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -129,6 +132,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -174,6 +178,7 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(
             long id, 
             [Bind("Song,SelectedCategories")] SongCategoryViewModel viewModel)
@@ -221,6 +226,7 @@ namespace Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -246,6 +252,7 @@ namespace Web.Controllers
         /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var song = await _context.Songs

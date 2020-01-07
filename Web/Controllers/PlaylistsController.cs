@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
+using Microsoft.AspNetCore.Authorization;
 using Web.Models;
 
 namespace Web.Controllers
@@ -20,12 +21,21 @@ namespace Web.Controllers
         }
 
         // GET: Playlists
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Playlists.ToListAsync());
         }
 
         // GET: Playlists/Details/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -45,6 +55,11 @@ namespace Web.Controllers
         }
 
         // GET: Playlists/Create
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             return View(await GetPlaylistEditViewModel(new Playlist()));
@@ -53,8 +68,14 @@ namespace Web.Controllers
         // POST: Playlists/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Playlist, SelectedSongs")] PlaylistEditViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -71,6 +92,12 @@ namespace Web.Controllers
         }
 
         // GET: Playlists/Edit/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -92,8 +119,15 @@ namespace Web.Controllers
         // POST: Playlists/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(long id, [Bind("Playlist, SelectedSongs")] PlaylistEditViewModel viewModel)
         {
             if (id != viewModel.Playlist.Id)
@@ -127,6 +161,12 @@ namespace Web.Controllers
         }
 
         // GET: Playlists/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -146,8 +186,14 @@ namespace Web.Controllers
         }
 
         // POST: Playlists/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var playlist = await _context.Playlists.FindAsync(id);
