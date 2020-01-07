@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Models;
 
 namespace Web.Controllers
@@ -20,12 +18,12 @@ namespace Web.Controllers
         {
             _context = context;
         }
-        
+
+        // GET: Songs
         /// <summary>
-        /// GET: Songs
-        /// 
+        ///     Controller GET method to get page with a list of all songs.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View of Songs Index page</returns>
         public async Task<IActionResult> Index()
         {
             var viewModel = new SongsTableViewModel
@@ -39,30 +37,24 @@ namespace Web.Controllers
                     .ToListAsync()
             };
 
-            return View( viewModel );
+            return View(viewModel);
         }
 
         // GET: Songs/Details/5
         /// <summary>
-        /// 
+        ///     Controller GET method to get detail page of song according to specified ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of song which detail page will be displayed</param>
+        /// <returns>View of songs detail page</returns>
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var song = await _context.Songs
                 .Include(s => s.Verses)
                 .Include(s => s.SongCategories).ThenInclude(songCategory => songCategory.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (song == null)
-            {
-                return NotFound();
-            }
+            if (song == null) return NotFound();
 
             song.Verses = song.Verses.OrderBy(v => v.SequenceNumber).ToList();
 
@@ -71,9 +63,9 @@ namespace Web.Controllers
 
         // GET: Songs/Create
         /// <summary>
-        /// 
+        ///     Controller GET method to get page for creating of new Song.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View of songs create page</returns>
         [Authorize]
         public IActionResult Create()
         {
@@ -85,9 +77,9 @@ namespace Web.Controllers
                     .ToList(),
                 SelectedCategories = new List<Category>()
             };
-            
+
             viewModel.Song.Verses.Add(new Verse());
-            
+
             return View(viewModel);
         }
 
@@ -95,14 +87,14 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         /// <summary>
-        /// 
+        ///     Controller POST method to store newly created song.
         /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
+        /// <param name="viewModel">Data of newly created song.</param>
+        /// <returns>When everything goes OK, redirection to Index page, otherwise page to create the same song.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Song,SelectedCategories,OtherCategories")] SongCategoryViewModel viewModel)
+        public async Task<IActionResult> Create([Bind("Song,SelectedCategories")] SongCategoryViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -112,33 +104,32 @@ namespace Web.Controllers
                     {
                         viewModel.Song.SongCategories.Add(new SongCategory
                         {
-                            Song = viewModel.Song, 
+                            Song = viewModel.Song,
                             CategoryId = category.Id
                         });
                     }
                 }
+
                 viewModel.Song.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
-                
+
                 _context.Songs.Add(viewModel.Song);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(viewModel);
         }
 
         // GET: Songs/Edit/5
         /// <summary>
-        /// 
+        ///     Controller GET method to get page for editing of song specified by ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of song to be edited</param>
+        /// <returns>View of songs edit page</returns>
         [Authorize]
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var viewModel = new SongCategoryViewModel
             {
@@ -150,11 +141,8 @@ namespace Web.Controllers
                     .OrderBy(c => c.Name.ToLower())
                     .ToListAsync()
             };
-            if (viewModel.Song == null)
-            {
-                return NotFound();
-            }
-            
+            if (viewModel.Song == null) return NotFound();
+
             viewModel.Song.Verses = viewModel.Song.Verses.OrderBy(v => v.SequenceNumber).ToList();
 
             viewModel.SelectedCategories = new List<Category>();
@@ -163,7 +151,7 @@ namespace Web.Controllers
                 viewModel.OtherCategories.Remove(songCategory.Category);
                 viewModel.SelectedCategories.Add(songCategory.Category);
             }
-            
+
             return View(viewModel);
         }
 
@@ -171,22 +159,19 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         /// <summary>
-        /// 
+        ///     Controller POST method to store changes made by editing.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of song to be edited</param>
+        /// <param name="viewModel">Data of edited song</param>
+        /// <returns>When everything goes OK, redirection to Index page, otherwise page to edit the same song.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Edit(
-            long id, 
+            long id,
             [Bind("Song,SelectedCategories")] SongCategoryViewModel viewModel)
         {
-            if (id != viewModel.Song.Id)
-            {
-                return NotFound();
-            }
+            if (id != viewModel.Song.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -194,10 +179,11 @@ namespace Web.Controllers
                 {
                     foreach (var category in viewModel.SelectedCategories)
                     {
-                        viewModel.Song.SongCategories.Add(new SongCategory{SongId = viewModel.Song.Id, CategoryId = category.Id});
+                        viewModel.Song.SongCategories.Add(new SongCategory
+                            {SongId = viewModel.Song.Id, CategoryId = category.Id});
                     }
                 }
-                
+
                 try
                 {
                     _context.UpdateSongWithVersesAndCategories(viewModel.Song);
@@ -206,51 +192,42 @@ namespace Web.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!SongExists(viewModel.Song.Id))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(viewModel);
         }
 
         // GET: Songs/Delete/5
         /// <summary>
-        /// 
+        ///     Controller GET method to get page to confirm deletion of a song specified by ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of song to be removed</param>
+        /// <returns>View of songs delete page.</returns>
         [Authorize]
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var song = await _context.Songs
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (song == null)
-            {
-                return NotFound();
-            }
+            if (song == null) return NotFound();
 
             return View(song);
         }
 
         // POST: Songs/Delete/5
         /// <summary>
-        /// 
+        ///     Controller POST method to remove song specified by ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost, ActionName("Delete")]
+        /// <param name="id">ID of song to be deleted.</param>
+        /// <returns>Redirection to songs Index page.</returns>
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> DeleteConfirmed(long id)
@@ -266,7 +243,7 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+
         private bool SongExists(long id)
         {
             return _context.Songs.Any(e => e.Id == id);

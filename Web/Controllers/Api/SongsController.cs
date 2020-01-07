@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Web.Controllers.Api
 {
     [ApiController]
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class SongsController : Controller
     {
         private readonly SongsDbContext _context;
@@ -16,8 +16,8 @@ namespace Web.Controllers.Api
         {
             _context = context;
         }
-        
-        [Microsoft.AspNetCore.Mvc.HttpGet]
+
+        [HttpGet]
         public IEnumerable<Song> Get()
         {
             return _context.Songs
@@ -26,6 +26,5 @@ namespace Web.Controllers.Api
                 .Include(s => s.SongPlaylists).ThenInclude(sp => sp.Playlist)
                 .ToList();
         }
-        
     }
 }
