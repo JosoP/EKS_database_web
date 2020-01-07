@@ -54,7 +54,6 @@
 </table>
 
 
-
 <div id="addSongModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -64,7 +63,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        @{await Html.RenderPartialAsync("_SongsTablePartial", Model.SongsTableViewModel);}
+            @{ await Html.RenderPartialAsync("_SongsTablePartial", Model.SongsTableViewModel); }
         </div>
     </div>
 </div>

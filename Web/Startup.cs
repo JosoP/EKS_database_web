@@ -30,18 +30,18 @@ namespace Web
                     Configuration.GetConnectionString("UsersDbConnection")));
             services.AddDbContext<SongsDbContext>(options =>
                 options.UseSqlite(
-                    Configuration.GetConnectionString("SongsDbConnection"))
+                        Configuration.GetConnectionString("SongsDbConnection"))
                     .EnableSensitiveDataLogging());
-            
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UserDbContext>();
-            
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages();
-            
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.

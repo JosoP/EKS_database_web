@@ -12,12 +12,12 @@ namespace DataImporter.Commands
         static Command()
         {
             allCommands = new Dictionary<string, Type>();
-            
+
             allCommands.Add("-Export", typeof(ExportCommand));
             allCommands.Add("-Import", typeof(ImportCommand));
             allCommands.Add("-RemoveDuplicities", typeof(RemoveDuplicitiesCommand));
         }
-        
+
         public abstract bool Execute(List<UniversalSong> songs);
 
         public abstract bool ParseArguments(List<string> arguments);
@@ -31,7 +31,7 @@ namespace DataImporter.Commands
                     return (Command) Activator.CreateInstance(command.Value);
                 }
             }
-            
+
             return null;
         }
     }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Database.Models.Songs;
 using Microsoft.AspNetCore.Authorization;
@@ -22,9 +21,9 @@ namespace Web.Controllers
 
         // GET: Playlists
         /// <summary>
-        /// 
+        ///     Controller GET method to get page with a list of all playlists.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View of playlists Index page</returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Playlists.ToListAsync());
@@ -32,10 +31,10 @@ namespace Web.Controllers
 
         // GET: Playlists/Details/5
         /// <summary>
-        /// 
+        ///     Controller GET method to get detail page of playlist according to specified ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of playlist which detail page will be displayed</param>
+        /// <returns>View of playlist detail page</returns>
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -56,9 +55,9 @@ namespace Web.Controllers
 
         // GET: Playlists/Create
         /// <summary>
-        /// 
+        ///     Controller GET method to get page for creating of new playlist.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View of playlists create page</returns>
         [Authorize]
         public async Task<IActionResult> Create()
         {
@@ -69,10 +68,10 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         /// <summary>
-        /// 
+        ///     Controller POST method to store newly created playlist.
         /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
+        /// <param name="viewModel">Data of newly created playlist.</param>
+        /// <returns>When everything goes OK, redirection to Index page, otherwise page to create the same playlist.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -82,21 +81,21 @@ namespace Web.Controllers
             {
                 fillPlaylistWithSongs(viewModel.Playlist, viewModel.SelectedSongs);
                 viewModel.Playlist.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();
-                
+
                 _context.Add(viewModel.Playlist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
-            return View(await GetPlaylistEditViewModel(viewModel.Playlist));     
+
+            return View(await GetPlaylistEditViewModel(viewModel.Playlist));
         }
 
         // GET: Playlists/Edit/5
         /// <summary>
-        /// 
+        ///     Controller GET method to get page for editing of playlist specified by ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of playlist to be edited</param>
+        /// <returns>View of playlist edit page</returns>
         [Authorize]
         public async Task<IActionResult> Edit(long? id)
         {
@@ -120,15 +119,16 @@ namespace Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         /// <summary>
-        /// 
+        ///     Controller POST method to store changes made by editing.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of playlist to be edited</param>
+        /// <param name="viewModel">Data of edited playlist</param>
+        /// <returns>When everything goes OK, redirection to Index page, otherwise page to edit the same playlist.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(long id, [Bind("Playlist, SelectedSongs")] PlaylistEditViewModel viewModel)
+        public async Task<IActionResult> Edit(long id,
+            [Bind("Playlist, SelectedSongs")] PlaylistEditViewModel viewModel)
         {
             if (id != viewModel.Playlist.Id)
             {
@@ -138,7 +138,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 fillPlaylistWithSongs(viewModel.Playlist, viewModel.SelectedSongs);
-                
+
                 try
                 {
                     _context.UpdatePlaylistWithSongs(viewModel.Playlist);
@@ -155,17 +155,19 @@ namespace Web.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(await GetPlaylistEditViewModel(viewModel.Playlist));
         }
 
         // GET: Playlists/Delete/5
         /// <summary>
-        /// 
+        ///      Controller GET method to get page to confirm deletion of a playlist specified by ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of playlist to be removed.</param>
+        /// <returns>View of playlist delete page.</returns>
         [Authorize]
         public async Task<IActionResult> Delete(long? id)
         {
@@ -182,15 +184,15 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            return View(playlist);    
+            return View(playlist);
         }
 
         // POST: Playlists/Delete/5
         /// <summary>
-        /// 
+        ///     Controller POST method to remove playlist specified by ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID of playlist to be deleted.</param>
+        /// <returns>Redirection to playlist Index page.</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -202,12 +204,21 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        ///     Finds out whether playlist with specified id exists in database.
+        /// </summary>
+        /// <param name="id">ID of playlist.</param>
+        /// <returns></returns>
         private bool PlaylistExists(long id)
         {
             return _context.Playlists.Any(e => e.Id == id);
         }
 
-
+        /// <summary>
+        ///     Assign SongPlaylist relation to the playlist according to a specified list of songs.
+        /// </summary>
+        /// <param name="playlist">Playlist to which relations will be added</param>
+        /// <param name="songs">List of songs that will be assigned to playlist</param>
         private void fillPlaylistWithSongs(Playlist playlist, List<Song> songs)
         {
             if (songs != null)
@@ -223,6 +234,11 @@ namespace Web.Controllers
             }
         }
 
+        /// <summary>
+        ///     Creates view model for edit and create playlist views
+        /// </summary>
+        /// <param name="playlist">Playlist which will be edited</param>
+        /// <returns></returns>
         private async Task<PlaylistEditViewModel> GetPlaylistEditViewModel(Playlist playlist)
         {
             var viewModel = new PlaylistEditViewModel

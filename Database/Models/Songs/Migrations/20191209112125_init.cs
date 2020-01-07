@@ -16,10 +16,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                     description = table.Column<string>(nullable: true),
                     lastModified = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_categories", x => x._id);
-                });
+                constraints: table => { table.PrimaryKey("PK_categories", x => x._id); });
 
             migrationBuilder.CreateTable(
                 name: "playlists",
@@ -31,10 +28,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                     description = table.Column<string>(nullable: true),
                     lastModified = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_playlists", x => x._id);
-                });
+                constraints: table => { table.PrimaryKey("PK_playlists", x => x._id); });
 
             migrationBuilder.CreateTable(
                 name: "songs",
@@ -47,10 +41,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                     author = table.Column<string>(nullable: true),
                     lastModified = table.Column<long>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_songs", x => x._id);
-                });
+                constraints: table => { table.PrimaryKey("PK_songs", x => x._id); });
 
             migrationBuilder.CreateTable(
                 name: "song_category",
@@ -61,7 +52,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_song_category", x => new { x.song, x.category });
+                    table.PrimaryKey("PK_song_category", x => new {x.song, x.category});
                     table.ForeignKey(
                         name: "FK_song_category_categories_category",
                         column: x => x.category,
@@ -85,7 +76,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_song_playlist", x => new { x.song, x.playlist });
+                    table.PrimaryKey("PK_song_playlist", x => new {x.song, x.playlist});
                     table.ForeignKey(
                         name: "FK_song_playlist_playlists_playlist",
                         column: x => x.playlist,

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Database.Models.Songs;
 using DataImporter.Importers;
 using DataImporter.Models;
 
@@ -8,8 +7,8 @@ namespace DataImporter.Commands
 {
     public class ImportCommand : Command
     {
-        private  Importer _importer;
-        
+        private Importer _importer;
+
 //        static ImportCommand()
 //        {
 //            Command.RegisterCommand("-Import", typeof(ImportCommand));
@@ -21,7 +20,7 @@ namespace DataImporter.Commands
         public override bool Execute(List<UniversalSong> songs)
         {
             var importedSongs = _importer.Import();
-            
+
             if (importedSongs != null)
             {
                 //return importedSongs.SaveToDatabase(_dbContext);
@@ -38,7 +37,7 @@ namespace DataImporter.Commands
         public override bool ParseArguments(List<string> arguments)
         {
             if (arguments.Count < 1) return false;
-            
+
             _importer = Importer.FindImporter(arguments[0]);
             if (_importer == null)
             {

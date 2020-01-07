@@ -9,7 +9,7 @@
             <img src="~/img/plus-2-16.png" alt="Pridať kategóriu" class="img-in-button">
         </button>
     </div>
-    
+
     <div class="control-label" style="margin-top: 10px">
         <h5 id="selectedCategories">
             @for (int i = 0; i < Model.Song.SongCategories.Count; i++)
@@ -18,43 +18,43 @@
                     @Model.SelectedCategories[i].Name
                     <input type="hidden" asp-for="SelectedCategories[i].Id" class="js-cat-id"/>
                     <input type="hidden" asp-for="SelectedCategories[i].Name" class="js-cat-name"/>
-                    
+
                     <img src="~/img/x-mark-12.png" class="js-category-remove" alt="Vymazať kategóriu">
                 </span>
             }
         </h5>
     </div>
-    
+
 </div>
 <hr/>
 
 
 <!-- Modal -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Pridať kategóriu</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div  class="modal-body">
-            <h5 id="otherCategories">
-            @for (int i = 0; i < Model.OtherCategories.Count; i++)
-            {
-                <span class="badge badge-primary js-category">
-                    @Model.OtherCategories[i].Name
-                    <input type="hidden" asp-for="OtherCategories[i].Id" class="js-cat-id"/>
-                    <input type="hidden" asp-for="OtherCategories[i].Name" class="js-cat-name"/>
-                    
-                    <img src="~/img/plus-2-12.png" class="js-category-add" alt="Pridať kategóriu">
-                </span>
-            }
-        </h5>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pridať kategóriu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 id="otherCategories">
+                    @for (int i = 0; i < Model.OtherCategories.Count; i++)
+                    {
+                        <span class="badge badge-primary js-category">
+                            @Model.OtherCategories[i].Name
+                            <input type="hidden" asp-for="OtherCategories[i].Id" class="js-cat-id"/>
+                            <input type="hidden" asp-for="OtherCategories[i].Name" class="js-cat-name"/>
+
+                            <img src="~/img/plus-2-12.png" class="js-category-add" alt="Pridať kategóriu">
+                        </span>
+                    }
+                </h5>
+            </div>
         </div>
     </div>
-  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

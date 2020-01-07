@@ -6,7 +6,7 @@ namespace EKS_database_web.Data.Songs.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable(        // rename old tables
+            migrationBuilder.RenameTable( // rename old tables
                 "song_category",
                 null,
                 "_song_category_old"
@@ -17,7 +17,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                 "_song_playlist_old"
             );
 
-            migrationBuilder.CreateTable(         // create new tables with on delete cascade
+            migrationBuilder.CreateTable( // create new tables with on delete cascade
                 name: "song_category",
                 columns: table => new
                 {
@@ -26,7 +26,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_song_category", x => new { x.song, x.category });
+                    table.PrimaryKey("PK_song_category", x => new {x.song, x.category});
                     table.ForeignKey(
                         name: "FK_song_category_categories_category",
                         column: x => x.category,
@@ -65,16 +65,17 @@ namespace EKS_database_web.Data.Songs.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.Sql("INSERT INTO song_category SELECT * FROM _song_category_old;");    // migrate data to new table
+            migrationBuilder.Sql(
+                "INSERT INTO song_category SELECT * FROM _song_category_old;"); // migrate data to new table
             migrationBuilder.Sql("INSERT INTO song_playlist SELECT * FROM _song_playlist_old;");
 
-            migrationBuilder.DropTable("_song_category_old");        // remove old tables
+            migrationBuilder.DropTable("_song_category_old"); // remove old tables
             migrationBuilder.DropTable("_song_playlist_old");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameTable(        // rename old tables
+            migrationBuilder.RenameTable( // rename old tables
                 "song_category",
                 null,
                 "_song_category_old"
@@ -85,7 +86,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                 "_song_playlist_old"
             );
 
-            migrationBuilder.CreateTable(         // create new tables with on delete Restrict
+            migrationBuilder.CreateTable( // create new tables with on delete Restrict
                 name: "song_category",
                 columns: table => new
                 {
@@ -94,7 +95,7 @@ namespace EKS_database_web.Data.Songs.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_song_category", x => new { x.song, x.category });
+                    table.PrimaryKey("PK_song_category", x => new {x.song, x.category});
                     table.ForeignKey(
                         name: "FK_song_category_categories_category",
                         column: x => x.category,
@@ -133,10 +134,11 @@ namespace EKS_database_web.Data.Songs.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.Sql("INSERT INTO song_category SELECT * FROM _song_category_old;");    // migrate data to new table
+            migrationBuilder.Sql(
+                "INSERT INTO song_category SELECT * FROM _song_category_old;"); // migrate data to new table
             migrationBuilder.Sql("INSERT INTO song_playlist SELECT * FROM _song_playlist_old;");
 
-            migrationBuilder.DropTable("_song_category_old");        // remove old tables
+            migrationBuilder.DropTable("_song_category_old"); // remove old tables
             migrationBuilder.DropTable("_song_playlist_old");
         }
     }

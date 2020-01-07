@@ -7,6 +7,7 @@ namespace DataImporter.Commands
     public class ExportCommand : Command
     {
         private Exporter _exporter;
+
         public override bool Execute(List<UniversalSong> songs)
         {
             return _exporter.Export(songs);

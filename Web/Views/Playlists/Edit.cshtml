@@ -5,7 +5,6 @@
 }
 
 
-    
 <form asp-action="Edit">
     <div class="row">
         <div class="col-6">
@@ -17,28 +16,28 @@
             </button>
         </div>
     </div>
-                                    
-    <hr />
-                
+
+    <hr/>
+
     <div class="row">
-            <div class="col-md-4">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Playlist.Id"/>
-                <div class="form-group">
-                    <label asp-for="Playlist.Name" class="control-label"></label>
-                    <input asp-for="Playlist.Name" class="form-control"/>
-                    <span asp-validation-for="Playlist.Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Playlist.Description" class="control-label"></label>
-                    <input asp-for="Playlist.Description" class="form-control"/>
-                    <span asp-validation-for="Playlist.Description" class="text-danger"></span>
-                </div>
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Playlist.Id"/>
+            <div class="form-group">
+                <label asp-for="Playlist.Name" class="control-label"></label>
+                <input asp-for="Playlist.Name" class="form-control"/>
+                <span asp-validation-for="Playlist.Name" class="text-danger"></span>
             </div>
-            <div class="col-sm-8">
-                @{await Html.RenderPartialAsync("_PlaylistSongsAdding");}
+            <div class="form-group">
+                <label asp-for="Playlist.Description" class="control-label"></label>
+                <input asp-for="Playlist.Description" class="form-control"/>
+                <span asp-validation-for="Playlist.Description" class="text-danger"></span>
             </div>
         </div>
+        <div class="col-sm-8">
+            @{ await Html.RenderPartialAsync("_PlaylistSongsAdding"); }
+        </div>
+    </div>
 </form>
 
 <div>
@@ -46,5 +45,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

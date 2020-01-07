@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Database.Models.Songs;
 using DataImporter.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DataImporter
 {
@@ -14,18 +9,18 @@ namespace DataImporter
         static void Main(string[] args)
         {
             var isOk = true;
-            
+
             var argumentParser = new ArgumentParser();
 
             if (argumentParser.Parse(args))
             {
                 var editedSongs = new List<UniversalSong>();
                 var commandIndex = 0;
-                
+
                 foreach (var command in argumentParser.Commands)
                 {
                     Console.WriteLine($"{++commandIndex}. command");
-                    
+
                     var isSuccess = command.Execute(editedSongs);
                     if (isSuccess == false)
                     {

@@ -8,22 +8,23 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th class="text-right">
-                <a class="btn btn-success btn-sm " asp-action="Create">
-                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú kategóriu" class="img-in-button">
-                </a>
-            </th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th class="text-right">
+            <a class="btn btn-success btn-sm " asp-action="Create">
+                <img src="~/img/plus-2-16.png" alt="Vytvoriť novú kategóriu" class="img-in-button">
+            </a>
+        </th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -45,6 +46,6 @@
                 </div>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

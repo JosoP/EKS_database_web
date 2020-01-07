@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Web.Controllers;
 
 namespace Web.Services
 {
@@ -13,7 +12,7 @@ namespace Web.Services
     {
         private readonly ILogger<EmailSender> _logger;
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
-        
+
         public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor, ILogger<EmailSender> logger)
         {
             Options = optionsAccessor.Value;
@@ -32,7 +31,7 @@ namespace Web.Services
                 MailMessage mail = new MailMessage()
                 {
                     From = new MailAddress(Options.GmailUser, "EKS"),
-                    To = { new MailAddress(email)},
+                    To = {new MailAddress(email)},
                     Subject = subject,
                     Body = message,
                     IsBodyHtml = true,
@@ -47,7 +46,7 @@ namespace Web.Services
                     _logger.LogInformation($"Email sent to {email}");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Cannot send e-mail to: {email}");
                 _logger.LogError(ex.Message);

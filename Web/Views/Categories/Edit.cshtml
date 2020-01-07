@@ -16,9 +16,9 @@
             </button>
         </div>
     </div>
-                                                
-    <hr />
-                        
+
+    <hr/>
+
     <div class="col-md-4">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id"/>
@@ -40,5 +40,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

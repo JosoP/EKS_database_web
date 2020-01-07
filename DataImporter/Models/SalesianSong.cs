@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Database.Models.Songs;
 
 namespace DataImporter.Models
 {
@@ -9,35 +8,34 @@ namespace DataImporter.Models
     [DataContract(Name = "piesen", Namespace = "")]
     public class SalesianSong
     {
-        [DataMember(Name = "cislo", Order = 0)] 
+        [DataMember(Name = "cislo", Order = 0)]
         public string Number { get; set; }
 
         public int? NumberInt
         {
             get
             {
-                if(Int32.TryParse(Number, out int numberInt))
+                if (Int32.TryParse(Number, out int numberInt))
                 {
                     return numberInt;
                 }
+
                 return null;
             }
         }
 
         [DataMember(Name = "nazov", Order = 1)]
         public string Title { get; set; }
-        
-        [DataMember(Name = "autori", Order = 2)] 
+
+        [DataMember(Name = "autori", Order = 2)]
         public string Authors { get; set; }
-        
-        [DataMember(Name = "kategorie", Order = 3)] 
+
+        [DataMember(Name = "kategorie", Order = 3)]
         public SalesianCategories Categories { get; set; }
-        
-        [DataMember(Name = "text", Order = 4)]
-        public string Text { get; set; }
-        
-        [DataMember(Name="url", Order = 5)]
-        public string Url { get; set; }
+
+        [DataMember(Name = "text", Order = 4)] public string Text { get; set; }
+
+        [DataMember(Name = "url", Order = 5)] public string Url { get; set; }
 
         public UniversalSong ToUniversal()
         {
@@ -45,9 +43,9 @@ namespace DataImporter.Models
 
             foreach (var category in Categories)
             {
-                universalCategories.Add( new UniversalCategory { Name = category } );
+                universalCategories.Add(new UniversalCategory {Name = category});
             }
-            
+
             return new UniversalSong
             {
                 Title = this.Title,
@@ -59,19 +57,18 @@ namespace DataImporter.Models
                 CreationDate = DateTime.Now
             };
         }
-        
-        
+
+
         private List<UniversalVerse> ParseTextToVerses()
         {
-            const string proxyEnter = "[]"; 
-            const string proxyVerseEnd = "[end]"; 
-            
+            const string proxyEnter = "[]";
+            const string proxyVerseEnd = "[end]";
+
             var verses = new List<UniversalVerse>();
             if (Text != null)
             {
                 if (Text.Length > 0)
                 {
-                    
 //                    var textWithoutChords = string.Join("", text.Split(']')
 //                        .Select(p => p.Split('[')[0].Trim()));
 
@@ -90,7 +87,7 @@ namespace DataImporter.Models
 
                     tempText = tempText.Trim();
                     var verseTexts = tempText.Split(proxyVerseEnd);
-                    
+
                     foreach (var verseText in verseTexts)
                     {
                         if (verseText.Length > 0)
@@ -99,7 +96,6 @@ namespace DataImporter.Models
                             {
                                 verses.Add(new UniversalVerse
                                 {
-                            
                                     Title = verseText.Substring(0, verseText.IndexOf(' ')),
                                     Text = verseText.Substring(verseText.IndexOf(' ') + 1)
                                 });
@@ -108,12 +104,10 @@ namespace DataImporter.Models
                             {
                                 verses.Add(new UniversalVerse
                                 {
-                            
                                     Title = "",
                                     Text = verseText
                                 });
                             }
-                                
                         }
                         else
                         {
@@ -125,6 +119,5 @@ namespace DataImporter.Models
 
             return verses;
         }
-        
     }
 }

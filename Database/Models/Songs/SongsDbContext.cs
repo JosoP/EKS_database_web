@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using EKS_database_web.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database.Models.Songs
@@ -22,7 +21,7 @@ namespace Database.Models.Songs
         public virtual DbSet<SongCategory> SongCategories { get; set; }
         public virtual DbSet<SongPlaylist> SongPlaylists { get; set; }
         public virtual DbSet<Verse> Verses { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SongCategory>(entity =>
@@ -68,41 +67,43 @@ namespace Database.Models.Songs
 
         public void UpdateSongWithVersesAndCategories(Song newSong)
         {
-            if(newSong == null) return;
-            
+            if (newSong == null) return;
+
             var originalSong = Songs
                 .Include(s => s.Verses)
                 .Include(s => s.SongCategories)
-                .FirstOrDefault(s => s.Id == newSong.Id);        // read updated song from database
+                .FirstOrDefault(s => s.Id == newSong.Id); // read updated song from database
 
-            if (originalSong == null)                                    // song is not in database now
+            if (originalSong == null) // song is not in database now
             {
                 Songs.Add(newSong);
             }
-            else                                                         // song is in database
+            else // song is in database
             {
                 originalSong.Number = newSong.Number;
                 originalSong.Title = newSong.Title;
                 originalSong.Author = newSong.Author;
-                originalSong.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();    // time of last edit update
-                foreach (var verse in newSong.Verses)                        // update existing verses
+                originalSong.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime(); // time of last edit update
+                foreach (var verse in newSong.Verses) // update existing verses
                 {
                     UpdateVerse(verse);
                 }
-                foreach (var songCategory in newSong.SongCategories)        // add new relations to categories 
+
+                foreach (var songCategory in newSong.SongCategories) // add new relations to categories 
                 {
                     AddSongCategoryIfNot(songCategory);
                 }
-                
-                foreach (var verse in originalSong.Verses)                    // remove, if some verse has been removed
+
+                foreach (var verse in originalSong.Verses) // remove, if some verse has been removed
                 {
                     if (newSong.Verses.Any(v => v.Id == verse.Id) == false)
                     {
                         Verses.Remove(verse);
                     }
                 }
-                
-                foreach (var songCategory in originalSong.SongCategories)    // remove, if some songcategory has been removed
+
+                foreach (var songCategory in originalSong.SongCategories
+                ) // remove, if some songcategory has been removed
                 {
                     if (newSong.SongCategories.Any(sc => sc.CategoryId == songCategory.CategoryId) == false)
                     {
@@ -120,27 +121,29 @@ namespace Database.Models.Songs
                 .Include(p => p.SongPlaylists)
                 .FirstOrDefault(p => p.Id == newPlaylist.Id);
 
-            
-            if (originalPlaylist == null)            // playlist now not exist
+
+            if (originalPlaylist == null) // playlist now not exist
             {
-                Playlists.Add(newPlaylist);    
+                Playlists.Add(newPlaylist);
             }
             else
             {
                 originalPlaylist.Name = newPlaylist.Name;
                 originalPlaylist.Description = newPlaylist.Description;
-                originalPlaylist.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime();     // time of last edit update
-                
-                foreach (var songPlaylist in newPlaylist.SongPlaylists)                        // update existing verses
+                originalPlaylist.LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime(); // time of last edit update
+
+                foreach (var songPlaylist in newPlaylist.SongPlaylists) // update existing verses
                 {
                     AddSongPlaylistIfNot(songPlaylist);
                 }
-                
-                foreach (var songPlaylist in originalPlaylist.SongPlaylists)    // remove, if some songplaylist has been removed
+
+                foreach (var songPlaylist in originalPlaylist.SongPlaylists
+                ) // remove, if some songplaylist has been removed
                 {
-                    if (newPlaylist.SongPlaylists.Any(sp => sp.SongId == songPlaylist.SongId) == false) // in new playlist isn't this songplaylist
+                    if (newPlaylist.SongPlaylists.Any(sp => sp.SongId == songPlaylist.SongId) == false
+                    ) // in new playlist isn't this songplaylist
                     {
-                        SongPlaylists.Remove(songPlaylist);        // remove it
+                        SongPlaylists.Remove(songPlaylist); // remove it
                     }
                 }
             }
@@ -148,9 +151,10 @@ namespace Database.Models.Songs
 
         private void AddSongPlaylistIfNot(SongPlaylist songPlaylist)
         {
-            if(songPlaylist == null)    return;
+            if (songPlaylist == null) return;
 
-            if (SongPlaylists.Any(sp => sp.PlaylistId == songPlaylist.PlaylistId && sp.SongId == songPlaylist.SongId) == false)
+            if (SongPlaylists.Any(sp => sp.PlaylistId == songPlaylist.PlaylistId && sp.SongId == songPlaylist.SongId) ==
+                false)
             {
                 SongPlaylists.Add(songPlaylist);
             }
@@ -158,8 +162,8 @@ namespace Database.Models.Songs
 
         private void AddSongCategoryIfNot(SongCategory songCategory)
         {
-            if(songCategory == null)    return;
-            
+            if (songCategory == null) return;
+
             var existing = SongCategories
                 .FirstOrDefault(sc => sc.CategoryId == songCategory.CategoryId && sc.SongId == songCategory.SongId);
 
@@ -171,7 +175,7 @@ namespace Database.Models.Songs
 
         private void UpdateVerse(Verse verse)
         {
-            if(verse == null)    return;
+            if (verse == null) return;
 
             var originalVerse = Verses.FirstOrDefault(v => v.Id == verse.Id);
 

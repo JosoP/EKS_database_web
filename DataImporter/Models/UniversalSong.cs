@@ -16,10 +16,9 @@ namespace DataImporter.Models
         public List<UniversalVerse> Verses { get; set; } = null;
 
         public List<UniversalCategory> Categories { get; set; } = null;
-        
+
         public List<UniversalPlaylist> Playlists { get; set; } = null;
 
-        public DateTime CreationDate { get; set; }        
-        
+        public DateTime CreationDate { get; set; }
     }
 }

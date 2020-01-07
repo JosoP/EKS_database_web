@@ -14,7 +14,7 @@
 <div id="versesContainer">
     @{
         for (int i = 0; i < Model.Song.Verses.Count; i++)
-        {    
+        {
             <div class="js-verse">
                 <input type="hidden" asp-for="Song.Verses[i].Id" class="js-verse-id"/>
                 <input type="hidden" asp-for="Song.Verses[i].SongId" class="js-verse-song-id"/>
@@ -25,16 +25,16 @@
                 </button>
                 <div class="form-group row">
                     <label asp-for="Song.Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
-                    <div class="col-sm-10" >
+                    <div class="col-sm-10">
                         <input asp-for="Song.Verses[i].Title" class="col-sm-6 form-control js-verse-title"/>
                         <span asp-validation-for="Song.Verses[i].Title" class="text-danger js-verse-title-validation"></span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="Song.Verses[i].Text" class="col-sm-2 col-form-label js-verse-text-lbl"></label>
-                    <div class="col-sm-10" >
+                    <div class="col-sm-10">
                         <textarea asp-for="Song.Verses[i].Text" class="col-sm-12 js-verse-text" rows="5"></textarea>
-                        <span asp-validation-for="Song.Verses[i].Text" class="text-danger col-sm-12 js-verse-text-validation"></span> 
+                        <span asp-validation-for="Song.Verses[i].Text" class="text-danger col-sm-12 js-verse-text-validation"></span>
                     </div>
                 </div>
                 <div class="row">
@@ -134,8 +134,3 @@
         }
     });
 </script>
-
-
-                      
-
-        

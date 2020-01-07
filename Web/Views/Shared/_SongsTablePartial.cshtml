@@ -16,7 +16,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Songs[0].Author)
         </th>
-        
+
         <th class="text-right">
             @if (Model.ViewMode == SongsTableViewModel.Mode.Maintaining)
             {
@@ -25,11 +25,11 @@
                 </a>
             }
         </th>
-        
+
     </tr>
     <tr>
         <th>
-            <input id="titleFilterInput" type="text" class=" input-filter js-filter" 
+            <input id="titleFilterInput" type="text" class=" input-filter js-filter"
                    placeholder="Zadajte filter">
         </th>
         <th>
@@ -37,7 +37,7 @@
                    placeholder="Zadajte filter">
         </th>
         <th>
-            <select class="input-filter js-filter" id="categoryFilterSelect" >
+            <select class="input-filter js-filter" id="categoryFilterSelect">
                 <option value="">Zvoľte filter</option>
                 @foreach (var category in Model.Categories)
                 {
@@ -50,65 +50,64 @@
                    placeholder="Zadajte filter">
         </th>
         <th class="text-right">
-            <button id="clearFilterButton" class="btn btn-light btn-sm " type="button"> 
+            <button id="clearFilterButton" class="btn btn-light btn-sm " type="button">
                 <img src="~/img/x-mark-dark-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
             </button>
         </th>
     </tr>
     </thead>
     <tbody id="songTableBody">
-@foreach (var song in Model.Songs) {
-    <tr class="js-song-row">
-        <input type="hidden" value=@song.Id class="js-song-id"/>
-        <input type="hidden" value=@song.Id class="js-song-title"/>
-        <td class="js-title">
-            @Html.DisplayFor(modelItem => song.Title)
-        </td>
-        <td class="js-song-number">
-            @Html.DisplayFor(modelItem => song.Number)
-        </td>
-        <td style="width: min-content" class="js-categories">
-            <div>
-                @foreach (var songCategory in song.SongCategories)
-                {
-
-                    <span class="badge badge-primary js-category">
-                        <p hidden class="js-category-id">@songCategory.CategoryId</p>
-                        @songCategory.Category.Name
-                    </span>
-                }
-            </div>
-        </td>
-        <td class="js-author">
-            @Html.DisplayFor(modelItem => song.Author)
-        </td>
-        <td class="text-right js-row-buttons">
-            @if (Model.ViewMode == SongsTableViewModel.Mode.Maintaining)
-            {
-                <div class="btn-group btn-group-sm">
-                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
-                        <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
-                    </a>
-                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">
-                        <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
-                    </a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">
-                        <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
-                    </a>
+    @foreach (var song in Model.Songs)
+    {
+        <tr class="js-song-row">
+            <input type="hidden" value=@song.Id class="js-song-id"/>
+            <input type="hidden" value=@song.Id class="js-song-title"/>
+            <td class="js-title">
+                @Html.DisplayFor(modelItem => song.Title)
+            </td>
+            <td class="js-song-number">
+                @Html.DisplayFor(modelItem => song.Number)
+            </td>
+            <td style="width: min-content" class="js-categories">
+                <div>
+                    @foreach (var songCategory in song.SongCategories)
+                    {
+                        <span class="badge badge-primary js-category">
+                            <p hidden class="js-category-id">@songCategory.CategoryId</p>
+                            @songCategory.Category.Name
+                        </span>
+                    }
                 </div>
-            }
-            else
-            {
-                <button class="btn btn-primary btn-sm js-select-song" type="button">
-                    <img src="~/img/arrow-55-16.png" alt="Zvoliť pieseň" class="img-in-button">
-                </button>
-            }
-        </td>
-    </tr>
-}
+            </td>
+            <td class="js-author">
+                @Html.DisplayFor(modelItem => song.Author)
+            </td>
+            <td class="text-right js-row-buttons">
+                @if (Model.ViewMode == SongsTableViewModel.Mode.Maintaining)
+                {
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
+                            <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
+                        </a>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">
+                            <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
+                        </a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">
+                            <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <button class="btn btn-primary btn-sm js-select-song" type="button">
+                        <img src="~/img/arrow-55-16.png" alt="Zvoliť pieseň" class="img-in-button">
+                    </button>
+                }
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
-
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

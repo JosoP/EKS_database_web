@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using EKS_database_web.Data;
 
 namespace Database.Models.Songs
 {
@@ -16,23 +15,21 @@ namespace Database.Models.Songs
             SongCategories = new HashSet<SongCategory>();
         }
 
-        [Key]
-        [Column("_id")]
-        public long Id { get; set; }
-        
+        [Key] [Column("_id")] public long Id { get; set; }
+
         [Required]
         [Column("name")]
         [DisplayName("Názov")]
         public string Name { get; set; }
-        
+
         [Column("description")]
         [DisplayName("Popis")]
         public string Description { get; set; }
-        
+
         [Column("lastModified")]
         [DisplayName("Naposledy upravené")]
         public long LastModified { get; set; }
-        
+
         [NotMapped]
         [DisplayName("Naposledy upravené")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm:ss}")]

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EKS_database_web.Data;
 
 namespace Database.Models.Songs
 {
@@ -17,23 +16,21 @@ namespace Database.Models.Songs
             Verses = new List<Verse>();
         }
 
-        [Key]
-        [Column("_id")]
-        public long Id { get; set; }
-        
+        [Key] [Column("_id")] public long Id { get; set; }
+
         [Required]
         [DisplayName("Názov")]
         [Column("title")]
         public string Title { get; set; }
-        
+
         [DisplayName(" Číslo")]
         [Column("number")]
         public long? Number { get; set; }
-        
+
         [DisplayName("Autor")]
         [Column("author")]
         public string Author { get; set; }
-        
+
         [DisplayName("Naposledy upravené")]
         [Column("lastModified")]
         public long LastModified { get; set; }
@@ -50,15 +47,12 @@ namespace Database.Models.Songs
                 LastModified = offset.ToUnixTimeSeconds();
             }
         }
-        
-        [DisplayName("Kategórie")]
-        public virtual ICollection<SongCategory> SongCategories { get; set; }
-        
-        [DisplayName("Playlisty")]
-        public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
-        
-        [DisplayName("Strofy")]
-        public virtual List<Verse> Verses { get; set; }
+
+        [DisplayName("Kategórie")] public virtual ICollection<SongCategory> SongCategories { get; set; }
+
+        [DisplayName("Playlisty")] public virtual ICollection<SongPlaylist> SongPlaylists { get; set; }
+
+        [DisplayName("Strofy")] public virtual List<Verse> Verses { get; set; }
 
         public override string ToString()
         {

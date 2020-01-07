@@ -23,7 +23,7 @@ namespace DataImporter.Exporters
         public override bool Export(List<UniversalSong> songs)
         {
             Console.WriteLine("Exporting to internal database starting...");
-            
+
             var configuration = GetAppConfiguration();
             var optionsBuilder = new DbContextOptionsBuilder<SongsDbContext>();
             optionsBuilder.UseSqlite(configuration.GetConnectionString("SongsDbConnection"));
@@ -51,7 +51,7 @@ namespace DataImporter.Exporters
                         {
                             Title = verse.Title,
                             Text = verse.Text,
-                            SequenceNumber = seqNum++   // sequence number for exact order of verses
+                            SequenceNumber = seqNum++ // sequence number for exact order of verses
                         }).ToList(),
                         LastModifiedDateTimeLocal = DateTime.Now.ToLocalTime()
                     };
@@ -103,11 +103,12 @@ namespace DataImporter.Exporters
                         return false;
                 }
             }
-            
+
             return true;
         }
 
-        private List<Category> FindOrCreateCetegories(List<UniversalCategory> universalCategories, SongsDbContext dbContext)
+        private List<Category> FindOrCreateCetegories(List<UniversalCategory> universalCategories,
+            SongsDbContext dbContext)
         {
             var categoriesToRet = new List<Category>();
             foreach (var universalCategory in universalCategories)
@@ -129,13 +130,13 @@ namespace DataImporter.Exporters
 
             return categoriesToRet;
         }
-        
+
         static IConfigurationRoot GetAppConfiguration()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            
+
             return builder.Build();
         }
     }

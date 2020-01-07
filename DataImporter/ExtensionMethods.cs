@@ -1,5 +1,3 @@
-using System;
-
 namespace DataImporter
 {
     public static class ExtensionMethods
@@ -8,25 +6,25 @@ namespace DataImporter
         {
             var isDeletingActive = false;
             var editedStr = "";
-            
+
             for (int i = 0; i < str.Length; i++)
             {
                 var currentChar = str[i];
-                
-                if ( currentChar == startCharacter)
+
+                if (currentChar == startCharacter)
                 {
                     isDeletingActive = true;
-                } 
-                        
-                if (isDeletingActive == false)
-                {
-                    editedStr += str[i];    //copy character
                 }
 
-                
+                if (isDeletingActive == false)
+                {
+                    editedStr += str[i]; //copy character
+                }
+
+
                 if (currentChar == endCharacter)
                 {
-                    isDeletingActive = false;      
+                    isDeletingActive = false;
                 }
             }
 

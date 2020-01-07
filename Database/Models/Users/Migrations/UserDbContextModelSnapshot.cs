@@ -2,10 +2,8 @@
 
 using System;
 using Database.Models.Users;
-using EKS_database_web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EKS_database_web.Data.Migrations
 {

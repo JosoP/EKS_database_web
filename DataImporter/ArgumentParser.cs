@@ -1,17 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Database.Models.Songs;
 using DataImporter.Commands;
-using DataImporter.Importers;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DataImporter
 {
     public class ArgumentParser
     {
         public List<Command> Commands { get; private set; }
-        
+
         public ArgumentParser()
         {
             Commands = new List<Command>();
@@ -54,7 +50,5 @@ namespace DataImporter
 
             return true;
         }
-
-
     }
 }

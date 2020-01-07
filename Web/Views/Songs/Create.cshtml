@@ -1,4 +1,3 @@
-@using Database.Models.Songs
 @model Web.Models.SongCategoryViewModel
 
 @{
@@ -16,9 +15,9 @@
             </button>
         </div>
     </div>
-            
-    <hr />
-    
+
+    <hr/>
+
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Song.Id" id="song-id"/>
     <div class="row">
@@ -49,7 +48,6 @@
 <div>
     <a asp-action="Index">Späť do zoznamu</a>
 </div>
-
 
 
 @section Scripts {

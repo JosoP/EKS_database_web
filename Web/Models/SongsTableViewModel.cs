@@ -11,8 +11,8 @@ namespace Web.Models
 
         public enum Mode
         {
-            Maintaining,            // table of songs with possibility to make CRUD operations
-            Selecting,            // table of songs with possibility of select song
+            Maintaining, // table of songs with possibility to make CRUD operations
+            Selecting, // table of songs with possibility of select song
         }
     }
 }

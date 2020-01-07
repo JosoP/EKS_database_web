@@ -8,42 +8,40 @@
 
 <div>
     <h4></h4>
-    <hr />
+    <hr/>
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Number)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Number)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Author)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Author)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.SongCategories)
         </dt>
         <dd class="col-sm-10">
             <h5>
-            @foreach (var songCategory in Model.SongCategories)
-            {
-
-                <span class="badge badge-primary">
-                    @songCategory.Category.Name
-                </span>
-                
-            }
+                @foreach (var songCategory in Model.SongCategories)
+                {
+                    <span class="badge badge-primary">
+                        @songCategory.Category.Name
+                    </span>
+                }
             </h5>
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Verses)
         </dt>
         <dd class="col-sm-10">
@@ -66,10 +64,10 @@
                 }
             }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LastModifiedDateTimeLocal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastModifiedDateTimeLocal)
         </dd>
     </dl>

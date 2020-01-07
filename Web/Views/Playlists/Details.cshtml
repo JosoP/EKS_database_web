@@ -5,25 +5,25 @@
 }
 
 <h1>Detaily playlistu</h1>
-<hr />
+<hr/>
 <div>
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.SongPlaylists)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @foreach (var songPlaylist in Model.SongPlaylists)
             {
                 <div>
@@ -31,10 +31,10 @@
                 </div>
             }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LastModifiedDateTimeLocal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LastModifiedDateTimeLocal)
         </dd>
     </dl>
