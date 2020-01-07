@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Database.Models.Songs
 {
@@ -27,6 +28,8 @@ namespace Database.Models.Songs
         [Column("text")]
         public string Text { get; set; }
 
+        [JsonIgnore]
+        [DisplayName("Text")]
         [ForeignKey(nameof(SongId))]
         public virtual Song Song { get; set; }
     }

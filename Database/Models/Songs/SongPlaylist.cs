@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Database.Models.Songs
 {
@@ -16,6 +17,7 @@ namespace Database.Models.Songs
         [DisplayName("Playlist")]
         public virtual Playlist Playlist { get; set; }
         
+        [JsonIgnore]
         [ForeignKey(nameof(SongId))]
         [DisplayName("Pieseň")]
         public virtual Song Song { get; set; }

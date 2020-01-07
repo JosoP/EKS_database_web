@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Database.Models.Songs
 {
@@ -11,6 +12,7 @@ namespace Database.Models.Songs
         [Column("song")]
         public long SongId { get; set; }
         
+        [JsonIgnore]
         [ForeignKey(nameof(SongId))]
         [DisplayName("Pieseň")]
         public Song Song { get; set; }

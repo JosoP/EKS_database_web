@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using EKS_database_web.Data;
 
 namespace Database.Models.Songs
@@ -45,6 +46,7 @@ namespace Database.Models.Songs
             }
         }
 
+        [JsonIgnore]
         [InverseProperty(nameof(SongCategory.Category))]
         [DisplayName("Piesne")]
         public virtual ICollection<SongCategory> SongCategories { get; set; }
