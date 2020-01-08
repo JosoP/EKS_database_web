@@ -16,7 +16,10 @@ namespace Database.Models.Songs
             Verses = new List<Verse>();
         }
 
-        [Key] [Column("_id")] public long Id { get; set; }
+        [Key] 
+        [DisplayName("ID")]
+        [Column("_id")] 
+        public long Id { get; set; }
 
         [Required]
         [DisplayName("Názov")]
@@ -44,6 +47,19 @@ namespace Database.Models.Songs
             set
             {
                 DateTimeOffset offset = DateTime.SpecifyKind(value, DateTimeKind.Local);
+                LastModified = offset.ToUnixTimeSeconds();
+            }
+        }
+        
+        [NotMapped]
+        [DisplayName("Naposledy upravené UTC")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm:ss}")]
+        public DateTime LastModifiedDateTimeUtc
+        {
+            get => DateTimeOffset.FromUnixTimeSeconds(LastModified).DateTime;
+            set
+            {
+                DateTimeOffset offset = DateTime.SpecifyKind(value, DateTimeKind.Utc);
                 LastModified = offset.ToUnixTimeSeconds();
             }
         }

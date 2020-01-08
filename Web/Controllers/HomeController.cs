@@ -15,7 +15,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Controller GET method to get home index page.
+        ///     Controller GET method to get home index page.
         /// </summary>
         /// <returns>View of index page.</returns>
         public IActionResult Index()
@@ -24,7 +24,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Controller GET method to get privacy page
+        ///     Controller GET method to get privacy page
         /// </summary>
         /// <returns>View of privacy page.</returns>
         public IActionResult Privacy()
@@ -33,7 +33,7 @@ namespace Web.Controllers
         }
 
         /// <summary>
-        /// Controller GET method to get error page.
+        ///     Controller GET method to get error page.
         /// </summary>
         /// <returns>View of error page.</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

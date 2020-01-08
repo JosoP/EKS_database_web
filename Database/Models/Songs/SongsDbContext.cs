@@ -65,14 +65,17 @@ namespace Database.Models.Songs
             Verses.RemoveRange(Verses);
         }
 
-        public void UpdateSongWithVersesAndCategories(Song newSong)
+        public void UpdateSongWithVersesAndCategories(Song newSong, Song originalSong = null)
         {
             if (newSong == null) return;
 
-            var originalSong = Songs
-                .Include(s => s.Verses)
-                .Include(s => s.SongCategories)
-                .FirstOrDefault(s => s.Id == newSong.Id); // read updated song from database
+            if (originalSong == null)            // original song not passed as parameter
+            {
+                originalSong = Songs
+                    .Include(s => s.Verses)
+                    .Include(s => s.SongCategories)
+                    .FirstOrDefault(s => s.Id == newSong.Id); // read updated song from database
+            }
 
             if (originalSong == null) // song is not in database now
             {
@@ -109,6 +112,34 @@ namespace Database.Models.Songs
                     {
                         SongCategories.Remove(songCategory);
                     }
+                }
+            }
+        }
+
+        public void UpdateSongWithAll(Song newSong)
+        {
+            if (newSong == null) return;
+            
+            var originalSong = Songs
+                .Include(s => s.Verses)
+                .Include(s => s.SongCategories)
+                .Include(s => s.SongCategories)
+                .FirstOrDefault(s => s.Id == newSong.Id); // read updated song from database
+            
+            UpdateSongWithVersesAndCategories(newSong, originalSong);
+            
+            foreach (var songPlaylist in newSong.SongPlaylists) // update existing verses
+            {
+                AddSongPlaylistIfNot(songPlaylist);
+            }
+
+            if (originalSong == null) return;
+
+            foreach (var songPlaylist in originalSong.SongPlaylists) // remove, if some songplaylist has been removed
+            {
+                if (newSong.SongPlaylists.Any(sp => sp.SongId == songPlaylist.SongId) == false) // in new song isn't this songplaylist
+                {
+                    SongPlaylists.Remove(songPlaylist); // remove it
                 }
             }
         }
