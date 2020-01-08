@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Reflection;
 using Database.Models.Songs;
 using Database.Models.Users;
 using Microsoft.AspNetCore.Builder;
@@ -46,7 +48,23 @@ namespace Web
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "EKS song API",
+                    Description = "API for access EKS global database from applications.",
+                    // TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Jozef Privarčák",
+                        Email = "jozkoprivarcak@gmail.com",
+                    },
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.Configure<IdentityOptions>(options =>

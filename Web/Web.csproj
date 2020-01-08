@@ -5,6 +5,10 @@
         <UserSecretsId>aspnet-Web-3B956FB4-2D9E-44B0-9B36-3D2D44ECCA9C</UserSecretsId>
         <RootNamespace>Web</RootNamespace>
     </PropertyGroup>
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
