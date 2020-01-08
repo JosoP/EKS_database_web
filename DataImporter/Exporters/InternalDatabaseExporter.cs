@@ -113,7 +113,7 @@ namespace DataImporter.Exporters
             var categoriesToRet = new List<Category>();
             foreach (var universalCategory in universalCategories)
             {
-                var songCat = dbContext.Categories.FirstOr(cat => cat.Name == universalCategory.Name, null);
+                var songCat = dbContext.Categories.FirstOrDefault(cat => cat.Name == universalCategory.Name);
                 if (songCat == null)
                 {
                     songCat = new Category
