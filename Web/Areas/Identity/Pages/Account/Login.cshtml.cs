@@ -37,13 +37,18 @@ namespace Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required] [EmailAddress] public string Email { get; set; }
+            [Required] 
+            [EmailAddress] 
+            [Display(Name = "Email")] 
+            public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Heslo")] 
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
+            [Display(Name = "Pamätať si prihlásenie?")] 
+            public bool RememberMe { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
