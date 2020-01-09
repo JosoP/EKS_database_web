@@ -2,6 +2,9 @@ using Database.Models.Songs;
 
 namespace Web.Models
 {
+    /// <summary>
+    ///     API format of verse class. This class is used for sending verse in API.
+    /// </summary>
     public class ApiVerse
     {
         
@@ -18,6 +21,10 @@ namespace Web.Models
             
         }
         
+        /// <summary>
+        ///     Constructor for building of instance of this class from its database equivalent. 
+        /// </summary>
+        /// <param name="databaseVerse">Database equivalent to this class.</param>
         public ApiVerse(Verse databaseVerse)
         {
             Id = databaseVerse.Id;
@@ -26,6 +33,10 @@ namespace Web.Models
             Text = databaseVerse.Text;
         }
 
+        /// <summary>
+        ///     Converts instance of this class to instance of database equivalent class.
+        /// </summary>
+        /// <returns>Instance of database equivalent of this class.</returns>
         public Verse ToDatabaseVerse(long songId)
         {
             return new Verse

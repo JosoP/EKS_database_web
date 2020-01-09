@@ -4,8 +4,12 @@ using DataImporter.Models;
 
 namespace DataImporter
 {
-    class Program
+    static class Program
     {
+        /// <summary>
+        ///     Main method of application.
+        /// </summary>
+        /// <param name="args">Arguments of application.</param>
         static void Main(string[] args)
         {
             var isOk = true;

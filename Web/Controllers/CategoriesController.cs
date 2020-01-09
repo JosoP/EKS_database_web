@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    /// <summary>
+    ///     Controller for categories pages.
+    /// </summary>
     public class CategoriesController : Controller
     {
         private readonly SongsDbContext _context;

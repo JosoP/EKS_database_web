@@ -10,6 +10,9 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    /// <summary>
+    ///     Controller for playlist pages.
+    /// </summary>
     public class PlaylistsController : Controller
     {
         private readonly SongsDbContext _context;

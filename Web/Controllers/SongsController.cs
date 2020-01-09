@@ -10,6 +10,9 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    /// <summary>
+    ///     Controller for song pages.
+    /// </summary>
     public class SongsController : Controller
     {
         private readonly SongsDbContext _context;
@@ -69,7 +72,7 @@ namespace Web.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            var viewModel = new SongCategoryViewModel
+            var viewModel = new SongEditViewModel
             {
                 Song = new Song(),
                 OtherCategories = _context.Categories
@@ -94,7 +97,7 @@ namespace Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Song,SelectedCategories")] SongCategoryViewModel viewModel)
+        public async Task<IActionResult> Create([Bind("Song,SelectedCategories")] SongEditViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +134,7 @@ namespace Web.Controllers
         {
             if (id == null) return NotFound();
 
-            var viewModel = new SongCategoryViewModel
+            var viewModel = new SongEditViewModel
             {
                 Song = await _context.Songs
                     .Include(s => s.Verses)
@@ -169,7 +172,7 @@ namespace Web.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(
             long id,
-            [Bind("Song,SelectedCategories")] SongCategoryViewModel viewModel)
+            [Bind("Song,SelectedCategories")] SongEditViewModel viewModel)
         {
             if (id != viewModel.Song.Id) return NotFound();
 

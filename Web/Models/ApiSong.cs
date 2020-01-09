@@ -5,6 +5,9 @@ using Database.Models.Songs;
 
 namespace Web.Models
 {
+    /// <summary>
+    ///     API format of song class. This class is used for sending song in song API.
+    /// </summary>
     public class ApiSong
     {
         
@@ -30,6 +33,10 @@ namespace Web.Models
             
         }
         
+        /// <summary>
+        ///     Constructor for building of instance of this class from its database equivalent. 
+        /// </summary>
+        /// <param name="databaseSong">Database equivalent to this class.</param>
         public ApiSong(Song databaseSong)
         {
             Id = databaseSong.Id;
@@ -51,6 +58,10 @@ namespace Web.Models
                 Playlists.Add(new ApiPlaylistPoor(songPlaylist.Playlist));
         }
 
+        /// <summary>
+        ///     Converts instance of this class to instance of database equivalent class.
+        /// </summary>
+        /// <returns>Instance of database equivalent of this class.</returns>
         public Song ToDatabaseSong()
         {
             var songCategories = Categories.Select(category => new SongCategory

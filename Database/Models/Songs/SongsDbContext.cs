@@ -14,7 +14,7 @@ namespace Database.Models.Songs
             : base(options)
         {
         }
-
+        
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Playlist> Playlists { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
@@ -55,6 +55,10 @@ namespace Database.Models.Songs
             });
         }
 
+        /// <summary>
+        ///     Removes all data from the database. To apply changes to the database, after calling this method,
+        ///     SaveChanges() method have to be called.
+        /// </summary>
         public void ClearAll()
         {
             Categories.RemoveRange(Categories);
@@ -65,6 +69,17 @@ namespace Database.Models.Songs
             Verses.RemoveRange(Verses);
         }
 
+        /// <summary>
+        ///     Updates data of song specified by parameter. In this method, these properties are updated: basic
+        ///     properties of the song, all verses and all relations to categories. To apply changes to the database,
+        ///     after calling this method, SaveChanges() method have to be called.
+        /// </summary>
+        /// <param name="newSong">Song according which data in database will be updated</param>
+        /// <param name="originalSong">
+        ///     Original song loaded from the database. It can be used when something else may be done with original
+        ///     song. When this parameter is null, song is loaded from the database in this function. Song that is
+        ///     in this parameter has tu have fields Verses and SongCategories loaded.
+        /// </param>
         public void UpdateSongWithVersesAndCategories(Song newSong, Song originalSong = null)
         {
             if (newSong == null) return;
@@ -116,6 +131,12 @@ namespace Database.Models.Songs
             }
         }
 
+        /// <summary>
+        ///     Updates data of song specified by parameter. In this method, these properties are updated: basic
+        ///     properties of the song, all verses, all relations to categories and all relations to playlists.
+        ///     To apply changes to the database, after calling this method, SaveChanges() method have to be called.
+        /// </summary>
+        /// <param name="newSong">Song according which data in database will be updated</param>
         public void UpdateSongWithAll(Song newSong)
         {
             if (newSong == null) return;
@@ -144,6 +165,11 @@ namespace Database.Models.Songs
             }
         }
 
+        /// <summary>
+        ///     Updates data of playlist specified by parameter. In this method, these properties are updated: basic
+        ///     properties of the playlist and all relations to the songs.
+        /// </summary>
+        /// <param name="newPlaylist"></param>
         public void UpdatePlaylistWithSongs(Playlist newPlaylist)
         {
             if (newPlaylist == null) return;
@@ -180,6 +206,10 @@ namespace Database.Models.Songs
             }
         }
 
+        /// <summary>
+        ///     Adds Song - Playlist relation to the database, if there is not.
+        /// </summary>
+        /// <param name="songPlaylist">Song - Playlist relation to be added.</param>
         private void AddSongPlaylistIfNot(SongPlaylist songPlaylist)
         {
             if (songPlaylist == null) return;
@@ -191,6 +221,10 @@ namespace Database.Models.Songs
             }
         }
 
+        /// <summary>
+        ///     Adds Song - Category relation to the database, if there is not.
+        /// </summary>
+        /// <param name="songCategory">Song - Category relation to be added.</param>
         private void AddSongCategoryIfNot(SongCategory songCategory)
         {
             if (songCategory == null) return;
@@ -204,6 +238,11 @@ namespace Database.Models.Songs
             }
         }
 
+        /// <summary>
+        ///     Updates verse stored in the database according to a verse specified in parameter. If verse with same ID
+        ///     does not exist in the database, it creates it.
+        /// </summary>
+        /// <param name="verse">Verse to be updated.</param>
         private void UpdateVerse(Verse verse)
         {
             if (verse == null) return;

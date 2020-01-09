@@ -9,6 +9,9 @@ using Database.Models.Songs;
 
 namespace Web.Controllers.Api
 {
+    /// <summary>
+    ///     Controller for categories API.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase

@@ -5,6 +5,9 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    /// <summary>
+    ///     Controller for home pages.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

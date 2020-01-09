@@ -8,6 +8,9 @@ using Microsoft.Extensions.Options;
 
 namespace Web.Services
 {
+    /// <summary>
+    ///     Service for sending of e-mails.
+    /// </summary>
     public class EmailSender : IEmailSender
     {
         private readonly ILogger<EmailSender> _logger;
@@ -19,11 +22,26 @@ namespace Web.Services
             _logger = logger;
         }
 
+        /// <summary>
+        ///     Sends e-mail.
+        /// </summary>
+        /// <param name="email">To which e-mail address e-mail will be sent.</param>
+        /// <param name="subject">Subject of e-mail.</param>
+        /// <param name="message">Message of email. Message should be in HTML format.</param>
+        /// <returns></returns>
         public Task SendEmailAsync(string email, string subject, string message)
         {
             return Execute(Options.GmailKey, subject, message, email);
         }
 
+        /// <summary>
+        ///     Sends e-mail.
+        /// </summary>
+        /// <param name="apiKey">Password to e-mail account used as e-mail service</param>
+        /// <param name="subject">Subject of e-mail.</param>
+        /// <param name="message">Message of email. Message should be in HTML format.</param>
+        /// <param name="email">To which e-mail address e-mail will be sent.</param>
+        /// <returns></returns>
         public async Task Execute(string apiKey, string subject, string message, string email)
         {
             try

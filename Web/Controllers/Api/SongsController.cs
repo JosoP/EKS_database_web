@@ -11,6 +11,9 @@ using Web.Models;
 
 namespace Web.Controllers.Api
 {
+    /// <summary>
+    ///     Controller for songs API.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SongsController : ControllerBase
@@ -26,7 +29,7 @@ namespace Web.Controllers.Api
 
         // GET: api/Songs
         /// <summary>
-        ///     Api GET method that gets All Songs in API format.
+        ///     Gets All Songs in API format.
         /// </summary>
         /// <returns>All songs in API format.</returns>
         [HttpGet]
@@ -47,7 +50,7 @@ namespace Web.Controllers.Api
 
         // GET: api/Songs/5
         /// <summary>
-        ///     Api GET method that gets Songs specified by ID in API format.
+        ///     Gets song specified by ID in API format.
         /// </summary>
         /// <param name="id">ID of song that will be returned.</param>
         /// <returns>Songs in API format.</returns>
@@ -69,7 +72,7 @@ namespace Web.Controllers.Api
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         /// <summary>
-        ///     Api PUT method that update song specified by ID and passed in body in API format.
+        ///     Updates song specified by ID and passed in body in API format.
         /// </summary>
         /// <param name="id">ID of song to be updated.</param>
         /// <param name="apiSong">Song according to which specified song will be updated in API format.</param>
@@ -112,8 +115,8 @@ namespace Web.Controllers.Api
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         /// <summary>
-        ///     Api POST method that creates new song according to song passed as parameter (sent in request body).
-        ///     In this method song and its verses are created and relations to categories and playlists are added. 
+        ///     Creates new song according to song sent in request body. In this method song and its verses are created
+        ///     and relations to categories and playlists are added or removed. 
         /// </summary>
         /// <param name="apiSong">Song to be created in API format.</param>
         /// <returns>Currently created song in API format.</returns>
@@ -150,7 +153,7 @@ namespace Web.Controllers.Api
 
         // DELETE: api/Songs/5
         /// <summary>
-        ///     Api DELETE method that removes a song specified by ID.
+        ///     Removes a song specified by ID.
         /// </summary>
         /// <param name="id">ID of song to be removed.</param>
         /// <returns>Currently removed song in API format.</returns>

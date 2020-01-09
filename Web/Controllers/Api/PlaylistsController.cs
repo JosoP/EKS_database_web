@@ -9,6 +9,9 @@ using Database.Models.Songs;
 
 namespace Web.Controllers.Api
 {
+    /// <summary>
+    ///     Controller for playlists API.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PlaylistsController : ControllerBase

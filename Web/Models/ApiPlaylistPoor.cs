@@ -3,6 +3,10 @@ using Database.Models.Songs;
 
 namespace Web.Models
 {
+    /// <summary>
+    ///     API format of playlist class without references to constrains elements.
+    ///     This class is used for sending playlist non playlist in API.
+    /// </summary>
     public class ApiPlaylistPoor
     {
         
@@ -20,6 +24,10 @@ namespace Web.Models
             
         }
         
+        /// <summary>
+        ///     Constructor for building of instance of this class from its database equivalent. 
+        /// </summary>
+        /// <param name="databasePlaylist">Database equivalent to this class</param>
         public ApiPlaylistPoor(Playlist databasePlaylist)
         {
             Id = databasePlaylist.Id;

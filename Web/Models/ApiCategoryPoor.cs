@@ -3,6 +3,10 @@ using Database.Models.Songs;
 
 namespace Web.Models
 {
+    /// <summary>
+    ///     API format of category class without references to constrains elements.
+    ///     This class is used for sending category in non category API.
+    /// </summary>
     public class ApiCategoryPoor
     {
         
@@ -20,6 +24,10 @@ namespace Web.Models
             
         }
         
+        /// <summary>
+        ///     Constructor for building of instance of this class from its database equivalent. 
+        /// </summary>
+        /// <param name="databaseCategory">Database equivalent to this class.</param>
         public ApiCategoryPoor(Category databaseCategory)
         {
             Id = databaseCategory.Id;
