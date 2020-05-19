@@ -20,9 +20,9 @@
         <th class="text-right">
             @if (Model.ViewMode == SongsTableViewModel.Mode.Maintaining)
             {
-                <a class="btn btn-success btn-sm " asp-action="Create">
-                    <img src="~/img/plus-2-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
-                </a>
+            <a class="btn btn-success btn-sm " asp-action="Create">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
             }
         </th>
 
@@ -51,7 +51,7 @@
         </th>
         <th class="text-right">
             <button id="clearFilterButton" class="btn btn-light btn-sm " type="button">
-                <img src="~/img/x-mark-dark-16.png" alt="Vytvoriť novú pieseň" class="img-in-button">
+                <i class="fa fa-times" aria-hidden="true"></i>
             </button>
         </th>
     </tr>
@@ -87,13 +87,13 @@
                 {
                     <div class="btn-group btn-group-sm">
                         <a class="btn btn-info" asp-action="Edit" asp-route-id="@song.Id">
-                            <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                         <a class="btn btn-secondary" asp-action="Details" asp-route-id="@song.Id">
-                            <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
+                            <i class="fa fa-file-text" aria-hidden="true"></i>
                         </a>
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@song.Id">
-                            <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </a>
                     </div>
                 }

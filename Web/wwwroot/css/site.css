@@ -91,3 +91,68 @@ body {
 .input-filter{
   height: 30px;
 }
+
+.eks-copyright {
+    margin: auto;
+    width: 50%;
+    text-align: center
+}
+
+.uvod__hlavna__stranka {
+    position: relative;
+    padding: 282px 0;
+    background-color: #ffffff;
+    background-image: url("../img/apk-eks-uvod.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: 500px;
+}
+
+.uvod__box {
+    padding-right: 130px;
+}
+
+.uvod__title {
+    margin-bottom: 30px;
+    line-height: 80px;
+    color: #055203;
+    font-size: 60px;
+    font-weight: 700;
+}
+
+.uvod__text {
+    padding-bottom: 40px;
+}
+
+.uvod-tlacidla {
+    text-align: left;
+}
+
+    .uvod-tlacidla .btn-sekcia-uvod {
+        color: #ffffff;
+        background-color: #055203;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 10px 70px;
+        margin-right: 10px;
+    }
+
+    .uvod-tlacidla .btn-outline-sekcia-uvod {
+        color: #055203;
+        border: 2px solid #055203;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 10px 50px;
+        margin-left: 10px;
+    }
+
+.obrazok-uvod-mobil-apk {
+}
+
+    .obrazok-uvod-mobil-apk img {
+       
+        width: 150%;
+        height: auto;
+    }

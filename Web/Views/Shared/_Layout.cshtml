@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EKS</title>
-    <link rel="shortcut icon" href="~/img/main_icon_dark.svg" type="image/x-icon"/>
-    @* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> *@
+    <link rel="shortcut icon" href="~/img/main_icon_dark.svg" type="image/x-icon" />
+    @* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> *@
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="~/css/site.css" type="text/css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/site.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -44,15 +45,17 @@
         </div>
     </nav>
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
+<section class="">
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+</section>
 
 <footer class="footer border-top text-light">
-    <div class="container">
-        &copy;JosoP 2019 - EKS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="container-fluid">
+        <div class="eks-copyright">&copy;JosoP 2019 - EKS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
