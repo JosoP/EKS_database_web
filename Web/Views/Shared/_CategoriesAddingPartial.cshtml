@@ -6,7 +6,7 @@
         <label asp-for="Song.SongCategories" class="control-label h5"></label>
         <button class="btn btn-success btn-sm float-right js-btn-add-category" type="button" style="margin-left: 10px"
                 data-toggle="modal" data-target="#addCategoryModal">
-            <img src="~/img/plus-2-16.png" alt="Pridať kategóriu" class="img-in-button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
         </button>
     </div>
 
@@ -19,7 +19,7 @@
                     <input type="hidden" asp-for="SelectedCategories[i].Id" class="js-cat-id"/>
                     <input type="hidden" asp-for="SelectedCategories[i].Name" class="js-cat-name"/>
 
-                    <img src="~/img/x-mark-12.png" class="js-category-remove" alt="Vymazať kategóriu">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </span>
             }
         </h5>
@@ -48,7 +48,7 @@
                             <input type="hidden" asp-for="OtherCategories[i].Id" class="js-cat-id"/>
                             <input type="hidden" asp-for="OtherCategories[i].Name" class="js-cat-name"/>
 
-                            <img src="~/img/plus-2-12.png" class="js-category-add" alt="Pridať kategóriu">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
                         </span>
                     }
                 </h5>

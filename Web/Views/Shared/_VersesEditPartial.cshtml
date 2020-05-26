@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-1">
         <button class="btn btn-success btn-sm float-right" type="button" id="add-verse-start">
-            <img src="~/img/plus-2-16.png" alt="Pridať strofu" class="img-in-button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
         </button>
     </div>
 </div>
@@ -21,7 +21,7 @@
                 <input type="hidden" asp-for="Song.Verses[i].SequenceNumber" class="js-verse-sequence-num"/>
 
                 <button class="btn btn-danger btn-sm js-btn-remove-verse" type="button">
-                    <img src="~/img/trash-2-16.png" alt="Odstrániť strofu" class="img-in-button">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </button>
                 <div class="form-group row">
                     <label asp-for="Song.Verses[i].Title" class="col-sm-2 col-form-label js-verse-title-lbl"></label>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-sm-1">
                         <button class="btn btn-success btn-sm float-right js-btn-add-verse" type="button">
-                            <img src="~/img/plus-2-16.png" alt="Pridať strofu" class="img-in-button">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

@@ -17,7 +17,7 @@
         </th>
         <th class="text-right">
             <a class="btn btn-success btn-sm " asp-action="Create">
-                <img src="~/img/plus-2-16.png" alt="Vytvoriť novú kategóriu" class="img-in-button">
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </a>
         </th>
     </tr>
@@ -35,13 +35,13 @@
             <td class="text-right">
                 <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">
-                        <img src="~/img/pencil-16.png" alt="Upraviť" class="img-in-button">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                     <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">
-                        <img src="~/img/view-details-16.png" alt="Detaily" class="img-in-button">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
                     </a>
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
-                        <img src="~/img/trash-2-16.png" alt="Odstrániť" class="img-in-button">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </a>
                 </div>
             </td>

@@ -40,7 +40,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nový e-mail")]
             public string NewEmail { get; set; }
         }
 
@@ -102,7 +102,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "E-mail sa nezmenil.";
             return RedirectToPage();
         }
 

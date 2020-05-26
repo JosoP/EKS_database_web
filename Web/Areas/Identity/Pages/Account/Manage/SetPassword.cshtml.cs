@@ -29,12 +29,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nové heslo")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Potvrdi nové heslo")]
+            [Compare("NewPassword", ErrorMessage = "Hesla sa nezhodujú!")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -81,7 +81,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Heslo bolo úspešne zmenené.";
 
             return RedirectToPage();
         }
