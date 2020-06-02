@@ -29,12 +29,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "NovÈ heslo")]
+            [Display(Name = "Nov√© heslo")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Potvrdiù novÈ heslo")]
-            [Compare("NewPassword", ErrorMessage = "Hesla sa nezhoduj˙!")]
+            [Display(Name = "Potvrdi≈• nov√© heslo")]
+            [Compare("NewPassword", ErrorMessage = "Hesl√° sa nezhoduj√∫!")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -81,7 +81,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Heslo bolo ˙speöne zmenenÈ.";
+            StatusMessage = "Heslo bolo √∫spe≈°ne zmenen√©.";
 
             return RedirectToPage();
         }

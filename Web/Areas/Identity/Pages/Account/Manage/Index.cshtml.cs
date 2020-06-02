@@ -30,7 +30,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Telefónne èíslo")]
+            [Display(Name = "TelefÃ³nne ÄÃ­slo")]
             public string PhoneNumber { get; set; }
         }
 
@@ -86,7 +86,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Tvoj profil bol aktualizovanı";
+            StatusMessage = "Tvoj profil bol aktualizovanï¿½";
             return RedirectToPage();
         }
     }

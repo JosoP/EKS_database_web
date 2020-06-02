@@ -31,19 +31,19 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Aktuálne heslo")]
+            [Display(Name = "AktuÃ¡lne heslo")]
             public string OldPassword { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Nové heslo")]
+            [Display(Name = "NovÃ© heslo")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Potvrïte nové heslo")]
-            [Compare("NewPassword", ErrorMessage = "Zadané heslá sa nezhodujú.")]
+            [Display(Name = "PotvrÄte novÃ© heslo")]
+            [Compare("NewPassword", ErrorMessage = "ZadanÃ© heslÃ¡ sa nezhodujÃº.")]
             public string ConfirmPassword { get; set; }
         }
 

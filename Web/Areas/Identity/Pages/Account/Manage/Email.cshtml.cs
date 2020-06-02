@@ -40,7 +40,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "Novı e-mail")]
+            [Display(Name = "NovÃ½ e-mail")]
             public string NewEmail { get; set; }
         }
 
